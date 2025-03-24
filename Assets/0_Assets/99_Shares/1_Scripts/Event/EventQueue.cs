@@ -2,10 +2,7 @@ using System.Collections.Generic;
 
 namespace Attention.EventModule
 {
-    public interface IEventQueue
-    {
-        void EnqueueEvent(IEventData eventData);
-    }
+
 
     public class EventQueue : IEventQueue
     {

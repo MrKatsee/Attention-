@@ -1,6 +1,5 @@
 using Attention.EventModule;
 using Attention.InputModule;
-using Attention.ProcessModule;
 using UnityEngine;
 
 namespace Attention
@@ -8,13 +7,12 @@ namespace Attention
     public class MainFlow : MonoBehaviour
     {
         private InputDispatcher _inputDispatcher;
-        private EventQueue _eventQueue;
-        private EventProcessor _eventProcessor;
+        private EventHandler _eventHandler;
 
         private void Awake()
         {
-            _eventQueue = new EventQueue();
-            _inputDispatcher = new InputDispatcher(_eventQueue);
+            _eventHandler = new EventHandler();
+            _inputDispatcher = new InputDispatcher(_eventHandler);
         }
 
         private void Start()
@@ -25,8 +23,8 @@ namespace Attention
         private void Update()
         {
             _inputDispatcher.Update();
-            _eventQueue.Update();
-            _eventProcessor.Update();
+            _eventHandler.Update();
+            // TODO: ViewDispatcher (EventHandler랑 비슷하게)
         }
     }
 }

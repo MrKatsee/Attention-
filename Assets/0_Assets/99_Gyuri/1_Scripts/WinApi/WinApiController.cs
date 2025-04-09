@@ -6,11 +6,28 @@ using UnityEngine;
 
 public class WinApiController : MonoBehaviour
 {
+    // === WinAPI 상수 정의 ===
+    const int GWL_EXSTYLE = -20;
+    const int GWL_STYLE = -16;
+    const uint WS_EX_LAYERED = 0x00080000;
+    const uint WS_EX_TOOLWINDOW = 0x00000080;
+    const uint WS_CHILD = 0x40000000;
+    const uint WS_POPUP = 0x80000000;
+    const uint LWA_COLORKEY = 0x00000001;
+    const uint SWP_SHOWWINDOW = 0x0040;
+
     private static WinApiController instance;
+
     public static WinApiController Instance => instance;
 
     public IntPtr window { get; private set; } = IntPtr.Zero;
 
+    private static readonly HashSet<string> ExcludedClassNames = new()
+    {
+        "ApplicationFrameWindow", "Progman", "Button"
+    };
+
+    // === Unity 이벤트 ===
     private void Awake()
     {
         if (instance == null)
@@ -25,24 +42,31 @@ public class WinApiController : MonoBehaviour
         }
     }
 
-    // === WinAPI 선언 ===
+    // === WinAPI 함수 선언 ===
     [DllImport("user32.dll")] private static extern IntPtr GetActiveWindow();
+    [DllImport("user32.dll")] public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+    [DllImport("user32.dll")] private static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
+    [DllImport("user32.dll")] private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+    [DllImport("user32.dll")] private static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
+    [DllImport("user32.dll")] private static extern bool SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
     [DllImport("user32.dll")] private static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
     [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr hWnd);
-    [DllImport("user32.dll")] private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
     [DllImport("user32.dll")] private static extern int GetWindowTextLength(IntPtr hWnd);
-    [DllImport("user32.dll")] private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-    [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+    [DllImport("user32.dll")] private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+    [DllImport("user32.dll")] private static extern IntPtr GetParent(IntPtr hWnd);
+    [DllImport("user32.dll", SetLastError = true)] private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
     [DllImport("user32.dll")] private static extern IntPtr GetWindowDC(IntPtr hWnd);
+    [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
     [DllImport("user32.dll")] private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
     [DllImport("gdi32.dll")] private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
     [DllImport("gdi32.dll")] private static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
-    [DllImport("gdi32.dll")] private static extern IntPtr SelectObject(IntPtr hdc, IntPtr obj);
-    [DllImport("gdi32.dll")] private static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int width, int height, IntPtr hdcSrc, int xSrc, int ySrc, uint rop);
+    [DllImport("gdi32.dll")] private static extern IntPtr SelectObject(IntPtr hdc, IntPtr h);
+    [DllImport("gdi32.dll")] private static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int w, int h, IntPtr hdcSrc, int xSrc, int ySrc, uint rop);
     [DllImport("gdi32.dll")] private static extern bool DeleteDC(IntPtr hdc);
     [DllImport("gdi32.dll")] private static extern bool DeleteObject(IntPtr hObject);
-    [DllImport("gdi32.dll")] private static extern bool GetDIBits(IntPtr hdc, IntPtr hBitmap, uint uStartScan, uint cScanLines, byte[] lpvBits, ref BITMAPINFO lpbmi, uint uUsage);
+    [DllImport("gdi32.dll")] private static extern bool GetDIBits(IntPtr hdc, IntPtr hbmp, uint start, uint lines, byte[] buffer, ref BITMAPINFO bmi, uint usage);
 
     private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
@@ -67,19 +91,52 @@ public class WinApiController : MonoBehaviour
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] public uint[] bmiColors;
     }
 
-    // === 창 정보 수집 ===
+    // === 창 필터링 및 정보 수집 ===
+    private bool IsToolWindow(IntPtr hWnd) => (GetWindowLong(hWnd, GWL_EXSTYLE) & WS_EX_TOOLWINDOW) != 0;
+
+    private string GetClassNameString(IntPtr hWnd)
+    {
+        StringBuilder sb = new(256);
+        GetClassName(hWnd, sb, sb.Capacity);
+        return sb.ToString();
+    }
+
+    private string GetWindowTitle(IntPtr hWnd)
+    {
+        int len = GetWindowTextLength(hWnd);
+        StringBuilder sb = new(len + 1);
+        GetWindowText(hWnd, sb, sb.Capacity);
+        return sb.ToString();
+    }
+
+    private bool IsUserVisibleWindow(IntPtr hWnd)
+    {
+        return IsWindowVisible(hWnd) &&
+               GetWindowTextLength(hWnd) > 0 &&
+               GetParent(hWnd) == IntPtr.Zero &&
+               !IsToolWindow(hWnd);
+    }
+
+    private bool IsTargetWindow(IntPtr hWnd)
+    {
+        if (!IsWindowVisible(hWnd) || GetParent(hWnd) != IntPtr.Zero) return false;
+
+        string className = GetClassNameString(hWnd);
+        if (ExcludedClassNames.Contains(className)) return false;
+
+        long style = GetWindowLongPtr(hWnd, GWL_STYLE).ToInt64();
+        if ((style & WS_CHILD) != 0 || (style & WS_POPUP) != 0) return false;
+
+        return true;
+    }
+
     public List<WindowData> GetWindowDataList()
     {
         List<WindowData> result = new();
         EnumWindows((hWnd, lParam) =>
         {
-            string title = GetWindowTitle(hWnd);
-            string className = GetClassNameString(hWnd);
-            Texture2D thumbnail = CaptureWindow(hWnd);
-
-            if (string.IsNullOrWhiteSpace(title)) title = "Untitled";
-
-            result.Add(new WindowData(hWnd, $"{title} [{className}]", thumbnail));
+            if (IsTargetWindow(hWnd))
+                result.Add(GetWindowData(hWnd));
             return true;
         }, IntPtr.Zero);
         return result;
@@ -91,27 +148,13 @@ public class WinApiController : MonoBehaviour
         string className = GetClassNameString(hWnd);
         Texture2D thumbnail = CaptureWindow(hWnd);
 
-        if (string.IsNullOrWhiteSpace(title)) title = "Untitled";
+        if (string.IsNullOrWhiteSpace(title))
+            title = "Untitled";
 
         return new WindowData(hWnd, $"{title} [{className}]", thumbnail);
     }
 
-    private string GetWindowTitle(IntPtr hWnd)
-    {
-        int len = GetWindowTextLength(hWnd);
-        StringBuilder sb = new(len + 1);
-        GetWindowText(hWnd, sb, sb.Capacity);
-        return sb.ToString();
-    }
-
-    private string GetClassNameString(IntPtr hWnd)
-    {
-        StringBuilder sb = new(256);
-        GetClassName(hWnd, sb, sb.Capacity);
-        return sb.ToString();
-    }
-
-    // === 창 캡처 ===
+    // === 캡처 함수 ===
     public Texture2D CaptureWindow(IntPtr hWnd)
     {
         if (!GetWindowRect(hWnd, out RECT rect)) return null;
@@ -124,7 +167,7 @@ public class WinApiController : MonoBehaviour
         IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, width, height);
         IntPtr old = SelectObject(hdcMem, hBitmap);
 
-        BitBlt(hdcMem, 0, 0, width, height, hdcSrc, 0, 0, 0x00CC0020);
+        BitBlt(hdcMem, 0, 0, width, height, hdcSrc, 0, 0, 0x00CC0020); // SRCCOPY
 
         BITMAPINFO bmi = new()
         {
@@ -132,7 +175,7 @@ public class WinApiController : MonoBehaviour
             {
                 biSize = (uint)Marshal.SizeOf(typeof(BITMAPINFOHEADER)),
                 biWidth = width,
-                biHeight = -height, // top-down
+                biHeight = height, // top-down
                 biPlanes = 1,
                 biBitCount = 32,
                 biCompression = 0
@@ -154,5 +197,12 @@ public class WinApiController : MonoBehaviour
 
         return tex;
     }
-}
 
+    // === 창을 투명하게 설정 ===
+    public void MakeWindowTransparent()
+    {
+        int exStyle = GetWindowLong(window, GWL_EXSTYLE);
+        SetWindowLong(window, GWL_EXSTYLE, exStyle | (int)WS_EX_LAYERED);
+        SetLayeredWindowAttributes(window, 0, 0, LWA_COLORKEY);
+    }
+}

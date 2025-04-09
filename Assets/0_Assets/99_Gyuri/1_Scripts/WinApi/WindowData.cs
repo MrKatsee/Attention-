@@ -1,0 +1,20 @@
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WindowData
+{
+    public IntPtr hWnd { get; private set; }
+    public string title;
+    public Texture2D thumbnail;
+
+    public WindowData(IntPtr hWnd, string title = null, Texture2D thumbnail = null)
+    {
+        this.hWnd = hWnd;
+        this.title = title==null?"":title;
+        this.thumbnail = thumbnail;
+    }
+
+}

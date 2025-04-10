@@ -23,9 +23,14 @@ public class WinApiController : MonoBehaviour
     public IntPtr window { get; private set; } = IntPtr.Zero;
 
     private static readonly HashSet<string> ExcludedClassNames = new()
-    {
-        "ApplicationFrameWindow", "Progman", "Button"
-    };
+{
+    "ApplicationFrameWindow", // UWP 앱
+    "Windows.UI.Core.CoreWindow",
+    "Progman",
+    "Button",
+    "Shell_TrayWnd",
+    "DV2ControlHost"
+};
 
     // === Unity 이벤트 ===
     private void Awake()
@@ -68,6 +73,10 @@ public class WinApiController : MonoBehaviour
     [DllImport("gdi32.dll")] private static extern bool DeleteObject(IntPtr hObject);
     [DllImport("gdi32.dll")] private static extern bool GetDIBits(IntPtr hdc, IntPtr hbmp, uint start, uint lines, byte[] buffer, ref BITMAPINFO bmi, uint usage);
 
+    [DllImport("user32.dll")]
+    static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
+
+
     private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
     [StructLayout(LayoutKind.Sequential)]
@@ -109,23 +118,25 @@ public class WinApiController : MonoBehaviour
         return sb.ToString();
     }
 
-    private bool IsUserVisibleWindow(IntPtr hWnd)
+    private bool IsRealAppWindow(IntPtr hWnd)
     {
-        return IsWindowVisible(hWnd) &&
-               GetWindowTextLength(hWnd) > 0 &&
-               GetParent(hWnd) == IntPtr.Zero &&
-               !IsToolWindow(hWnd);
-    }
+        if (!IsWindowVisible(hWnd)) return false;
+        if (GetParent(hWnd) != IntPtr.Zero) return false;
 
-    private bool IsTargetWindow(IntPtr hWnd)
-    {
-        if (!IsWindowVisible(hWnd) || GetParent(hWnd) != IntPtr.Zero) return false;
+        // 창 타이틀이 없으면 제외
+        if (GetWindowTextLength(hWnd) == 0) return false;
 
+        // 제외할 클래스 이름
         string className = GetClassNameString(hWnd);
         if (ExcludedClassNames.Contains(className)) return false;
 
+        // 스타일 검사
         long style = GetWindowLongPtr(hWnd, GWL_STYLE).ToInt64();
-        if ((style & WS_CHILD) != 0 || (style & WS_POPUP) != 0) return false;
+        if ((style & WS_CHILD) != 0) return false;
+
+        // 툴윈도우 제외
+        if (IsToolWindow(hWnd)) return false;
+
 
         return true;
     }
@@ -135,7 +146,7 @@ public class WinApiController : MonoBehaviour
         List<WindowData> result = new();
         EnumWindows((hWnd, lParam) =>
         {
-            if (IsTargetWindow(hWnd))
+            if(IsRealAppWindow(hWnd))
                 result.Add(GetWindowData(hWnd));
             return true;
         }, IntPtr.Zero);

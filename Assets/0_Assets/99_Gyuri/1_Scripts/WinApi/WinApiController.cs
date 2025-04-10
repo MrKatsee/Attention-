@@ -48,9 +48,7 @@ public class WinApiController : MonoBehaviour
     }
 
     // === WinAPI 함수 선언 ===
-    [DllImport("user32.dll")]
-    private static extern IntPtr GetForegroundWindow();
-
+    [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
     [DllImport("user32.dll")] private static extern IntPtr GetActiveWindow();
     [DllImport("user32.dll")] public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -192,7 +190,7 @@ public class WinApiController : MonoBehaviour
             {
                 biSize = (uint)Marshal.SizeOf(typeof(BITMAPINFOHEADER)),
                 biWidth = width,
-                biHeight = -height, // top-down
+                biHeight = height, // top-down
                 biPlanes = 1,
                 biBitCount = 32,
                 biCompression = 0
@@ -233,5 +231,7 @@ public class WinApiController : MonoBehaviour
 
         return GetWindowData(hWnd);
     }
+
+
 
 }

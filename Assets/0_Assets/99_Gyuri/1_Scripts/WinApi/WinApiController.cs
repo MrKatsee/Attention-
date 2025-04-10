@@ -48,6 +48,9 @@ public class WinApiController : MonoBehaviour
     }
 
     // === WinAPI 함수 선언 ===
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
+
     [DllImport("user32.dll")] private static extern IntPtr GetActiveWindow();
     [DllImport("user32.dll")] public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -166,6 +169,8 @@ public class WinApiController : MonoBehaviour
     }
 
     // === 캡처 함수 ===
+
+
     public Texture2D CaptureWindow(IntPtr hWnd)
     {
         if (!GetWindowRect(hWnd, out RECT rect)) return null;
@@ -178,7 +183,8 @@ public class WinApiController : MonoBehaviour
         IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, width, height);
         IntPtr old = SelectObject(hdcMem, hBitmap);
 
-        BitBlt(hdcMem, 0, 0, width, height, hdcSrc, 0, 0, 0x00CC0020); // SRCCOPY
+        // BitBlt -> PrintWindow로 변경
+        bool success = PrintWindow(hWnd, hdcMem, 0);
 
         BITMAPINFO bmi = new()
         {
@@ -186,7 +192,7 @@ public class WinApiController : MonoBehaviour
             {
                 biSize = (uint)Marshal.SizeOf(typeof(BITMAPINFOHEADER)),
                 biWidth = width,
-                biHeight = height, // top-down
+                biHeight = -height, // top-down
                 biPlanes = 1,
                 biBitCount = 32,
                 biCompression = 0
@@ -206,8 +212,10 @@ public class WinApiController : MonoBehaviour
         DeleteDC(hdcMem);
         ReleaseDC(hWnd, hdcSrc);
 
-        return tex;
+        return success ? tex : null;
     }
+
+
 
     // === 창을 투명하게 설정 ===
     public void MakeWindowTransparent()
@@ -216,4 +224,14 @@ public class WinApiController : MonoBehaviour
         SetWindowLong(window, GWL_EXSTYLE, exStyle | (int)WS_EX_LAYERED);
         SetLayeredWindowAttributes(window, 0, 0, LWA_COLORKEY);
     }
+    public WindowData GetFocusedWindowData()
+    {
+        IntPtr hWnd = GetForegroundWindow();
+
+        if (hWnd == IntPtr.Zero || !IsRealAppWindow(hWnd))
+            return null;
+
+        return GetWindowData(hWnd);
+    }
+
 }

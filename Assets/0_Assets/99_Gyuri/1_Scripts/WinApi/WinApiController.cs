@@ -147,8 +147,14 @@ public class WinApiController : MonoBehaviour
         List<WindowData> result = new();
         EnumWindows((hWnd, lParam) =>
         {
-            if(IsRealAppWindow(hWnd))
-                result.Add(GetWindowData(hWnd));
+            if (IsRealAppWindow(hWnd))
+            {
+                WindowData data = GetWindowData(hWnd);
+                Texture2D thumbnail = CaptureWindow(hWnd);
+                data.thumbnail = thumbnail;   
+                result.Add(data);
+            }
+                
             return true;
         }, IntPtr.Zero);
         return result;
@@ -158,12 +164,12 @@ public class WinApiController : MonoBehaviour
     {
         string title = GetWindowTitle(hWnd);
         string className = GetClassNameString(hWnd);
-        Texture2D thumbnail = CaptureWindow(hWnd);
+        //Texture2D thumbnail = CaptureWindow(hWnd);
 
         if (string.IsNullOrWhiteSpace(title))
             title = "Untitled";
 
-        return new WindowData(hWnd, $"{title} [{className}]", thumbnail);
+        return new WindowData(hWnd, $"{title} [{className}]");
     }
 
     // === Ä¸Ã³ ÇÔ¼ö ===
@@ -231,6 +237,20 @@ public class WinApiController : MonoBehaviour
 
         return GetWindowData(hWnd);
     }
+
+    public bool IsRegisteredWindowStillOpen(IntPtr hWnd)
+    {
+        var currentWindows = WinApiController.Instance.GetWindowDataList();
+        foreach (var win in currentWindows)
+        {
+            if (win.hWnd == hWnd)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 

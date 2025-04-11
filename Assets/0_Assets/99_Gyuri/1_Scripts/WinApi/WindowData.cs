@@ -22,6 +22,7 @@ public class WindowData
         this.thumbnail = thumbnail;
     }
 
+
     public override bool Equals(object obj)
     {
         if (obj is WindowData other)

@@ -1198,7 +1198,8 @@ MonoBehaviour:
   _controller: {fileID: 2088750252}
   _prefab: {fileID: 2597156467660713515, guid: b4e795768e2d49c468c463bff081f667, type: 3}
   _viewPort: {fileID: 1393512631}
-  text: {fileID: 507448432}
+  _text: {fileID: 0}
+  _timer: {fileID: 1825695016}
 --- !u!114 &1825695016
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-namespace Attention.EventModule
+namespace Attention.Main.EventModule
 {
     public class SceneHandler : IEventHandler
     {

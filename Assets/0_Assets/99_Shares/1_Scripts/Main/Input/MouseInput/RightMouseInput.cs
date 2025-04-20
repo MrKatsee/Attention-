@@ -1,8 +1,8 @@
-using Attention.EventModule;
+using Attention.Main.EventModule;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Attention.InputModule
+namespace Attention.Main.InputModule
 {
     public class RightMouseInput : IInput
     {

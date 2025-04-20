@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Attention.EventModule
+namespace Attention.Main.EventModule
 {
 
 

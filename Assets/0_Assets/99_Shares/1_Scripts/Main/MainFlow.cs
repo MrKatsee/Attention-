@@ -1,8 +1,8 @@
-using Attention.EventModule;
-using Attention.InputModule;
+using Attention.Main.EventModule;
+using Attention.Main.InputModule;
 using UnityEngine;
 
-namespace Attention
+namespace Attention.Main
 {
     public class MainFlow : MonoBehaviour
     {

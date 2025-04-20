@@ -1,7 +1,7 @@
-using Attention.EventModule;
+using Attention.Main.EventModule;
 using System.Collections.Generic;
 
-namespace Attention.InputModule
+namespace Attention.Main.InputModule
 {
     public interface IInput
     {

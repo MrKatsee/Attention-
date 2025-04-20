@@ -13,6 +13,7 @@ namespace Attention.Main.InputModule
         private IEventQueue _eventQueue;
 
         private Dictionary<MouseInput, IInput> _mouseInputs;
+        // TODO: 필요하면 KeyboardInput 추가
 
         public InputDispatcher(IEventQueue eventQueue)
         {
@@ -27,19 +28,19 @@ namespace Attention.Main.InputModule
 
         public void Update()
         {
-            foreach (IEventData inputEvent in GetMouseInput())
+            foreach (IEvent inputEvent in GetMouseInput())
             {
                 _eventQueue.EnqueueEvent(inputEvent);
             }
         }
 
-        private IEnumerable<IEventData> GetMouseInput()
+        private IEnumerable<IEvent> GetMouseInput()
         {
-            List<IEventData> inputEvents = new List<IEventData>();
+            List<IEvent> inputEvents = new List<IEvent>();
 
             foreach (var input in _mouseInputs.Values)
             {
-                if (input.TryGetInputEvents(out IEnumerable<IEventData> eventDatas))
+                if (input.TryGetInputEvents(out IEnumerable<IEvent> eventDatas))
                 {
                     inputEvents.AddRange(eventDatas);
                 }

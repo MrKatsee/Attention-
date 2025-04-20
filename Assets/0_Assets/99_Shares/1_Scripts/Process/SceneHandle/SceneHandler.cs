@@ -10,5 +10,9 @@ namespace Attention.Main.EventModule
         //{
 
         //}
+
+        // TODO: 근데 그냥 EventType 없이 클래스 이름으로 매칭해도 될듯?
+        // TODO: 저렇게 한 이유는 파라미터를 캐스팅하기 위해서인데,
+        // TODO: 굳이 저렇게 할 필요 없이 데이터 클래스 안에 넣으면 둘 다 동시에 해결 가능,,,?
     }
 }

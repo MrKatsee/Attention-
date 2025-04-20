@@ -7,12 +7,11 @@ namespace Attention.Main
     public class MainFlow : MonoBehaviour
     {
         private InputDispatcher _inputDispatcher;
-        private EventHandler _eventHandler;
 
         private void Awake()
         {
-            _eventHandler = new EventHandler();
-            _inputDispatcher = new InputDispatcher(_eventHandler);
+            EventBus eventBus = new EventBus();
+            _inputDispatcher = new InputDispatcher(eventBus);
         }
 
         private void Start()
@@ -23,7 +22,7 @@ namespace Attention.Main
         private void Update()
         {
             _inputDispatcher.Update();
-            _eventHandler.Update();
+
             // TODO: ViewDispatcher (EventHandler랑 비슷하게)
         }
     }

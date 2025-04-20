@@ -5,6 +5,6 @@ namespace Attention.Main.InputModule
 {
     public interface IInput
     {
-        bool TryGetInputEvents(out IEnumerable<IEventData> eventDatas);
+        bool TryGetInputEvents(out IEnumerable<IEvent> eventDatas);
     }
 }

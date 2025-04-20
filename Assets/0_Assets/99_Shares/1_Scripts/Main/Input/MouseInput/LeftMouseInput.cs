@@ -6,24 +6,18 @@ namespace Attention.Main.InputModule
 {
     public class LeftMouseInput : IInput
     {
-        public bool TryGetInputEvents(out IEnumerable<IEventData> eventDatas)
+        public bool TryGetInputEvents(out IEnumerable<IEvent> result)
         {
+            List<IEvent> eventDatas = new List<IEvent>();
+
             if (Input.GetMouseButtonDown(0))
             {
-                eventDatas = GetEvents();
-                return true;
+                eventDatas.Add(new LeftClickEvent(Input.mousePosition));
             }
+            // HS: 확장 가능 (ex) ShitfLeftClickEvent)
 
-            eventDatas = null;
-            return false;
-        }
-
-        private IEnumerable<IEventData> GetEvents()
-        {
-            List<IEventData> eventDatas = new List<IEventData>();
-
-
-            return eventDatas;
+            result = eventDatas;
+            return eventDatas.Count > 0;
         }
     }
 }

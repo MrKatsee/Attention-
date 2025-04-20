@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Attention
 {
@@ -24,17 +25,25 @@ namespace Attention.Main.EventModule
         private EventQueue<ILogicEvent> _logicEventQueue;
         private EventQueue<IViewEvent> _viewEventQueue;
 
+        public EventBus()
+        {
+            _logicEventQueue = new EventQueue<ILogicEvent>();
+            _viewEventQueue = new EventQueue<IViewEvent>();
+        }
+
         public void EnqueueEvent<T>(T eventData) where T : IEvent
         {
-            switch (typeof(T))
+            if (eventData is ILogicEvent logicEvent)
             {
-                case var type when type == typeof(ILogicEvent):
-                    _logicEventQueue.Enqueue(eventData as ILogicEvent);
-                    break;
-
-                case var type when type == typeof(IViewEvent):
-                    _viewEventQueue.Enqueue(eventData as IViewEvent);
-                    break;
+                _logicEventQueue.Enqueue(logicEvent);
+            }
+            else if (eventData is IViewEvent viewEvent)
+            {
+                _viewEventQueue.Enqueue(viewEvent);
+            }
+            else
+            {
+                Debug.LogError("해당하는 이벤트의 형식을 찾을 수 없음: " + eventData.GetType());
             }
         }
 

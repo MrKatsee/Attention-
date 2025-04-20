@@ -6,9 +6,18 @@ namespace Attention.Main.InputModule
 {
     public class RightMouseInput : IInput
     {
-        public bool TryGetInputEvents(out IEnumerable<IEvent> eventDatas)
+        public bool TryGetInputEvents(out IEnumerable<IEvent> result)
         {
-            throw new System.NotImplementedException();
+            List<IEvent> eventDatas = new List<IEvent>();
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                eventDatas.Add(new InteractClickEvent(Input.mousePosition));
+            }
+            // HS: 확장 가능 (ex) ShitfLeftClickEvent)
+
+            result = eventDatas;
+            return eventDatas.Count > 0;
         }
     }
 }

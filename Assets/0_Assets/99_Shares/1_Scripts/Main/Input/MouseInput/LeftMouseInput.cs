@@ -12,7 +12,7 @@ namespace Attention.Main.InputModule
 
             if (Input.GetMouseButtonDown(0))
             {
-                eventDatas.Add(new LeftClickEvent(Input.mousePosition));
+                eventDatas.Add(new SelectClickEvent(Input.mousePosition));
             }
             // HS: 확장 가능 (ex) ShitfLeftClickEvent)
 

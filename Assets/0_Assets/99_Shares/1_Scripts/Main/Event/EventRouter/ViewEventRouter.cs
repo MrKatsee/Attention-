@@ -4,14 +4,8 @@ namespace Attention.Main.EventModule
 {
     public class ViewEventRouter : EventRouter<IViewEvent>
     {
-        public ViewEventRouter(IEventDispatcher<IViewEvent> eventDispatcher) : base(eventDispatcher)
+        public ViewEventRouter(IEventDispatcher<IViewEvent> eventDispatcher, IEventHandlerContainer<IViewEvent> eventHandlers) : base(eventDispatcher, eventHandlers)
         {
-
-        }
-
-        protected override void OnBeforeHandleEvent(IViewEvent eventData)
-        {
-
         }
     }
 }

@@ -1,6 +1,7 @@
 using Attention.Main.EventModule;
 using Attention.Main.InputModule;
 using UnityEngine;
+using Util;
 
 namespace Attention.Main
 {
@@ -9,22 +10,32 @@ namespace Attention.Main
         private EventBus _eventBus;
 
         private InputDispatcher _inputDispatcher;
+
+        private LogicHandlerContainer _logicHandlers;
+        private ViewPresenterContainer _viewPresenters;
+
         private LogicEventRouter _logicEventRouter;
         private ViewEventRouter _viewEventRouter;
 
         private void Awake()
         {
+            DI.Init();
+
             _eventBus = new EventBus();
 
             _inputDispatcher = new InputDispatcher(_eventBus);
-            _logicEventRouter = new LogicEventRouter(_eventBus);
-            _viewEventRouter = new ViewEventRouter(_eventBus);
+
+            _logicHandlers = new LogicHandlerContainer();
+            _viewPresenters = new ViewPresenterContainer();
+
+            _logicEventRouter = new LogicEventRouter(_eventBus, _logicHandlers);
+            _viewEventRouter = new ViewEventRouter(_eventBus, _viewPresenters);
         }
 
         private void Start()
         {
-            _logicEventRouter.Init();
-            _viewEventRouter.Init();
+            _logicHandlers.Init();
+            _viewPresenters.Init();
         }
 
         private void Update()

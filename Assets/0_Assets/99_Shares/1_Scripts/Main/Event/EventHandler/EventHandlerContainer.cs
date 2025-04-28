@@ -5,18 +5,25 @@ using System.Reflection;
 
 namespace Attention.Main.EventModule
 {
-    public class EventHandlerContainer<T> where T : IEvent
+    public interface IEventHandlerContainer<T> where T : IEvent
     {
-        private Dictionary<Type, List<Action<T>>> _handlers;
+        bool TryGetEvents(Type eventType, out List<Action<T>> events);
+    }
 
-        public EventHandlerContainer()
+    public class EventHandlerContainer<T> : IEventHandlerContainer<T> where T : IEvent
+    {
+        private Dictionary<Type, IEventHandler<T>> _eventHandlers;
+        private Dictionary<Type, List<Action<T>>> _registeredEvents;
+
+        public void Init()
         {
-            _handlers = new Dictionary<Type, List<Action<T>>>();
+            InitializeHandlers();
+            RegisterEvents();
         }
 
-        public void RegisterEvents()
+        private void InitializeHandlers()
         {
-            _handlers = new Dictionary<Type, List<Action<T>>>();
+            _eventHandlers = new Dictionary<Type, IEventHandler<T>>();
 
             var handlerTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
@@ -24,8 +31,21 @@ namespace Attention.Main.EventModule
 
             foreach (var handlerType in handlerTypes)
             {
-                var handlerInstance = Activator.CreateInstance(handlerType);
+                var handler = Activator.CreateInstance(handlerType);
+                _eventHandlers.Add(handlerType, (IEventHandler<T>)handler);
+            }
+        }
 
+        private void RegisterEvents()
+        {
+            _registeredEvents = new Dictionary<Type, List<Action<T>>>();
+
+            var handlerTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => typeof(IEventHandler<T>).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+
+            foreach (var handlerType in _eventHandlers.Keys)
+            {
                 var methods = handlerType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(m =>
                         m.GetParameters().Length == 1 &&
@@ -37,13 +57,13 @@ namespace Attention.Main.EventModule
 
                     Action<T> action = (evt) =>
                     {
-                        method.Invoke(handlerInstance, new object[] { evt });
+                        method.Invoke(_eventHandlers[handlerType], new object[] { evt });
                     };
 
-                    if (!_handlers.TryGetValue(paramType, out var list))
+                    if (!_registeredEvents.TryGetValue(paramType, out var list))
                     {
                         list = new List<Action<T>>();
-                        _handlers[paramType] = list;
+                        _registeredEvents[paramType] = list;
                     }
 
                     list.Add(action);
@@ -51,9 +71,9 @@ namespace Attention.Main.EventModule
             }
         }
 
-        public bool TryGetHandlers(Type type, out List<Action<T>> handlerList)
+        public bool TryGetEvents(Type eventType, out List<Action<T>> events)
         {
-            if (_handlers.TryGetValue(type, out handlerList))
+            if (_registeredEvents.TryGetValue(eventType, out events))
             {
                 return true;
             }

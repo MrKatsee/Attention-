@@ -5,24 +5,18 @@ namespace Attention.Main.EventModule
     public abstract class EventRouter<T> where T : IEvent
     {
         private IEventDispatcher<T> _eventDispatcher;
-        private EventHandlerContainer<T> _handlers;
+        private IEventHandlerContainer<T> _handlers;
 
-        public EventRouter(IEventDispatcher<T> eventDispatcher)
+        public EventRouter(IEventDispatcher<T> eventDispatcher, IEventHandlerContainer<T> eventHandlers)
         {
             _eventDispatcher = eventDispatcher;
-            _handlers = new EventHandlerContainer<T>();
-        }
-
-        public void Init()
-        {
-            _handlers.RegisterEvents();
+            _handlers = eventHandlers;;
         }
 
         public void Update()
         {
             while (_eventDispatcher.TryDispatch(out T eventData))
             {
-                OnBeforeHandleEvent(eventData);
                 HandleEvent(eventData);
             }
         }
@@ -30,7 +24,7 @@ namespace Attention.Main.EventModule
         private void HandleEvent(T eventData)
         {
             Type type = eventData.GetType();
-            if (_handlers.TryGetHandlers(type, out var handlerList))
+            if (_handlers.TryGetEvents(type, out var handlerList))
             {
                 foreach (var handler in handlerList)
                 {
@@ -38,7 +32,5 @@ namespace Attention.Main.EventModule
                 }
             }
         }
-
-        protected virtual void OnBeforeHandleEvent(T eventData) { }
     }
 }

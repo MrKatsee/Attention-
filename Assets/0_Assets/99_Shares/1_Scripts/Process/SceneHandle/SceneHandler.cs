@@ -1,6 +1,6 @@
 namespace Attention.Main.EventModule
 {
-    public class SceneHandler : IEventHandler
+    public class SceneHandler : ILogicEventHandler
     {
         // TODO: EventType에 따른 함수 캐싱
         // TODO: IEventData를 해당 파라미터에 해당하는 EventData로 캐스팅해서 넣어주기

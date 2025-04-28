@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Attention.Main.EventModule
 {
-    public class TestHandler : IEventHandler
+    public class TestHandler : ILogicEventHandler
     {
-        private void Test(SelectClickEvent data)
+        public void Test(SelectClickEvent data)
         {
             Debug.Log(data.ScreenPosition);
         }

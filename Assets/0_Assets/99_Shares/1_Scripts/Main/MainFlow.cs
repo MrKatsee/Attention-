@@ -8,6 +8,8 @@ namespace Attention.Main
 {
     public class MainFlow : MonoBehaviour
     {
+        private SceneLoader _sceneLaoder;
+
         private EventBus _eventBus;
 
         private InputDispatcher _inputDispatcher;
@@ -23,6 +25,8 @@ namespace Attention.Main
         private void Awake()
         {
             DI.Init();
+
+            _sceneLaoder = new SceneLoader();
 
             _eventBus = new EventBus();
 
@@ -41,10 +45,14 @@ namespace Attention.Main
         {
             _logicHandlers.Init();
             _viewPresenters.Init();
+
+            _eventBus.EnqueueLogicEvent(new ChangeSceneEvent(SceneType.Entry, SceneType.Scene));
         }
 
         private void Update()
         {
+            if (_sceneLaoder.IsLoading) { return; }
+
             _inputDispatcher.Update();
             _logicEventRouter.Update();
             _viewEventRouter.Update();

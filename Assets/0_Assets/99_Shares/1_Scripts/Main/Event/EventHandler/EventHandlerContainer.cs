@@ -34,7 +34,10 @@ namespace Attention.Main.EventModule
                 var handler = Activator.CreateInstance(handlerType);
                 _eventHandlers.Add(handlerType, (IEventHandler<T>)handler);
             }
+
+            OnInitializeHandlers(_eventHandlers.Values);
         }
+        protected virtual void OnInitializeHandlers(IEnumerable<IEventHandler<T>> eventHandlers) { }
 
         private void RegisterEvents()
         {

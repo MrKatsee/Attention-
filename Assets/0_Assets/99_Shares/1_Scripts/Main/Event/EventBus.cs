@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 namespace Attention
 {
     public interface IEventQueue
     {
-        void EnqueueEvent<T>(T eventData) where T : IEvent;
+        void EnqueueLogicEvent(ILogicEvent eventData);
+        void EnqueueViewEvent(IViewEvent eventData);
     }
 
     public interface IEventDispatcher<T> where T : IEvent
@@ -20,6 +22,7 @@ namespace Attention.Main.EventModule
     /// 이벤트를 받아서, 분배하는 역할을 하는 클래스.
     /// 처리의 체인과 순서 보장(+ 과도한 Call Stack 방지)의 의도를 동시에 충족시키기 위해 2-Stage Queue를 사용한다.
     /// </summary>
+    [DIPublisher]
     public class EventBus : IEventQueue, IEventDispatcher<ILogicEvent>, IEventDispatcher<IViewEvent>
     {
         private EventQueue<ILogicEvent> _logicEventQueue;
@@ -29,22 +32,17 @@ namespace Attention.Main.EventModule
         {
             _logicEventQueue = new EventQueue<ILogicEvent>();
             _viewEventQueue = new EventQueue<IViewEvent>();
+
+            DI.Register(this);
         }
 
-        public void EnqueueEvent<T>(T eventData) where T : IEvent
+        public void EnqueueLogicEvent(ILogicEvent eventData)
         {
-            if (eventData is ILogicEvent logicEvent)
-            {
-                _logicEventQueue.Enqueue(logicEvent);
-            }
-            else if (eventData is IViewEvent viewEvent)
-            {
-                _viewEventQueue.Enqueue(viewEvent);
-            }
-            else
-            {
-                Debug.LogError("해당하는 이벤트의 형식을 찾을 수 없음: " + eventData.GetType());
-            }
+            _logicEventQueue.Enqueue(eventData);
+        }
+        public void EnqueueViewEvent(IViewEvent eventData)
+        {
+            _viewEventQueue.Enqueue(eventData);
         }
 
         public bool TryDispatch(out ILogicEvent eventData)

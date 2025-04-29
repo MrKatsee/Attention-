@@ -1,5 +1,6 @@
 using Attention.Main.EventModule;
 using Attention.Main.InputModule;
+using Attention.View;
 using UnityEngine;
 using Util;
 
@@ -12,7 +13,9 @@ namespace Attention.Main
         private InputDispatcher _inputDispatcher;
 
         private LogicHandlerContainer _logicHandlers;
+
         private ViewPresenterContainer _viewPresenters;
+        private ViewContainer _viewContainer;
 
         private LogicEventRouter _logicEventRouter;
         private ViewEventRouter _viewEventRouter;
@@ -26,7 +29,9 @@ namespace Attention.Main
             _inputDispatcher = new InputDispatcher(_eventBus);
 
             _logicHandlers = new LogicHandlerContainer();
+
             _viewPresenters = new ViewPresenterContainer();
+            _viewContainer = new ViewContainer(_viewPresenters);
 
             _logicEventRouter = new LogicEventRouter(_eventBus, _logicHandlers);
             _viewEventRouter = new ViewEventRouter(_eventBus, _viewPresenters);

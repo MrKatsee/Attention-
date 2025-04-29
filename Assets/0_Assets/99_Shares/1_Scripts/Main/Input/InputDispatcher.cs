@@ -28,19 +28,19 @@ namespace Attention.Main.InputModule
 
         public void Update()
         {
-            foreach (IEvent inputEvent in GetMouseInput())
+            foreach (ILogicEvent inputEvent in GetMouseInput())
             {
-                _eventQueue.EnqueueEvent(inputEvent);
+                _eventQueue.EnqueueLogicEvent(inputEvent);
             }
         }
 
-        private IEnumerable<IEvent> GetMouseInput()
+        private IEnumerable<ILogicEvent> GetMouseInput()
         {
-            List<IEvent> inputEvents = new List<IEvent>();
+            List<ILogicEvent> inputEvents = new List<ILogicEvent>();
 
             foreach (var input in _mouseInputs.Values)
             {
-                if (input.TryGetInputEvents(out IEnumerable<IEvent> eventDatas))
+                if (input.TryGetInputEvents(out IEnumerable<ILogicEvent> eventDatas))
                 {
                     inputEvents.AddRange(eventDatas);
                 }

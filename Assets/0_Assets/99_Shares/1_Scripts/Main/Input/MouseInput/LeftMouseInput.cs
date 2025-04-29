@@ -6,9 +6,9 @@ namespace Attention.Main.InputModule
 {
     public class LeftMouseInput : IInput
     {
-        public bool TryGetInputEvents(out IEnumerable<IEvent> result)
+        public bool TryGetInputEvents(out IEnumerable<ILogicEvent> result)
         {
-            List<IEvent> eventDatas = new List<IEvent>();
+            List<ILogicEvent> eventDatas = new List<ILogicEvent>();
 
             if (Input.GetMouseButtonDown(0))
             {

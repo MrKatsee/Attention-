@@ -1,13 +1,12 @@
 using Util;
 
-namespace Attention.Main.EventModule
+namespace Attention.Process
 {
-    [DIPublisher]
     public class SceneHandler : ILogicEventHandler
     {
         public SceneHandler()
         {
-            DI.Register(this);
+
         }
 
         // TODO: EventType에 따른 함수 캐싱

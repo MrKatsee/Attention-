@@ -9,7 +9,7 @@ namespace Attention.Process
     public class TestHandler : ILogicEventHandler
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
-        [Inject(typeof(ViewContainer))] private IViewContainer _viewContainer;
+        [Inject(typeof(ViewContainer))] private IViewLoader _viewContainer;
 
         public TestHandler()
         {

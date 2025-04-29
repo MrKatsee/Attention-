@@ -4,14 +4,14 @@ using Util;
 
 namespace Attention.View
 {
-    public interface IViewContainer
+    public interface IViewLoader
     {
         public void ActivateView(ViewType type);
         public void DeactivateView(ViewType type);
     }
 
     [DIPublisher]
-    public class ViewContainer : IViewContainer
+    public class ViewContainer : IViewLoader
     {
         private IViewPresenterContainer _viewPresenters;
 

@@ -6,18 +6,11 @@ namespace Util
     public class CoroutineHelper : MonoBehaviour
     {
         private static CoroutineHelper _instance;
-        public static CoroutineHelper Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    var obj = new GameObject("CoroutineHelper");
-                    _instance = obj.AddComponent<CoroutineHelper>();
-                }
+        public static CoroutineHelper Instance => _instance;
 
-                return _instance;
-            }
+        private void Awake()
+        {
+            _instance = this;
         }
 
         public Coroutine StartRoutine(IEnumerator routine)

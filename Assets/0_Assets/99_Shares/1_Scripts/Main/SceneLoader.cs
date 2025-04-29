@@ -57,10 +57,6 @@ namespace Attention.Main
             _loadCount++;
 
             AsyncOperation asyncLoading = SceneManager.LoadSceneAsync(SceneTypeToName(type), LoadSceneMode.Additive);
-            if (asyncLoading == null)
-            {
-                throw new Exception($"There is no SceneNamed {SceneTypeToName(type)}");
-            }
 
             while (!asyncLoading.isDone)
             {
@@ -83,15 +79,9 @@ namespace Attention.Main
         {
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(SceneTypeToName(type));
 
-            Debug.Log(asyncUnload.isDone);
-
             while (!asyncUnload.isDone)
             {
-                Debug.Log(asyncUnload.isDone);
-
                 yield return null;
-
-                Debug.Log(asyncUnload.isDone);
             }
 
             _loadCount--;

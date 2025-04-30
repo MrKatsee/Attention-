@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
     public float elapsedTime = 0f;
     private bool isRunning = false;
+    [SerializeField] Text text;
 
     public void StartStopwatch()
     {
@@ -25,6 +27,7 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
+        text.text = elapsedTime.ToString();
         if (isRunning)
         {
             elapsedTime += Time.deltaTime;

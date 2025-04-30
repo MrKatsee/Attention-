@@ -19,6 +19,8 @@ public class WinApiTest : MonoBehaviour
 
     WindowData registeredWindow = new WindowData();
 
+    List<WindowData> registeredWindowList = new();
+
     private void Start()
     {
         WindowData data = WinApiController.Instance.GetWindowData(WinApiController.Instance.window);
@@ -48,6 +50,15 @@ public class WinApiTest : MonoBehaviour
 
     private void checkRegister()
     {
+        //foreach (var item in registeredWindowList)
+        //{
+        //    if (item.Equals(currentFocusedWindow))
+        //    {
+        //        _timer.StartStopwatch();
+        //        return;
+        //    }
+        //}
+
         if (registeredWindow.Equals(currentFocusedWindow))
         {
             _timer.StartStopwatch();

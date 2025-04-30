@@ -74,8 +74,39 @@ public class WinApiController : MonoBehaviour
     [DllImport("gdi32.dll")] private static extern bool DeleteObject(IntPtr hObject);
     [DllImport("gdi32.dll")] private static extern bool GetDIBits(IntPtr hdc, IntPtr hbmp, uint start, uint lines, byte[] buffer, ref BITMAPINFO bmi, uint usage);
 
+    [DllImport("user32.dll")] static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
+
     [DllImport("user32.dll")]
-    static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
+    private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+    [DllImport("psapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In][MarshalAs(UnmanagedType.U4)] int nSize);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, uint processId);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CloseHandle(IntPtr hObject);
+
+    private const uint PROCESS_QUERY_INFORMATION = 0x0400;
+    private const uint PROCESS_VM_READ = 0x0010;
+
+    public string GetWindowExecutablePath(IntPtr hWnd)
+    {
+        GetWindowThreadProcessId(hWnd, out uint processId);
+
+        IntPtr hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, processId);
+        if (hProcess == IntPtr.Zero)
+            return null;
+
+        StringBuilder buffer = new StringBuilder(1024);
+        GetModuleFileNameEx(hProcess, IntPtr.Zero, buffer, buffer.Capacity);
+
+        CloseHandle(hProcess);
+        return buffer.ToString();
+    }
+
 
 
     private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
@@ -165,12 +196,13 @@ public class WinApiController : MonoBehaviour
         string title = GetWindowTitle(hWnd);
         string className = GetClassNameString(hWnd);
         //Texture2D thumbnail = CaptureWindow(hWnd);
-
+        string exePath = GetWindowExecutablePath(hWnd);
         if (string.IsNullOrWhiteSpace(title))
             title = "Untitled";
-
-        return new WindowData(hWnd, $"{title} [{className}]");
+        //Debug.Log($"{title} [{className}], Path: {exePath}");
+        return new WindowData(hWnd, $"{title} [{className}]", null, exePath);
     }
+
 
     // === Ä¸Ã³ ÇÔ¼ö ===
 

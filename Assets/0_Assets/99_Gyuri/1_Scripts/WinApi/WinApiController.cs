@@ -76,14 +76,11 @@ public class WinApiController : MonoBehaviour
 
     [DllImport("user32.dll")] static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
 
-    [DllImport("user32.dll")]
-    private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+    [DllImport("user32.dll")] private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
-    [DllImport("psapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In][MarshalAs(UnmanagedType.U4)] int nSize);
+    [DllImport("psapi.dll", CharSet = CharSet.Auto, SetLastError = true)] private static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In][MarshalAs(UnmanagedType.U4)] int nSize);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, uint processId);
+    [DllImport("kernel32.dll", SetLastError = true)] private static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, uint processId);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -92,20 +89,6 @@ public class WinApiController : MonoBehaviour
     private const uint PROCESS_QUERY_INFORMATION = 0x0400;
     private const uint PROCESS_VM_READ = 0x0010;
 
-    public string GetWindowExecutablePath(IntPtr hWnd)
-    {
-        GetWindowThreadProcessId(hWnd, out uint processId);
-
-        IntPtr hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, processId);
-        if (hProcess == IntPtr.Zero)
-            return null;
-
-        StringBuilder buffer = new StringBuilder(1024);
-        GetModuleFileNameEx(hProcess, IntPtr.Zero, buffer, buffer.Capacity);
-
-        CloseHandle(hProcess);
-        return buffer.ToString();
-    }
 
 
 
@@ -134,6 +117,20 @@ public class WinApiController : MonoBehaviour
 
     // === 창 필터링 및 정보 수집 ===
     private bool IsToolWindow(IntPtr hWnd) => (GetWindowLong(hWnd, GWL_EXSTYLE) & WS_EX_TOOLWINDOW) != 0;
+    public string GetWindowExecutablePath(IntPtr hWnd)
+    {
+        GetWindowThreadProcessId(hWnd, out uint processId);
+
+        IntPtr hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, processId);
+        if (hProcess == IntPtr.Zero)
+            return null;
+
+        StringBuilder buffer = new StringBuilder(1024);
+        GetModuleFileNameEx(hProcess, IntPtr.Zero, buffer, buffer.Capacity);
+
+        CloseHandle(hProcess);
+        return buffer.ToString();
+    }
 
     private string GetClassNameString(IntPtr hWnd)
     {
@@ -168,6 +165,7 @@ public class WinApiController : MonoBehaviour
 
         // 툴윈도우 제외
         if (IsToolWindow(hWnd)) return false;
+        if (IsToolWindow(hWnd)) return false;
 
 
         return true;
@@ -199,7 +197,7 @@ public class WinApiController : MonoBehaviour
         string exePath = GetWindowExecutablePath(hWnd);
         if (string.IsNullOrWhiteSpace(title))
             title = "Untitled";
-        //Debug.Log($"{title} [{className}], Path: {exePath}");
+        Debug.Log($"{title} [{className}], Path: {exePath}");
         return new WindowData(hWnd, $"{title} [{className}]", null, exePath);
     }
 

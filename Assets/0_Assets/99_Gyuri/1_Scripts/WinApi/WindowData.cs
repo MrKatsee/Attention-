@@ -11,6 +11,8 @@ public class WindowData
     public Texture2D thumbnail;
     public string exePath;
 
+    private bool isStorable;
+
     public WindowData()
     {
         this.hWnd = IntPtr.Zero;

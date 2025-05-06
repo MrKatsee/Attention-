@@ -11,8 +11,6 @@ public class WindowData
     public Texture2D thumbnail;
     public string exePath;
 
-    private bool isStorable;
-
     public WindowData()
     {
         this.hWnd = IntPtr.Zero;
@@ -34,6 +32,11 @@ public class WindowData
             return this.hWnd == other.hWnd;
         }
         return false;
+    }
+
+    public bool isExePath(string exePath)
+    {
+        return this.exePath.Equals(exePath);
     }
 
 }

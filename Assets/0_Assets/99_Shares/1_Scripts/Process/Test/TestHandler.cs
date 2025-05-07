@@ -20,7 +20,7 @@ namespace Attention.Process
         public void Test(SelectClickEvent data)
         {
             Debug.Log(data.ScreenPosition);
-            Debug.Log(_testData.id);
+            Debug.Log(_testData.Id++);
             _viewContainer.ActivateView(ViewType.Test);
             _eventQueue.EnqueueViewEvent(new TestUIEvent(data.ScreenPosition));
         }

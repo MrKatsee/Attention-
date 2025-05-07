@@ -1,18 +1,20 @@
+using Attention;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
-public class TimeEvents : MonoBehaviour
+namespace Attention
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public class TimeEvent : ILogicEvent
     {
-        
+        public float DeltaTime;
+
+        public TimeEvent(float deltaTime) {
+            DeltaTime = deltaTime;
+        }
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

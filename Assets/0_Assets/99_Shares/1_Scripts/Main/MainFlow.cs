@@ -57,6 +57,7 @@ namespace Attention.Main
         {
             if (_sceneLaoder.IsLoading) { return; }
 
+            _eventBus.EnqueueLogicEvent(new TimeEvent(Time.deltaTime));
             _inputDispatcher.Update();
             _logicEventRouter.Update();
             _viewEventRouter.Update();

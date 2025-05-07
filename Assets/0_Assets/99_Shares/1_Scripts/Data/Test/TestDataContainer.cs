@@ -7,10 +7,10 @@ using Util;
 [DIPublisher]
 public class TestDataContainer : IDataContainer
 {
-    public int id;
+    public int Id;
     public TestDataContainer()
     {
-        id = 3;
+        Id = 0;
         DI.Register(this);
     }
 }

@@ -19,6 +19,7 @@ namespace Attention.Data
         List<IDataContainer> _datas;
         public DataContainer()
         {
+            _datas = new List<IDataContainer>();
             InitializeDataContainer();
         }
         private void InitializeDataContainer()

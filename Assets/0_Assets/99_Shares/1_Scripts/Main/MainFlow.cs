@@ -1,3 +1,4 @@
+using Attention.Data;
 using Attention.Main.EventModule;
 using Attention.Main.InputModule;
 using Attention.View;
@@ -22,6 +23,8 @@ namespace Attention.Main
         private LogicEventRouter _logicEventRouter;
         private ViewEventRouter _viewEventRouter;
 
+        private DataContainer _dataContaioner;
+
         private void Awake()
         {
             DI.Init();
@@ -39,6 +42,7 @@ namespace Attention.Main
 
             _logicEventRouter = new LogicEventRouter(_eventBus, _logicHandlers);
             _viewEventRouter = new ViewEventRouter(_eventBus, _viewPresenters);
+            _dataContaioner = new DataContainer();
         }
 
         private void Start()

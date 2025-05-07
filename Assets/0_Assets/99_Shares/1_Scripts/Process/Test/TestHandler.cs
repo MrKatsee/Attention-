@@ -10,6 +10,7 @@ namespace Attention.Process
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject(typeof(ViewContainer))] private IViewLoader _viewContainer;
+        [Inject] private TestDataContainer _dataContainer;
 
         public TestHandler()
         {
@@ -19,7 +20,7 @@ namespace Attention.Process
         public void Test(SelectClickEvent data)
         {
             Debug.Log(data.ScreenPosition);
-
+            Debug.Log(_dataContainer.id);
             _viewContainer.ActivateView(ViewType.Test);
             _eventQueue.EnqueueViewEvent(new TestUIEvent(data.ScreenPosition));
         }

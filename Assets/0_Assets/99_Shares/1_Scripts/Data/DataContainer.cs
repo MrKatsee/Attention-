@@ -16,20 +16,15 @@ namespace Attention.Data
 
     public class DataContainer
     {
+        List<IDataContainer> _datas;
         public DataContainer()
         {
             InitializeDataContainer();
         }
         private void InitializeDataContainer()
         {
-            var dataTypes = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(a => a.GetTypes())
-                    .Where(t => typeof(IDataContainer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
-
-            foreach (var dataType in dataTypes)
-            {
-                var dataContainer = Activator.CreateInstance(dataType);
-            }
+            _datas.Add(new TestDataContainer());
+            
         }
     }
 }

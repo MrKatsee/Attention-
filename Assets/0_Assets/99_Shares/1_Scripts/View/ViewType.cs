@@ -4,5 +4,7 @@ namespace Attention.View
     {
         None = 0,
         Test,
+        WinCapture_Button,
+
     }
 }

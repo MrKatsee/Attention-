@@ -59,7 +59,7 @@ public class WinApiTest : MonoBehaviour
         //    }
         //}
 
-        if (registeredWindow.Equals(currentFocusedWindow))
+        if (registeredWindow.IshWnd(currentFocusedWindow))
         {
             _timer.StartStopwatch();
         }
@@ -74,7 +74,7 @@ public class WinApiTest : MonoBehaviour
         WindowData temp = WinApiController.Instance.GetFocusedWindowData();
 
         if (temp != null &&
-    (currentFocusedWindow == null || !currentFocusedWindow.Equals(temp)))
+    (currentFocusedWindow == null || !currentFocusedWindow.IshWnd(temp)))
         {
             currentFocusedWindow = temp;
 

@@ -25,13 +25,9 @@ public class WindowData
     }
 
 
-    public override bool Equals(object obj)
+    public bool IshWnd(WindowData data)
     {
-        if (obj is WindowData other)
-        {
-            return this.hWnd == other.hWnd;
-        }
-        return false;
+        return this.hWnd == data.hWnd;
     }
 
     public bool isExePath(string exePath)

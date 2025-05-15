@@ -17,5 +17,4 @@ namespace Attention.Data
             DI.Register(this);
         }
     }
-
 }

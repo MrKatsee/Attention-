@@ -11,8 +11,8 @@ namespace Attention.Data
 {
     public interface IDataContainer
     {
+        
     }
-
 
     public class DataContainer
     {

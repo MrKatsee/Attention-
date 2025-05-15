@@ -21,6 +21,7 @@ namespace Attention.View
         {
             SetOnClick();
         }
+
         public void SetOnClick()
         {
             View.SetButtonListener(

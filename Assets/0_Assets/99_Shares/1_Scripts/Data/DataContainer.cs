@@ -26,7 +26,7 @@ namespace Attention.Data
         private void InitializeDataContainer()
         {
             _datas = new List<IDataContainer>();
-            //_datas.Add(new TestDataContainer());
+            _datas.Add(new TimeDataContainer());
         }
 
         public void createContainer(Type type)

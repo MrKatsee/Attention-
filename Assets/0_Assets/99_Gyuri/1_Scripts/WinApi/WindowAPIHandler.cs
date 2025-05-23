@@ -85,7 +85,7 @@ namespace Attention.Window
                 if (IsRealAppWindow(hWnd))
                 {
                     WindowAPIData data = GetWindowData(hWnd);
-                    data.setThumbnail(CaptureWindow(hWnd));
+                    data.Thumbnail=CaptureWindow(hWnd);
                     result.Add(data);
                 }
 

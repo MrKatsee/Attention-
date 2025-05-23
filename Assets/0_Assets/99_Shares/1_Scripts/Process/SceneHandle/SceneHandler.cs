@@ -1,7 +1,9 @@
 using Attention.Main;
+using Attention.Main.EventModule;
 using Attention.View;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using Util;
 
 namespace Attention.Process
@@ -9,6 +11,7 @@ namespace Attention.Process
     [DISubscriber]
     public class SceneHandler : ILogicEventHandler
     {
+        [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject(typeof(SceneLoader))] private ISceneLoader _sceneLoader;
         [Inject] private ViewContainer _viewContainer;
 
@@ -27,6 +30,8 @@ namespace Attention.Process
             yield return _sceneLoader.MoveScene(from, to);
 
             _viewContainer.InitFactory();
+
+            _eventQueue.EnqueueLogicEvent(new CompleteLoadSceneEvent(to));
         }
     }
 }

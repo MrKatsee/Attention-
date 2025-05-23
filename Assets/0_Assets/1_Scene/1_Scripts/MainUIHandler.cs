@@ -20,8 +20,7 @@ namespace Attention
 
         public void OpenStore(OpenStoreEvent data)
         {
-            _viewContainer.ActivateView(ViewType.Store);
-            _eventQueue.EnqueueViewEvent(new OpenStoreViewEvent());
+            _viewContainer.ActivateView(ViewType.Shop);
         }
 
         public void CreateCat(CreateCatEvent _event)

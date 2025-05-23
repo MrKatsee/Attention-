@@ -10,7 +10,8 @@ namespace Attention.View
     {
         public override ViewType Type => ViewType.Cat;
 
-        [SerializeField] private Image _image;
+        [SerializeField] private SpriteRenderer _renderer;
+
         [SerializeField] private Text _text;
 
         public void SetData(string str)

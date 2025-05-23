@@ -6,7 +6,7 @@ namespace Attention.View
         Test,
         WinCapture_Button,
         Cat = 97,
-        Store = 98,
+        Shop = 98,
         CreateCat = 99,
     }
 }

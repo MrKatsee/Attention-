@@ -782,10 +782,10 @@ GameObject:
   - component: {fileID: 5132278956037580499}
   - component: {fileID: 7494530205755522359}
   - component: {fileID: 5802495057392261475}
-  - component: {fileID: 974271547819861433}
   - component: {fileID: 6814169603519999542}
+  - component: {fileID: 6167223485523487260}
   m_Layer: 5
-  m_Name: UI_CreateCat
+  m_Name: CreateCatPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -842,20 +842,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &974271547819861433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8125840433852263512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fac7f3dcbd6f7ae43a0ec4e0dd916efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _btn: {fileID: 6327157844560258495}
-  _inputCatData: {fileID: 7458280241719455047}
 --- !u!114 &6814169603519999542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,3 +859,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6167223485523487260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125840433852263512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd66f84cfb17c1b48b77079eb4ff55cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _btn: {fileID: 6327157844560258495}
+  _inputCatData: {fileID: 7458280241719455047}

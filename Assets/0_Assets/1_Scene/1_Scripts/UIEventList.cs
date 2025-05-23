@@ -47,12 +47,4 @@ namespace Attention
     }
 
     public class OpenStoreEvent : ILogicEvent { }
-
-    public class OpenStoreViewEvent : IViewEvent { }
-
-    public class CloseStoreEvent : IViewEvent { }
-
-    public class OpenSettingEvent : IViewEvent { }
-
-    public class CloseSettingEvent : IViewEvent { }
 }

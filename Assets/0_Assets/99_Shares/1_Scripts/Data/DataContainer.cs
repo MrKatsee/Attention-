@@ -24,7 +24,8 @@ namespace Attention.Data
         }
         private void InitializeDataContainer()
         {
-            _datas.Add(new TestDataContainer());
+            _datas.Add(new TimeDataContainer());
+            //_datas.Add(new TestDataContainer());
             
         }
     }

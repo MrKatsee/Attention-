@@ -27,5 +27,4 @@ namespace Attention
             _eventQueue.EnqueueViewEvent(new CloseStoreEvent());
         }
     }
-
 }

@@ -31,6 +31,7 @@ namespace Attention.Process
                 return;
             }
             _timeData.ProcessTime += data.DeltaTime;
+            _eventQueue.EnqueueViewEvent(new TimeViewEvent(data.DeltaTime));
             CheckWinFocus();
             Debug.Log(_timeData.ProcessTime);
         }

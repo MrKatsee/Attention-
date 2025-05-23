@@ -30,7 +30,5 @@ namespace Attention.View
                     //_eventQueue.EnqueueViewEvent(new TestUIEvent(UnityEngine.Vector3.zero));
                 });
         }
-
-        
     }
 }

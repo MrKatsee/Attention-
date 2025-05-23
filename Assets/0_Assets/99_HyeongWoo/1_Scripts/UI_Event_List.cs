@@ -39,7 +39,19 @@ namespace Attention {
         }
     }
 
+    public class TimeViewEvent : IViewEvent
+    {
+        public float DeltaTime;
+
+        public TimeViewEvent(float deltaTime)
+        {
+            DeltaTime = deltaTime;
+        }
+    }
+
     public class OpenStoreEvent : ILogicEvent { }
+
+    public class OpenStoreViewEvent : IViewEvent { }
 
     public class CloseStoreEvent : IViewEvent { }
 

@@ -1,4 +1,5 @@
 using Attention.Main.EventModule;
+using Attention.View;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,26 @@ using Util;
 namespace Attention
 {
     [DISubscriber]
-    public class CatSelectButton : ButtonPresenter<UI_Cat_Button>
+    public class UI_Cat_Button : UI_Button
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
+        public override ViewType Type => ViewType.Create_Cat_Panel;
 
-        public CatSelectButton()
+        [SerializeField] private InputField _catData;
+
+        public UI_Cat_Button()
         {
             DI.Register(this);
         }
 
-        public override void OnClick()
+        public string getCatData()
         {
-            _eventQueue.EnqueueLogicEvent(new CreateCatEvent(View.getCatData()));
+            return _catData.text;
+        }
+
+        public void OnClick()
+        {
+            _eventQueue.EnqueueLogicEvent(new CreateCatEvent(getCatData()));
             _eventQueue.EnqueueViewEvent(new CloseCreateCatUIEvent());
         }
     }

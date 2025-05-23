@@ -14,6 +14,7 @@ namespace Attention.Data
         public TimeDataContainer()
         {
             ProcessTime = 0;
+            Debug.Log("wowow" + ProcessTime);
             DI.Register(this);
         }
     }

@@ -20,6 +20,8 @@ namespace Attention.Main
         private ViewPresenterContainer _viewPresenters;
         private ViewContainer _viewContainer;
 
+        private ObjectLoader _objectLoader;
+
         private LogicEventRouter _logicEventRouter;
         private ViewEventRouter _viewEventRouter;
 
@@ -39,6 +41,8 @@ namespace Attention.Main
 
             _viewPresenters = new ViewPresenterContainer();
             _viewContainer = new ViewContainer(_viewPresenters);
+
+            _objectLoader = new ObjectLoader(_viewContainer);
 
             _logicEventRouter = new LogicEventRouter(_eventBus, _logicHandlers);
             _viewEventRouter = new ViewEventRouter(_eventBus, _viewPresenters);
@@ -60,7 +64,7 @@ namespace Attention.Main
             _eventBus.EnqueueLogicEvent(new DeltaTimeEvent(Time.deltaTime));
             _inputDispatcher.Update();
             _logicEventRouter.Update();
-            _viewContainer.Update();
+            _objectLoader.Update();
             _viewEventRouter.Update();
         }
     }

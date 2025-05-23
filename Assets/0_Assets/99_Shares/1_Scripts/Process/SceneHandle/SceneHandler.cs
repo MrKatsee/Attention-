@@ -10,12 +10,10 @@ namespace Attention.Process
     [DISubscriber]
     public class SceneHandler : ILogicEventHandler
     {
-        [Inject(typeof(EventBus))] 
-        private IEventQueue _eventQueue;
-        
-        [Inject(typeof(SceneLoader))] 
-        private ISceneLoader _sceneLoader;
-        
+        [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
+        [Inject(typeof(SceneLoader))] private ISceneLoader _sceneLoader;
+        [Inject(typeof(ViewLoader))] private IViewLoader _viewLoader;
+
         [Inject] private ViewContainer _viewContainer;
 
         public SceneHandler()
@@ -55,7 +53,7 @@ namespace Attention.Process
 
         private void OnNewGame()
         {
-            _viewContainer.ActivateView(ViewType.CreateCat);
+            _viewLoader.ActivateView(ViewType.CreateCat);
         }
 
         private void OnLoadGame()

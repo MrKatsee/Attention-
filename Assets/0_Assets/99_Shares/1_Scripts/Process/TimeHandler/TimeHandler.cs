@@ -8,6 +8,7 @@ using Util;
 
 namespace Attention.Process
 {
+    [DISubscriber]
     public class TimeHandler : ILogicEventHandler
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
@@ -24,10 +25,15 @@ namespace Attention.Process
 
         public void CheckProcessTime(TimeEvent data)
         {
+            if (_timeData == null)
+            {
+                //Debug.Log("Why is DI not correctly?");
+                return;
+            }
             _timeData.ProcessTime += data.DeltaTime;
+            _eventQueue.EnqueueViewEvent(new TimeViewEvent(data.DeltaTime));
             CheckWinFocus();
-
-
+            Debug.Log(_timeData.ProcessTime);
         }
 
         private void CheckWinFocus()

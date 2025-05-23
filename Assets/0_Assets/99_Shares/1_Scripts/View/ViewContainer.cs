@@ -21,6 +21,9 @@ namespace Attention.View
         private List<ViewType> _activeViews;
         private List<ViewType> _inactiveViews;
 
+        private Queue<ViewType> _activateQueue;
+        private Queue<ViewType> _deactivateQueue;
+
         public ViewContainer(IViewPresenterContainer viewPresenters)
         {
             _viewPresenters = viewPresenters;
@@ -28,6 +31,9 @@ namespace Attention.View
             _view = new Dictionary<ViewType, IView>();
             _activeViews = new List<ViewType>();
             _inactiveViews = new List<ViewType>();
+
+            _activateQueue = new Queue<ViewType>();
+            _deactivateQueue = new Queue<ViewType>();
 
             DI.Register(this);
         }
@@ -41,39 +47,66 @@ namespace Attention.View
         public void ActivateView(ViewType type)
         {
             if (_activeViews.Contains(type)) { return; }
+            if (_activateQueue.Contains(type)) { return; }
 
-            if (_view.TryGetValue(type, out IView view))
-            {
-                _activeViews.Add(type);
-                _inactiveViews.Remove(type);
-
-                IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
-                presenter.OnActivateView();
-            }
-            else
-            {
-                view = _viewFactory.CreateView(type);
-
-                _view.Add(type, view);
-                _activeViews.Add(type);
-
-                IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
-                presenter.InitializeView(view);
-                presenter.OnActivateView();
-            }
+            _activateQueue.Enqueue(type);
         }
 
         public void DeactivateView(ViewType type)
         {
             if (!_activeViews.Contains(type)) { return; }
+            if (_deactivateQueue.Contains(type)) { return; }
 
-            if (_view.TryGetValue(type, out IView view))
+            _deactivateQueue.Enqueue(type);
+        }
+
+        public void Update()
+        {
+            while (_activateQueue.Count > 0)
             {
-                _activeViews.Remove(type);
-                _inactiveViews.Add(type);
+                ViewType type = _activateQueue.Dequeue();
+                if (_view.TryGetValue(type, out IView view))
+                {
+                    if (view is UI_Base ui)
+                    {
+                        ui.gameObject.SetActive(true);
+                    }
 
-                IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
-                presenter.OnDeactivateView();
+                    _activeViews.Add(type);
+                    _inactiveViews.Remove(type);
+
+                    IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
+                    presenter.OnActivateView();
+                }
+                else
+                {
+                    view = _viewFactory.CreateView(type);
+
+                    _view.Add(type, view);
+                    _activeViews.Add(type);
+
+                    IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
+                    presenter.InitializeView(view);
+                    presenter.OnActivateView();
+                }
+            }
+
+            while (_deactivateQueue.Count > 0)
+            {
+                ViewType type = _deactivateQueue.Dequeue();
+                if (_view.TryGetValue(type, out IView view))
+                {
+                    if (view is UI_Base ui)
+                    {
+                        ui.gameObject.SetActive(false);
+                    }
+
+                    _activeViews.Remove(type);
+                    _inactiveViews.Add(type);
+
+                    IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
+                    presenter.OnDeactivateView();
+                }
             }
         }
     }

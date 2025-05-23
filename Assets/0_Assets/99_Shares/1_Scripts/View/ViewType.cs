@@ -7,6 +7,6 @@ namespace Attention.View
         WinCapture_Button,
         Cat = 97,
         Store = 98,
-        Create_Cat_Panel = 99,
+        CreateCat = 99,
     }
 }

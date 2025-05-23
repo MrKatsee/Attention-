@@ -1,9 +1,8 @@
 using Attention.Main;
 using Attention.Main.EventModule;
 using Attention.View;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 using Util;
 
 namespace Attention.Process
@@ -11,8 +10,12 @@ namespace Attention.Process
     [DISubscriber]
     public class SceneHandler : ILogicEventHandler
     {
-        [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
-        [Inject(typeof(SceneLoader))] private ISceneLoader _sceneLoader;
+        [Inject(typeof(EventBus))] 
+        private IEventQueue _eventQueue;
+        
+        [Inject(typeof(SceneLoader))] 
+        private ISceneLoader _sceneLoader;
+        
         [Inject] private ViewContainer _viewContainer;
 
         public SceneHandler()
@@ -29,9 +32,40 @@ namespace Attention.Process
         {
             yield return _sceneLoader.MoveScene(from, to);
 
-            _viewContainer.InitFactory();
+            _viewContainer.InitFactory();   // 순서 주의
+
+            if (from == SceneType.Scene)
+            {
+                OnExitScene();
+            }
+
+            if (to == SceneType.Scene)
+            {
+                OnEnterScene();
+            }
 
             _eventQueue.EnqueueLogicEvent(new CompleteLoadSceneEvent(to));
+        }
+
+        private void OnEnterScene()
+        {
+            OnNewGame();
+            //OnLoadGame(); <- 분기
+        }
+
+        private void OnNewGame()
+        {
+            _viewContainer.ActivateView(ViewType.CreateCat);
+        }
+
+        private void OnLoadGame()
+        {
+
+        }
+
+        private void OnExitScene()
+        {
+
         }
     }
 }

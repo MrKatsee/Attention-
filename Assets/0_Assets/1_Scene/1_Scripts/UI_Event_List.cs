@@ -4,38 +4,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Attention {
-    public class OpenCreateCatUIEvent : ILogicEvent { }
-
-    public class CloseCreateCatUIEvent : IViewEvent { }
-
+namespace Attention
+{
     public class CreateCatEvent : ILogicEvent
     {
-        public string _catData;
+        public string CatData;
 
         public CreateCatEvent(string catData)
         {
-            _catData = catData;
+            CatData = catData;
         }
     }
 
     public class CompleteLoadSceneEvent : ILogicEvent
     {
-        public SceneType _sceneType;
+        public SceneType SceneType;
 
         public CompleteLoadSceneEvent(SceneType sceneType)
         {
-            _sceneType = sceneType;
+            SceneType = sceneType;
         }
     }
 
     public class MatchCatImageEvent : IViewEvent
     {
-        public string _catData;
+        public string CatData;
 
         public MatchCatImageEvent(string catData)
         {
-            _catData = catData;
+            CatData = catData;
         }
     }
 

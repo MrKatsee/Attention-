@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,15 +6,20 @@ using Util;
 namespace Attention.Data
 {
     [DIPublisher]
-    public class TimeDataContainer : IDataContainer
+    public class TimeDataContainer
     {
-        public float ProcessTime;
+        private float _processTime;
 
         public TimeDataContainer()
         {
-            ProcessTime = 0;
-            Debug.Log("wowow" + ProcessTime);
+            _processTime = 0;
+
             DI.Register(this);
+        }
+
+        public void UpdateTime(float deltaTime)
+        {
+            _processTime += deltaTime;
         }
     }
 }

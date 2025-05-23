@@ -7,11 +7,11 @@ using Util;
 namespace Attention
 {
 
-    public class TimeEvent : ILogicEvent
+    public class DeltaTimeEvent : ILogicEvent
     {
         public float DeltaTime;
 
-        public TimeEvent(float deltaTime) {
+        public DeltaTimeEvent(float deltaTime) {
             DeltaTime = deltaTime;
         }
 

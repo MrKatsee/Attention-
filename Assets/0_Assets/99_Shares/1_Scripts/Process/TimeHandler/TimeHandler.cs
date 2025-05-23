@@ -1,8 +1,5 @@
 using Attention.Data;
 using Attention.Main.EventModule;
-using Attention.View;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Util;
 
@@ -14,38 +11,26 @@ namespace Attention.Process
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject] private TimeDataContainer _timeData;
 
-        private const float WIN_FOCUS_TIME = 2.0f;
-        //FocusedWindow
-        private float _lastWinFocusTime;
         public TimeHandler()
         {
-            _lastWinFocusTime = 0f;
             DI.Register(this);
         }
 
-        public void CheckProcessTime(TimeEvent data)
+        public void CheckProcessTime(DeltaTimeEvent data)
         {
-            if (_timeData == null)
-            {
-                //Debug.Log("Why is DI not correctly?");
-                return;
-            }
-            _timeData.ProcessTime += data.DeltaTime;
+            _timeData.UpdateTime(data.DeltaTime);
+
             _eventQueue.EnqueueViewEvent(new TimeViewEvent(data.DeltaTime));
-            CheckWinFocus();
-            Debug.Log(_timeData.ProcessTime);
         }
 
-        private void CheckWinFocus()
-        {
-            if (_timeData.ProcessTime - _lastWinFocusTime > WIN_FOCUS_TIME)
-            {
-                _lastWinFocusTime = _timeData.ProcessTime;
-                //���⿡ üũ �̺�Ʈ ť �߰�
+        //private void CheckWinFocus()
+        //{
+        //    if (_timeData._processTime - _lastWinFocusTime > WIN_FOCUS_TIME)
+        //    {
+        //        _lastWinFocusTime = _timeData._processTime;
 
-            }
-        }
-
+        //        //여기에 체크 이벤트 큐 추가
+        //    }
+        //}
     }
 }
-

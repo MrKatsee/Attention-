@@ -6,38 +6,38 @@ using Util;
 namespace Attention.Data
 {
     [DIPublisher]
-    public class CatDataContainer : IDataContainer
+    public class CatDataContainer
     {
-        Dictionary<int, CatData> catDatas;
+        private Dictionary<int, CatData> _catDatas;
 
         public CatDataContainer()
         {
-            catDatas = new Dictionary<int, CatData>();
+            _catDatas = new Dictionary<int, CatData>();
         }
 
         public int CreateCat()
         {
-            return registCat(new CatData());
+            return RegistCat(new CatData());
         }
 
-        public int registCat(CatData data)
+        public int RegistCat(CatData data)
         {
             if (data == null)
             {
                 return -1;
             }
 
-            int id = catDatas.Count;
-            catDatas.Add(id, data);
+            int id = _catDatas.Count;
+            _catDatas.Add(id, data);
             return id;
         }
 
-        public void loadData()
+        public void LoadData()
         {
 
         }
 
-        public void saveData()
+        public void SaveData()
         {
 
         }

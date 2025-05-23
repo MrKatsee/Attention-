@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CatObject : MonoBehaviour
 {
-    public void time_update(TimeEvent timeEvent)
+    public void TimeUpdate(DeltaTimeEvent timeEvent)
     {
         this.transform.position += new Vector3(1,0,0) * timeEvent.DeltaTime;
     }

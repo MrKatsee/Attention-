@@ -57,9 +57,10 @@ namespace Attention.Main
         {
             if (_sceneLaoder.IsLoading) { return; }
 
-            _eventBus.EnqueueLogicEvent(new TimeEvent(Time.deltaTime));
+            _eventBus.EnqueueLogicEvent(new DeltaTimeEvent(Time.deltaTime));
             _inputDispatcher.Update();
             _logicEventRouter.Update();
+            _viewContainer.Update();
             _viewEventRouter.Update();
         }
     }

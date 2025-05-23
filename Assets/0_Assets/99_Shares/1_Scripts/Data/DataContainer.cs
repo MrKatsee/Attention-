@@ -1,10 +1,5 @@
-using Attention.Main.EventModule;
-using Attention.View;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using Util;
 
 
@@ -26,7 +21,6 @@ namespace Attention.Data
         private void InitializeDataContainer()
         {
             _datas = new List<IDataContainer>();
-            _datas.Add(new TimeDataContainer());
         }
 
         public void createContainer(Type type)
@@ -39,4 +33,3 @@ namespace Attention.Data
         }
     }
 }
-

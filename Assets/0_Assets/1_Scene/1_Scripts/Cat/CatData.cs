@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Attention
 {
     public class CatData
     {
+        public GUID guid;
+
         public string name;
         public int days;
 
         public Catstate curState;
+    }
+
+    public class CatLogData
+    {
+        public GUID guid;
 
         public List<Catstate> stateLogs;
     }

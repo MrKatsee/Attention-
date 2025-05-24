@@ -1,4 +1,3 @@
-using Attention.Main.EventModule;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +19,8 @@ namespace Attention.Data
 
         public void CreateCatData(Guid id)
         {
-            _catDatas.Add(id, new CatEntityData());
+            CatEntityData data = new CatEntityData();
+            _catDatas.Add(id, data);
         }
 
         public void CreateCataData(Guid id, CatEntityData data)
@@ -28,18 +28,34 @@ namespace Attention.Data
             _catDatas[id] = data;
         }
 
-        public void UpdateAllCat(Action<CatEntityData> atction)
-        {
-            foreach (Guid id in _catDatas.Keys)
-            {
-                //UnityEngine.Debug.Log(id);
-                atction(_catDatas[id]);
-            }
-        }
+        //public void UpdateAllCat(Action<CatEntityData> atction)
+        //{
+        //    foreach (Guid id in _catDatas.Keys)
+        //    {
+        //        atction(_catDatas[id]);
+        //    }
+        //}
 
         public CatEntityData GetCatData(Guid id)
         {
             return _catDatas[id];
+        }
+
+        public void UpdateCatData(Guid id, CatEntityData data)
+        {
+            if (!_catDatas.ContainsKey(id)) { return; }
+
+            _catDatas[id] = data;
+        }
+
+        public List<(Guid, CatEntityData)> GetCatAllDatas()
+        {
+            List<(Guid, CatEntityData)> dataList = new List<(Guid, CatEntityData)>();
+            foreach(Guid id in _catDatas.Keys)
+            {
+                dataList.Add((id, _catDatas[id]));
+            }
+            return dataList;
         }
 
         public void ReamoveCatData(Guid id)

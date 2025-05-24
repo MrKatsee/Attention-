@@ -1,19 +1,18 @@
-using Attention.Main.EventModule;
-using Attention.View;
+using Attention.Data;
 using System;
 using UnityEngine;
-using Util;
 
-public abstract class Entity : MonoBehaviour
+namespace Attention.View
 {
-    public Guid id { get; private set; }
-
-    public abstract EntityType type {  get; }
-
-    public virtual void Init()
+    public abstract class Entity : MonoBehaviour
     {
-        this.id = Guid.NewGuid();
-    }
+        public abstract EntityType type { get; }
 
-    public abstract void UpdateEntity();
+        public virtual void Init() { }
+
+        public virtual void UpdateEntity(EntityData data)
+        {
+            this.transform.position = data.position;
+        }
+    }
 }

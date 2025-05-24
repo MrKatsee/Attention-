@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Util;
 
 namespace Attention.Data
@@ -22,7 +21,7 @@ namespace Attention.Data
             _entityDatas.Add(_id, data);
         }
 
-        public void SetEntityData(Guid _id, EntityData data)
+        public void UpdatetEntityData(Guid _id, EntityData data)
         {
             if (_entityDatas.ContainsKey(_id))
             {
@@ -47,14 +46,5 @@ namespace Attention.Data
                 _entityDatas.Remove(_id);
             }
         }
-    }
-
-    public class EntityData
-    {
-        public Vector3 position;
-        public bool direction;
-
-        public bool isActivate;
-        public bool isVisible;
     }
 }

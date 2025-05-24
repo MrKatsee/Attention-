@@ -5,65 +5,78 @@ using Util;
 
 namespace Attention.View
 {
+    interface IEntityContainer
+    {
+        public Entity GetEntity(Guid id);
+
+        public List<Guid> GetIDs();
+    }
+
     [DIPublisher]
-    public class EntityContainer
+    public class EntityContainer : IEntityContainer
     {
         private EntityPrefabContainer _entityPrefabContainer;
+
         private Dictionary<Guid, Entity> _objDict;
-        private Dictionary<EntityType, List<Entity>> _entityTypeDict;
+        private List<Entity> _entityPool;
 
         public EntityContainer()
         {
-
             DI.Register(this);
         }
         
         public void Init()
         {
             _objDict = new Dictionary<Guid, Entity>();
-            _entityTypeDict = new Dictionary<EntityType, List<Entity>>();
+            _entityPool = new List<Entity>();
             _entityPrefabContainer = GameObject.FindAnyObjectByType<EntityPrefabContainer>();
             _entityPrefabContainer.Init();
         }
 
-        public Guid CreateEntity(EntityType type)
+        public void CreateEntity(EntityType type)
         {
             Entity target = _entityPrefabContainer.GetEntity(type);
             if(target == null)
             {
-                return Guid.Empty;
+                return;
             }
 
             Entity entity = GameObject.Instantiate(target) as Entity;
             entity.Init();
-
-            _objDict.Add(entity.id, entity);
-            if (!_entityTypeDict.ContainsKey(entity.type))
-            {
-                _entityTypeDict[entity.type] = new List<Entity>();
-            }
-
-            _entityTypeDict[entity.type].Add(entity);
-            
-            return entity.id;
+            _entityPool.Add(entity);
         }
 
-        public void UpdateEntityByType(EntityType type)
-        {
-            if (!_entityTypeDict.ContainsKey(type)) { return; }
-
-            foreach (Entity entity in _entityTypeDict[type])
-            {
-                entity.UpdateEntity();
-            }
-        }
-
-        public void UpdateEntity(Guid id)
+        public Entity GetEntity(Guid id)
         {
             if (_objDict.ContainsKey(id))
             {
-                _objDict[id].UpdateEntity();
+                return _objDict[id];
             }
+            return null;
+        }
+
+        public void CreateAndBindEntity(Guid id, EntityType type) 
+        {
+            Entity target = _entityPrefabContainer.GetEntity(type);
+            if (target == null)
+            {
+                return;
+            }
+
+            Entity entity = GameObject.Instantiate(target) as Entity;
+            entity.Init();
+            _objDict[id] = entity;
+        }
+
+        public List<Guid> GetIDs()
+        {
+            List<Guid> ids = new List<Guid>();
+
+            foreach (Guid id in _objDict.Keys)
+            {
+                ids.Add(id);
+            }
+            return ids;
         }
 
         public void DeactivateEntity(Guid id)
@@ -80,7 +93,7 @@ namespace Attention.View
 
             EntityType type = _objDict[id].type;
 
-            _entityTypeDict[type].Remove(_objDict[id]);
+            _entityPool.Add(_objDict[id]);
             _objDict.Remove(id);
         }
     }

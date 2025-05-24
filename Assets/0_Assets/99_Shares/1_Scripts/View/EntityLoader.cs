@@ -7,9 +7,14 @@ namespace Attention.View
     public interface IEntityLoader
     {
         public void CreateEntity(EntityType type);
-        public void UpdateEntityByType(EntityType type);
-        public void UpdateEntity(Guid type);
+        public void CreateAndBindEntity(Guid id, EntityType type);
         public void DeactivateEntity(Guid type);
+    }
+
+    public struct BindingData
+    {
+        public Guid id;
+        public EntityType type;
     }
 
     [DIPublisher]
@@ -18,8 +23,7 @@ namespace Attention.View
         private EntityContainer _entityContainer;
 
         private Queue<EntityType> _createQueue;
-        private Queue<EntityType> _updateByTypeQueue;
-        private Queue<Guid> _updateQueue;
+        private Queue<BindingData> _createBindings;
         private Queue<Guid> _deactivateQueue;
 
         public EntityLoader(EntityContainer entityContainer)
@@ -27,8 +31,7 @@ namespace Attention.View
             _entityContainer = entityContainer;
 
             _createQueue = new Queue<EntityType>();
-            _updateByTypeQueue = new Queue<EntityType>();
-            _updateQueue = new Queue<Guid>();
+            _createBindings = new Queue<BindingData>();
             _deactivateQueue = new Queue<Guid>();
 
             DI.Register(this);
@@ -39,18 +42,9 @@ namespace Attention.View
             _createQueue.Enqueue(type);
         }
 
-        public void UpdateEntityByType(EntityType type)
+        public void CreateAndBindEntity(Guid id, EntityType type)
         {
-            if (_updateByTypeQueue.Contains(type)) { return; }
-
-            _updateByTypeQueue.Enqueue(type);
-        }
-
-        public void UpdateEntity(Guid id)
-        {
-            if (_updateQueue.Contains(id)) { return; }
-
-            _updateQueue.Enqueue(id);
+            _createBindings.Enqueue(new BindingData { id = id, type = type });
         }
 
         public void DeactivateEntity(Guid id)
@@ -67,14 +61,10 @@ namespace Attention.View
                 _entityContainer.CreateEntity(_createQueue.Dequeue());
             }
 
-            while(_updateByTypeQueue.Count > 0)
+            while(_createBindings.Count > 0)
             {
-                _entityContainer.UpdateEntityByType(_updateByTypeQueue.Dequeue());
-            }
-
-            while (_updateQueue.Count > 0)
-            {
-                _entityContainer.UpdateEntity(_updateQueue.Dequeue());
+                BindingData data = _createBindings.Dequeue();
+                _entityContainer.CreateAndBindEntity(data.id, data.type);
             }
 
             while (_deactivateQueue.Count > 0)

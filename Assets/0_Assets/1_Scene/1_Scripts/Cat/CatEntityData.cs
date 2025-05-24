@@ -4,7 +4,7 @@ namespace Attention.Data
     {
         public string name;
 
-        //public Anim anim;
+        public string animation;
 
         public float satiety;
         public float stress;

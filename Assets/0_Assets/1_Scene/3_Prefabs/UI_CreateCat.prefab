@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 5132278956037580499}
   - component: {fileID: 7494530205755522359}
   - component: {fileID: 5802495057392261475}
-  - component: {fileID: 974271547819861433}
+  - component: {fileID: 5964172288835409305}
   - component: {fileID: 6814169603519999542}
   m_Layer: 5
   m_Name: UI_CreateCat
@@ -842,7 +842,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &974271547819861433
+--- !u!114 &5964172288835409305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8125840433852263512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fac7f3dcbd6f7ae43a0ec4e0dd916efd, type: 3}
+  m_Script: {fileID: 11500000, guid: fd66f84cfb17c1b48b77079eb4ff55cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _btn: {fileID: 6327157844560258495}

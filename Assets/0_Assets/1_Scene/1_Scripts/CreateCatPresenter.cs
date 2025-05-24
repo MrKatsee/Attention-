@@ -8,7 +8,7 @@ namespace Attention
     public class CreateCatPresenter : ViewPresenter<UI_CreateCat>
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
-        [Inject(typeof(ViewContainer))] private IViewLoader _viewContainer;
+        [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
 
         public CreateCatPresenter()
         {

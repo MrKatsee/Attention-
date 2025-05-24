@@ -13,6 +13,15 @@ namespace Attention
     { 
 
     }
+
+    public class WindowSelectLogicEvent: ILogicEvent
+    {
+        private int _id;
+        public int id { get; }
+        public WindowSelectLogicEvent(int id) { 
+            _id = id;
+        }
+    }
 }
 
 namespace Attention.View
@@ -30,18 +39,22 @@ namespace Attention.View
         }
         public void SetSelectPanel(WindowSelectViewEvent _event)
         {
+            _viewContainer.ActivateView(ViewType.WindowSelect);
             List<Action> actions = new();
             List<WindowAPIData> windows = _windowDataContainer.Windows;
-            foreach(WindowAPIData window in windows) {
-                Action action = () =>
-                {
-                    //로직 이벤트 큐
-                };
-            }
+            View.Init(windows,(int i) =>
+            {
+                _eventQueue.EnqueueLogicEvent(new WindowSelectLogicEvent(i));
+            });
+           
 
         }
         public override void OnDeactivateView() {
-            View.OnDeactivate();
+            View.ResetThumbnails();
+        }
+        public override void OnActivateView()
+        {
+            View.ResetThumbnails();
         }
 
     }

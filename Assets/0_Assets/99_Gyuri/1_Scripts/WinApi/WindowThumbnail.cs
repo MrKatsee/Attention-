@@ -18,11 +18,25 @@ namespace Attention.View
         [SerializeField] private Text _title;
 
         private Action _onClick;
-        public void Init(WindowAPIData data, Action action)
+
+        public void SetThumbnail(Texture2D thumbnail)
         {
-            _thumbnail.texture = data.Thumbnail;
-            _title.text = data.Title;
-            _button.onClick.AddListener(()=> { action.Invoke(); });
+            _thumbnail.texture = thumbnail;
         }
+        public void SetTitle(string title)
+        {
+            _title.text = title;
+        }
+        public void SetListener(Action<int> action, int index)
+        {
+            _button.onClick.RemoveAllListeners();
+            _button.onClick.AddListener(() => { action.Invoke(index); });
+        }
+        //public void Init(WindowAPIData data, Action action)
+        //{
+        //    _thumbnail.texture = data.Thumbnail;
+        //    _title.text = data.Title;
+        //    _button.onClick.AddListener(()=> { action.Invoke(); });
+        //}
     }
 }

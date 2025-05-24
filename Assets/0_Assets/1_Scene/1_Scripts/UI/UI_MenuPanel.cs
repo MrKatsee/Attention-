@@ -17,6 +17,7 @@ namespace Attention.View
 
         public void Init(Action settingAction)
         {
+            Debug.Log("로드완료");
             _settingButton.onClick.AddListener(() => { settingAction(); });
             
         }

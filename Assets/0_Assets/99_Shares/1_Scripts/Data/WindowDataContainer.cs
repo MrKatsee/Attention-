@@ -7,15 +7,20 @@ namespace Attention.Data
     [DIPublisher]
     public class WindowDataContainer
     {
-        private List<WindowAPIData> _windows;
-        public List<WindowAPIData> Windows
-        {
-            get { return _windows; }
-            set { _windows = value; }
-        }
+        public WindowAPIData AttentionWindowData { get; private set; }
+        public List<WindowAPIData> Windows { get; private set; }
         public WindowDataContainer() {
-            _windows = new List<WindowAPIData>();
+            AttentionWindowData = new WindowAPIData();
+            Windows = new List<WindowAPIData>();
+            DI.Register(this);
         }
+
+        public void SetAttentionWindowData(WindowAPIData data)
+        {
+            AttentionWindowData = data;
+        }
+
+
     }
 }
 

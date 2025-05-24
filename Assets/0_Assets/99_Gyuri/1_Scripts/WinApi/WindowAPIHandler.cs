@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
+using Util;
 
 namespace Attention.Window
 {
+    [DIPublisher]
     public class WindowAPIHandler
     {
         [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
@@ -41,6 +43,7 @@ namespace Attention.Window
         private const uint WS_EX_TOOLWINDOW = 0x00000080;
         private const uint WS_CHILD = 0x40000000;
         private const uint LWA_COLORKEY = 0x00000001;
+        private const uint COLORKEY = 0xFF0000;
         private const uint PROCESS_QUERY_INFORMATION = 0x0400;
         private const uint PROCESS_VM_READ = 0x0010;
 
@@ -77,6 +80,31 @@ namespace Attention.Window
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] public uint[] bmiColors;
         }
 
+
+        [DllImport("user32.dll")] private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("user32.dll")] private static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
+        [DllImport("user32.dll")] private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr SendMessageTimeout(
+            IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam,
+            SendMessageTimeoutFlags fuFlags, uint uTimeout, out IntPtr lpdwResult);
+
+        [Flags]
+        private enum SendMessageTimeoutFlags : uint
+        {
+            SMTO_NORMAL = 0x0,
+            SMTO_BLOCK = 0x1,
+            SMTO_ABORTIFHUNG = 0x2,
+            SMTO_NOTIMEOUTIFNOTHUNG = 0x8
+        }
+
+        private const uint WM_SPAWN_WORKERW = 0x052C;
+
+        public WindowAPIHandler()
+        {
+            DI.Register(this);
+        }
+
         public List<WindowAPIData> GetWindowDataList()
         {
             List<WindowAPIData> result = new();
@@ -105,20 +133,57 @@ namespace Attention.Window
             return new WindowAPIData(hWnd, $"{title} - {className} ", null, exePath);
         }
     
-        public void MakeWindowTransparent(WindowAPIData window)
+        public void SetWindowTransparent(WindowAPIData window)
         {
             int exStyle = GetWindowLong(window.HWnd, GWL_EXSTYLE);
             SetWindowLong(window.HWnd, GWL_EXSTYLE, exStyle | (int)WS_EX_LAYERED);
-            SetLayeredWindowAttributes(window.HWnd, 0, 0, LWA_COLORKEY);
+            SetLayeredWindowAttributes(window.HWnd, COLORKEY, 0, LWA_COLORKEY);
         }
         public WindowAPIData GetFocusedWindowData()
         {
+
+            Debug.Log("getForeground");
             IntPtr hWnd = GetForegroundWindow();
 
             if (hWnd == IntPtr.Zero || !IsRealAppWindow(hWnd))
                 return null;
 
             return GetWindowData(hWnd);
+        }
+        private static IntPtr GetDesktopWorkerW()
+        {
+            // 1. "Progman" 창 찾기
+            IntPtr progman = FindWindow("Progman", null);
+
+            // 2. WorkerW 창을 생성 유도
+            SendMessageTimeout(progman, WM_SPAWN_WORKERW, IntPtr.Zero, IntPtr.Zero,
+                SendMessageTimeoutFlags.SMTO_NORMAL, 1000, out _);
+
+            // 3. EnumWindows로 WorkerW 탐색
+            IntPtr workerw = IntPtr.Zero;
+            EnumWindows((topHandle, lParam) =>
+            {
+                IntPtr shellView = FindWindowEx(topHandle, IntPtr.Zero, "SHELLDLL_DefView", null);
+                if (shellView != IntPtr.Zero)
+                {
+                    workerw = FindWindowEx(IntPtr.Zero, topHandle, "WorkerW", null);
+                }
+                return true;
+            }, IntPtr.Zero);
+
+            return workerw;
+        }
+        public void SetWindowToDesktopLayer(IntPtr hWnd)
+        {
+            IntPtr workerw = GetDesktopWorkerW();
+            if (workerw == IntPtr.Zero)
+            {
+                Debug.LogError("[WindowZOrderHelper] WorkerW 창을 찾지 못했습니다.");
+                return;
+            }
+
+            SetParent(hWnd, workerw);
+            Debug.Log("[WindowZOrderHelper] 창을 WorkerW 위에 고정했습니다.");
         }
         private bool IsToolWindow(IntPtr hWnd) => (GetWindowLong(hWnd, GWL_EXSTYLE) & WS_EX_TOOLWINDOW) != 0;
         private string GetWindowExecutablePath(IntPtr hWnd)
@@ -214,6 +279,17 @@ namespace Attention.Window
 
             return success ? tex : null;
         }
+
+
+        const int WS_EX_NOACTIVATE = 0x08000000;
+
+        public void PreventZOrderOnClick(IntPtr hWnd)
+        {
+            int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+            SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_NOACTIVATE);
+        }
+
+
     }
 }
 

@@ -1,14 +1,16 @@
 using Attention.Data;
 using Attention.Main.EventModule;
-using Attention.View;
 using Attention.Window;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Util;
 
 namespace Attention
 {
+    public class WindowCaptureLogicEvent : ILogicEvent
+    {
+
+    }
     public class WindowSelectViewEvent : IViewEvent
     { 
 

@@ -1,10 +1,5 @@
-using Attention.View;
-using Attention.Window;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Attention.View

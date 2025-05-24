@@ -37,6 +37,8 @@ namespace Attention.Window
         [DllImport("psapi.dll", CharSet = CharSet.Auto, SetLastError = true)] private static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In][MarshalAs(UnmanagedType.U4)] int nSize);
         [DllImport("kernel32.dll", SetLastError = true)] private static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, uint processId);
         [DllImport("kernel32.dll", SetLastError = true)][return: MarshalAs(UnmanagedType.Bool)] private static extern bool CloseHandle(IntPtr hObject);
+        [DllImport("user32.dll", SetLastError = true)] private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
 
         private const int GWL_EXSTYLE = -20;
         private const int GWL_STYLE = -16;
@@ -47,6 +49,11 @@ namespace Attention.Window
         private const uint COLORKEY = 0xFFFFFF;
         private const uint PROCESS_QUERY_INFORMATION = 0x0400;
         private const uint PROCESS_VM_READ = 0x0010;
+        private const uint SWP_NOMOVE = 0x0001;
+        private const uint SWP_NOSIZE = 0x0002;
+        private const uint SWP_NOACTIVATE = 0x0010;
+        private const uint SWP_SHOWWINDOW = 0x0040;
+
         private static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
 
         private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
@@ -82,36 +89,7 @@ namespace Attention.Window
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] public uint[] bmiColors;
         }
 
-
-        [DllImport("user32.dll")] private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-        [DllImport("user32.dll")] private static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
-        [DllImport("user32.dll")] private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr SendMessageTimeout(
-            IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam,
-            SendMessageTimeoutFlags fuFlags, uint uTimeout, out IntPtr lpdwResult);
-
-        [Flags]
-        private enum SendMessageTimeoutFlags : uint
-        {
-            SMTO_NORMAL = 0x0,
-            SMTO_BLOCK = 0x1,
-            SMTO_ABORTIFHUNG = 0x2,
-            SMTO_NOTIMEOUTIFNOTHUNG = 0x8
-        }
-
-        private const uint WM_SPAWN_WORKERW = 0x052C;
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SetWindowPos(
-    IntPtr hWnd,
-    IntPtr hWndInsertAfter,
-    int X,
-    int Y,
-    int cx,
-    int cy,
-    uint uFlags);
-
+        
         public WindowAPIHandler()
         {
             DI.Register(this);
@@ -150,17 +128,16 @@ namespace Attention.Window
             int exStyle = GetWindowLong(window.HWnd, GWL_EXSTYLE);
             SetWindowLong(window.HWnd, GWL_EXSTYLE, exStyle | (int)WS_EX_LAYERED);
             SetLayeredWindowAttributes(window.HWnd, COLORKEY, 0, LWA_COLORKEY);
+        }
+
+        public void SetWindowBottom(WindowAPIData window)
+        {
             SetWindowPos(window.HWnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
         }
 
-        const uint SWP_NOMOVE = 0x0001;
-        const uint SWP_NOSIZE = 0x0002;
-        const uint SWP_NOACTIVATE = 0x0010;
-        const uint SWP_SHOWWINDOW = 0x0040;
         public WindowAPIData GetFocusedWindowData()
         {
 
-            Debug.Log("getForeground");
             IntPtr hWnd = GetForegroundWindow();
 
             if (hWnd == IntPtr.Zero || !IsRealAppWindow(hWnd))
@@ -168,41 +145,7 @@ namespace Attention.Window
 
             return GetWindowData(hWnd);
         }
-        private static IntPtr GetDesktopWorkerW()
-        {
-            // 1. "Progman" 창 찾기
-            IntPtr progman = FindWindow("Progman", null);
-
-            // 2. WorkerW 창을 생성 유도
-            SendMessageTimeout(progman, WM_SPAWN_WORKERW, IntPtr.Zero, IntPtr.Zero,
-                SendMessageTimeoutFlags.SMTO_NORMAL, 1000, out _);
-
-            // 3. EnumWindows로 WorkerW 탐색
-            IntPtr workerw = IntPtr.Zero;
-            EnumWindows((topHandle, lParam) =>
-            {
-                IntPtr shellView = FindWindowEx(topHandle, IntPtr.Zero, "SHELLDLL_DefView", null);
-                if (shellView != IntPtr.Zero)
-                {
-                    workerw = FindWindowEx(IntPtr.Zero, topHandle, "WorkerW", null);
-                }
-                return true;
-            }, IntPtr.Zero);
-
-            return workerw;
-        }
-        public void SetWindowToDesktopLayer(IntPtr hWnd)
-        {
-            IntPtr workerw = GetDesktopWorkerW();
-            if (workerw == IntPtr.Zero)
-            {
-                Debug.LogError("[WindowZOrderHelper] WorkerW 창을 찾지 못했습니다.");
-                return;
-            }
-
-            SetParent(hWnd, workerw);
-            Debug.Log("[WindowZOrderHelper] 창을 WorkerW 위에 고정했습니다.");
-        }
+        
         private bool IsToolWindow(IntPtr hWnd) => (GetWindowLong(hWnd, GWL_EXSTYLE) & WS_EX_TOOLWINDOW) != 0;
         private string GetWindowExecutablePath(IntPtr hWnd)
         {
@@ -297,17 +240,6 @@ namespace Attention.Window
 
             return success ? tex : null;
         }
-
-
-        const int WS_EX_NOACTIVATE = 0x08000000;
-
-        public void PreventZOrderOnClick(IntPtr hWnd)
-        {
-            int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
-            SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_NOACTIVATE);
-        }
-
-
     }
 }
 

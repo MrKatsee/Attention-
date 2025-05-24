@@ -71,7 +71,6 @@ namespace Attention.Process
         {
             //메뉴 패널 생성
             _viewLoader.ActivateView(ViewType.MenuPanel);
-            _eventQueue.EnqueueLogicEvent(new WindowTransparentLogicEvent());
 
         }
 

@@ -7,10 +7,7 @@ using Util;
 
 namespace Attention
 {
-    public class WindowTransparentLogicEvent : ILogicEvent
-    {
 
-    }
 
     public class AttentionWindowLogicEvent : ILogicEvent
     {
@@ -28,19 +25,14 @@ namespace Attention.Process
         public WindowHandler() {
             DI.Register(this);
         }
-        public void SetWindowTransparent(WindowTransparentLogicEvent _event)
-        {
-            Debug.Log("Window 투명화");
-            _windowAPIHandler.SetWindowTransparent(_windowDataContainer.AttentionWindowData);
-            //_windowAPIHandler.SetWindowToDesktopLayer(_windowDataContainer.AttentionWindowData.HWnd);
-            //_windowAPIHandler.PreventZOrderOnClick(_windowDataContainer.AttentionWindowData.HWnd);
-        }
+
         public void GetWindowTransparent(AttentionWindowLogicEvent _event) {
-            Debug.Log("Window정보 가져옴");
-            Debug.Log(_windowDataContainer == null);
+#if !UNITY_EDITOR
             _windowDataContainer.SetAttentionWindowData(_windowAPIHandler.GetFocusedWindowData());
+            _windowAPIHandler.SetWindowTransparent(_windowDataContainer.AttentionWindowData);
+#endif
         }
-        
+
     }
 
 }

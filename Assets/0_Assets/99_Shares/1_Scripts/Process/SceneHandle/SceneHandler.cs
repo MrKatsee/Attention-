@@ -53,6 +53,7 @@ namespace Attention.Process
             //OnLoadGame(); <- 분기
 
             //기본 메뉴 패널 
+            OnInitGame();
         }
 
         private void OnNewGame()

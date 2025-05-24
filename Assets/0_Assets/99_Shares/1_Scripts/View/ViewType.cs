@@ -5,6 +5,8 @@ namespace Attention.View
         None = 0,
         Test,
         WinCapture_Button,
+        WindowSelect,
+        WindowThumbnail,
         Cat = 97,
         Shop = 98,
         CreateCat = 99,

@@ -51,9 +51,7 @@ namespace Attention.View
            
 
         }
-        public override void OnDeactivateView() {
-            View.ResetThumbnails();
-        }
+
         public override void OnActivateView()
         {
             View.ResetThumbnails();

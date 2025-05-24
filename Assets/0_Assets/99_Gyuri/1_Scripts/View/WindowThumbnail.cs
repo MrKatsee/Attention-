@@ -27,11 +27,5 @@ namespace Attention.View
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(() => { action(index); });
         }
-        //public void Init(WindowAPIData data, Action action)
-        //{
-        //    _thumbnail.texture = data.Thumbnail;
-        //    _title.text = data.Title;
-        //    _button.onClick.AddListener(()=> { action.Invoke(); });
-        //}
     }
 }

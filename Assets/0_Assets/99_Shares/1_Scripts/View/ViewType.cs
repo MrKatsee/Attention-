@@ -11,7 +11,7 @@ namespace Attention.View
         WindowSelect,
         WindowThumbnail,
         Cat = 97,
-        Store = 98,
+        Shop = 98,
         CreateCat = 99,
         Test,
     }

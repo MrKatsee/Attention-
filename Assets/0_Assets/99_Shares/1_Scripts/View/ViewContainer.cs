@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 using Util;
 
 namespace Attention.View
@@ -40,14 +40,17 @@ namespace Attention.View
             {
                 if (view is UI_Base ui)
                 {
-                    ui.gameObject.SetActive(true);
+                    if (view is MonoBehaviour mb && (view is UI_Base || view is Obj_Base))
+                    {
+                        mb.gameObject.SetActive(true);
+                    }
+
+                    _activeViews.Add(type);
+                    _inactiveViews.Remove(type);
+
+                    IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
+                    presenter.OnActivateView();
                 }
-
-                _activeViews.Add(type);
-                _inactiveViews.Remove(type);
-
-                IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
-                presenter.OnActivateView();
             }
             else
             {
@@ -70,14 +73,17 @@ namespace Attention.View
             {
                 if (view is UI_Base ui)
                 {
-                    ui.gameObject.SetActive(false);
+                    if (view is MonoBehaviour mb && (view is UI_Base || view is Obj_Base))
+                    {
+                        mb.gameObject.SetActive(false);
+                    }
+
+                    _activeViews.Remove(type);
+                    _inactiveViews.Add(type);
+
+                    IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
+                    presenter.OnDeactivateView();
                 }
-
-                _activeViews.Remove(type);
-                _inactiveViews.Add(type);
-
-                IViewPresenter presenter = _viewPresenters.GetPresenter(view.GetType());
-                presenter.OnDeactivateView();
             }
         }
     }

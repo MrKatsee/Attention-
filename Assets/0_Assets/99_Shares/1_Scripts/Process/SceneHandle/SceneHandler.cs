@@ -15,6 +15,7 @@ namespace Attention.Process
         [Inject(typeof(ViewLoader))] private IViewLoader _viewLoader;
 
         [Inject] private ViewContainer _viewContainer;
+        [Inject] private EntityContainer _entityContainer;
 
         public SceneHandler()
         {
@@ -31,6 +32,7 @@ namespace Attention.Process
             yield return _sceneLoader.MoveScene(from, to);
 
             _viewContainer.InitFactory();   // 순서 주의
+            _entityContainer.Init();
 
             if (from == SceneType.Scene)
             {

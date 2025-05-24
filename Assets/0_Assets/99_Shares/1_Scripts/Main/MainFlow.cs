@@ -20,6 +20,8 @@ namespace Attention.Main
         private ViewPresenterContainer _viewPresenters;
         private ViewContainer _viewContainer;
 
+        private EntityContainer _entityContainer;
+
         private ObjectLoader _objectLoader;
 
         private LogicEventRouter _logicEventRouter;
@@ -42,7 +44,9 @@ namespace Attention.Main
             _viewPresenters = new ViewPresenterContainer();
             _viewContainer = new ViewContainer(_viewPresenters);
 
-            _objectLoader = new ObjectLoader(_viewContainer);
+            _entityContainer = new EntityContainer();
+
+            _objectLoader = new ObjectLoader(_viewContainer, _entityContainer);
 
             _logicEventRouter = new LogicEventRouter(_eventBus, _logicHandlers);
             _viewEventRouter = new ViewEventRouter(_eventBus, _viewPresenters);

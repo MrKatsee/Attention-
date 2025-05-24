@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Attention.View
@@ -6,12 +5,16 @@ namespace Attention.View
     public class ViewFactory
     {
         private UIPrefabContainer _uiPrefabContainer;
+        //private ObjPrefabContainer _objPrefabContainer;
         private Transform _canvasTransform;
 
         public void Init()
         {
             _uiPrefabContainer = GameObject.FindAnyObjectByType<UIPrefabContainer>();
             _uiPrefabContainer.Init();
+
+            //_objPrefabContainer = GameObject.FindAnyObjectByType<ObjPrefabContainer>();
+            //_objPrefabContainer.Init();
 
             _canvasTransform = GameObject.Find("UICanvas").transform;
         }
@@ -24,10 +27,15 @@ namespace Attention.View
                 IView uiInstance = GameObject.Instantiate<UI_Base>(uiPrefab, _canvasTransform);
                 return uiInstance;
             }
-            else
-            {   // TODO: UI가 아닌 View
-                return null;
-            }
+
+            //Obj_Base objPrefab = _objPrefabContainer.GetObj(type);
+            //if(objPrefab != null)
+            //{
+            //    IView objInstance = GameObject.Instantiate<Obj_Base>(objPrefab);
+            //    return objPrefab;
+            //}
+
+            return null;
         }
     }
 }

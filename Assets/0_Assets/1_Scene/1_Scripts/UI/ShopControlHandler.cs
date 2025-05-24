@@ -8,7 +8,7 @@ namespace Attention
     [DISubscriber]
     public class ShopControlHandler : ILogicEventHandler
     {
-        [Inject(typeof(ViewContainer))] private IViewLoader _viewContainer;
+        [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
 
         public ShopControlHandler()
         {

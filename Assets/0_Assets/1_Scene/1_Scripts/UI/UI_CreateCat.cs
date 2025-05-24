@@ -1,8 +1,5 @@
-using Attention.Main.EventModule;
 using Attention.View;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

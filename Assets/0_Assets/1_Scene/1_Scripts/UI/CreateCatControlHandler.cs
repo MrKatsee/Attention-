@@ -10,7 +10,7 @@ namespace Attention
     public class CreateCatConrolHandler : ILogicEventHandler
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
-        [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
+        [Inject(typeof(EntityLoader))] private IEntityLoader _entityLoader;
 
         public CreateCatConrolHandler()
         {
@@ -19,7 +19,7 @@ namespace Attention
 
         public void CreateCat(CreateCatEvent _event)
         {
-            _viewContainer.ActivateView(ViewType.Cat);
+            _entityLoader.CreateEntity(EntityType.Cat);
             _eventQueue.EnqueueViewEvent(new MatchCatImageEvent(_event.CatData));
         }
     }

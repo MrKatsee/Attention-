@@ -9,7 +9,7 @@ namespace Attention
     [DISubscriber]
     public class ShopPresenter : ViewPresenter<UI_Shop>
     {
-        [Inject(typeof(ViewContainer))] private IViewLoader _viewContainer;
+        [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
 
         public ShopPresenter()
         {

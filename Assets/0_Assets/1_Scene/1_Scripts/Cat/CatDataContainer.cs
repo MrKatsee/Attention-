@@ -1,6 +1,7 @@
-using System.Collections;
+using Attention.Main.EventModule;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Diagnostics;
 using Util;
 
 namespace Attention.Data
@@ -8,38 +9,42 @@ namespace Attention.Data
     [DIPublisher]
     public class CatDataContainer
     {
-        private Dictionary<int, CatData> _catDatas;
+        private Dictionary<Guid, CatEntityData> _catDatas;
 
         public CatDataContainer()
         {
-            _catDatas = new Dictionary<int, CatData>();
+            _catDatas = new Dictionary<Guid, CatEntityData>();
+
+            DI.Register(this);
         }
 
-        public int CreateCat()
+        public void CreateCatData(Guid id)
         {
-            return RegistCat(new CatData());
+            _catDatas.Add(id, new CatEntityData());
         }
 
-        public int RegistCat(CatData data)
+        public void CreateCataData(Guid id, CatEntityData data)
         {
-            if (data == null)
+            _catDatas[id] = data;
+        }
+
+        public void UpdateAllCat(Action<CatEntityData> atction)
+        {
+            foreach (Guid id in _catDatas.Keys)
             {
-                return -1;
+                //UnityEngine.Debug.Log(id);
+                atction(_catDatas[id]);
             }
-
-            int id = _catDatas.Count;
-            _catDatas.Add(id, data);
-            return id;
         }
 
-        public void LoadData()
+        public CatEntityData GetCatData(Guid id)
         {
-
+            return _catDatas[id];
         }
 
-        public void SaveData()
+        public void ReamoveCatData(Guid id)
         {
-
+            _catDatas.Remove(id);
         }
     }
 }

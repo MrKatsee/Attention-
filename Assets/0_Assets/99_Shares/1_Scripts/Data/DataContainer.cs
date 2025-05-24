@@ -10,6 +10,7 @@ namespace Attention.Data
         private TimeDataContainer _timeDataContainer;
         private WindowDataContainer _windowDataContainer;
         private PlayerDataContainer _playerDataContainer;
+        private ShopDataContainer _shopDataContainer;
 
         public DataContainer()
         {
@@ -17,6 +18,7 @@ namespace Attention.Data
             _timeDataContainer = new TimeDataContainer();
             _windowDataContainer = new WindowDataContainer();
             _playerDataContainer = new PlayerDataContainer();
+            _shopDataContainer = new ShopDataContainer();
         }
     }
 }

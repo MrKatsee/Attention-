@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Util;
 
 namespace Attention.Data
 {
+    [DIPublisher]
     public class ShopDataContainer
     {
         private Dictionary<int, ItemData> _shopItems;
+
+        public ShopDataContainer()
+        {
+            DI.Register(this);
+        }
 
         public void Init()
         {

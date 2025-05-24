@@ -11,6 +11,18 @@ namespace Attention.Window
         private Texture2D _thumbnail;
         private string _exePath;
 
+        public WindowAPIData()
+        {
+            _hwnd = IntPtr.Zero;
+        }
+        public WindowAPIData(IntPtr hWnd, string title = null, Texture2D thumbnail = null, string exePath = null)
+        {
+            _hwnd = hWnd;
+            _title = title == null ? "" : title;
+            _thumbnail = thumbnail;
+            _exePath = exePath;
+        }
+
         public IntPtr HWnd{
             get { return _hwnd; }
         }
@@ -27,14 +39,6 @@ namespace Attention.Window
         public string exePath
         {
             get { return exePath; }
-        }
-
-        public WindowAPIData(IntPtr hWnd, string title = null, Texture2D thumbnail = null, string exePath = null)
-        {
-            _hwnd = hWnd;
-            _title = title == null ? "" : title;
-            _thumbnail = thumbnail;
-            _exePath = exePath;
         }
 
         public bool IsHWnd(WindowAPIData data)

@@ -20,8 +20,6 @@ namespace Attention.View
             _settingButton.onClick.AddListener(() => { settingAction(); });
             
         }
-
-
         
     }
 

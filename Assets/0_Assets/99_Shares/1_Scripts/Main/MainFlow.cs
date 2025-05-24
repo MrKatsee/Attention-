@@ -2,6 +2,7 @@ using Attention.Data;
 using Attention.Main.EventModule;
 using Attention.Main.InputModule;
 using Attention.View;
+using Attention.Window;
 using UnityEngine;
 using Util;
 
@@ -27,7 +28,9 @@ namespace Attention.Main
         private LogicEventRouter _logicEventRouter;
         private ViewEventRouter _viewEventRouter;
 
-        private DataContainer _dataContaioner;
+        private DataContainer _dataContainer;
+
+        private WindowAPIHandler _windowAPIHandler;
 
         private void Awake()
         {
@@ -50,7 +53,8 @@ namespace Attention.Main
 
             _logicEventRouter = new LogicEventRouter(_eventBus, _logicHandlers);
             _viewEventRouter = new ViewEventRouter(_eventBus, _viewPresenters);
-            _dataContaioner = new DataContainer();
+            _dataContainer = new DataContainer();
+            _windowAPIHandler = new WindowAPIHandler();
         }
 
         private void Start()
@@ -58,6 +62,7 @@ namespace Attention.Main
             _logicHandlers.Init();
             _viewPresenters.Init();
 
+            _eventBus.EnqueueLogicEvent(new AttentionWindowLogicEvent());
             _eventBus.EnqueueLogicEvent(new ChangeSceneEvent(SceneType.Entry, SceneType.Scene));
         }
 

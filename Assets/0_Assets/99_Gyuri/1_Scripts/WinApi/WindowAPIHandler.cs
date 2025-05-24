@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
+using UnityEngine.XR;
 using Util;
 
 namespace Attention.Window
@@ -43,9 +44,10 @@ namespace Attention.Window
         private const uint WS_EX_TOOLWINDOW = 0x00000080;
         private const uint WS_CHILD = 0x40000000;
         private const uint LWA_COLORKEY = 0x00000001;
-        private const uint COLORKEY = 0xFF0000;
+        private const uint COLORKEY = 0xFFFFFF;
         private const uint PROCESS_QUERY_INFORMATION = 0x0400;
         private const uint PROCESS_VM_READ = 0x0010;
+        private static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
 
         private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
@@ -100,6 +102,16 @@ namespace Attention.Window
 
         private const uint WM_SPAWN_WORKERW = 0x052C;
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool SetWindowPos(
+    IntPtr hWnd,
+    IntPtr hWndInsertAfter,
+    int X,
+    int Y,
+    int cx,
+    int cy,
+    uint uFlags);
+
         public WindowAPIHandler()
         {
             DI.Register(this);
@@ -138,7 +150,13 @@ namespace Attention.Window
             int exStyle = GetWindowLong(window.HWnd, GWL_EXSTYLE);
             SetWindowLong(window.HWnd, GWL_EXSTYLE, exStyle | (int)WS_EX_LAYERED);
             SetLayeredWindowAttributes(window.HWnd, COLORKEY, 0, LWA_COLORKEY);
+            SetWindowPos(window.HWnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
         }
+
+        const uint SWP_NOMOVE = 0x0001;
+        const uint SWP_NOSIZE = 0x0002;
+        const uint SWP_NOACTIVATE = 0x0010;
+        const uint SWP_SHOWWINDOW = 0x0040;
         public WindowAPIData GetFocusedWindowData()
         {
 

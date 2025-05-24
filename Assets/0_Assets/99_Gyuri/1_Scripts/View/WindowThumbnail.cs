@@ -25,7 +25,7 @@ namespace Attention.View
         public void SetListener(Action<int> action, int index)
         {
             _button.onClick.RemoveAllListeners();
-            _button.onClick.AddListener(() => { action.Invoke(index); });
+            _button.onClick.AddListener(() => { action(index); });
         }
         //public void Init(WindowAPIData data, Action action)
         //{

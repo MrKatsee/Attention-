@@ -43,8 +43,6 @@ namespace Attention.Process
             {
                 OnEnterScene();
             }
-
-            _eventQueue.EnqueueLogicEvent(new CompleteLoadSceneEvent(to));
         }
 
         private void OnEnterScene()
@@ -53,6 +51,7 @@ namespace Attention.Process
             //OnLoadGame(); <- 분기
 
             //기본 메뉴 패널 
+            OnStartGame();
         }
 
         private void OnNewGame()
@@ -66,11 +65,12 @@ namespace Attention.Process
         }
         
         //분기 상관없이 공통으로 진행되는 Scene 초기 init
-        private void OnInitGame()
+        private void OnStartGame()
         {
+            _eventQueue.EnqueueLogicEvent(new GameStartEvent());
+
             //메뉴 패널 생성
             _viewLoader.ActivateView(ViewType.MenuPanel);
-
         }
 
 

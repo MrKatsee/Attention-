@@ -32,7 +32,7 @@ namespace Attention.View
     public class WindowSelectPresenter : ViewPresenter<UI_WIndowSelect>
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
-        [Inject(typeof(ViewContainer))] private IViewLoader _viewContainer;
+        [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
         [Inject(typeof(WindowDataContainer))] private WindowDataContainer _windowDataContainer;
 
         public WindowSelectPresenter()

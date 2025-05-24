@@ -3,12 +3,16 @@ namespace Attention.View
     public enum ViewType
     {
         None = 0,
-        Test,
+        
+        MenuPanel,
+        SettingPanel,
         WinCapture_Button,
+        
         WindowSelect,
         WindowThumbnail,
         Cat = 97,
         Store = 98,
         CreateCat = 99,
+        Test,
     }
 }

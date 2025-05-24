@@ -51,6 +51,8 @@ namespace Attention.Process
         {
             OnNewGame();
             //OnLoadGame(); <- 분기
+
+            //기본 메뉴 패널 
         }
 
         private void OnNewGame()
@@ -62,6 +64,15 @@ namespace Attention.Process
         {
 
         }
+        
+        //분기 상관없이 공통으로 진행되는 Scene 초기 init
+        private void OnInitGame()
+        {
+            //메뉴 패널 생성
+            _viewLoader.ActivateView(ViewType.MenuPanel);
+
+        }
+
 
         private void OnExitScene()
         {

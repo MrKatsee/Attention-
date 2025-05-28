@@ -5,7 +5,7 @@ using Util;
 namespace Attention.View
 {
     [DISubscriber]
-    public class EntityViewPresenter : ViewPresenter<Obj_Base>
+    public class EntityViewPresenter : ViewPresenter<Obj_Entity>
     {
         [Inject(typeof(EntityContainer))] private IEntityContainer _entityContainer;
         [Inject] private CatDataContainer _dataContainter;

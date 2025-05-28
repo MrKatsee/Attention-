@@ -7,27 +7,20 @@ using Util;
 
 namespace Attention
 {
-    public class WindowCaptureLogicEvent : ILogicEvent
-    {
-
-    }
-    public class WindowSelectViewEvent : IViewEvent
-    { 
-
-    }
 
     public class WindowSelectLogicEvent: ILogicEvent
     {
-        private int _id;
-        public int id { get; }
+        public int Id { get; private set; }
         public WindowSelectLogicEvent(int id) { 
-            _id = id;
+            Id = id;
         }
     }
+
 }
 
 namespace Attention.View
 {
+
     [DISubscriber]
     public class WindowSelectPresenter : ViewPresenter<UI_WIndowSelect>
     {
@@ -39,7 +32,7 @@ namespace Attention.View
         {
             DI.Register(this);
         }
-        public void SetSelectPanel(WindowSelectViewEvent _event)
+        public void SetSelectPanel()
         {
             _viewContainer.ActivateView(ViewType.WindowSelect);
             List<Action> actions = new();
@@ -55,9 +48,8 @@ namespace Attention.View
         public override void OnActivateView()
         {
             View.ResetThumbnails();
+            SetSelectPanel();
         }
-
     }
-
 
 }

@@ -14,13 +14,10 @@ namespace Attention.View
         [SerializeField] private Button _endingRoomButton;
         [SerializeField] private Button _settingButton;
 
-
         public void Init(Action settingAction)
         {
-            _settingButton.onClick.AddListener(() => { settingAction(); });
-            
+            _settingButton.onClick.AddListener(() => { settingAction(); });   
         }
-        
     }
 
 }

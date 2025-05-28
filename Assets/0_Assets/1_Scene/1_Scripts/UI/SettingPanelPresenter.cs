@@ -1,8 +1,10 @@
 using Attention.Main.EventModule;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Util;
+
+namespace Attention
+{
+    public class TaskListViewEvent : IViewEvent { }
+}
 
 namespace Attention.View
 {
@@ -17,7 +19,18 @@ namespace Attention.View
             DI.Register(this);
         }
 
+        protected override void OnInitializeView()
+        {
+            View.Init(
+                () => _eventQueue.EnqueueLogicEvent(new WindowCaptureLogicEvent()),
+                () => { }, //TODO:manage list of tasks
+                () => _viewContainer.DeactivateView(ViewType.SettingPanel));
+        }
         
+        private void onClickAddTask(WindowCaptureViewEvent _event)
+        {
+            _viewContainer.ActivateView(ViewType.WindowSelect);
+        }
     }
 
 }

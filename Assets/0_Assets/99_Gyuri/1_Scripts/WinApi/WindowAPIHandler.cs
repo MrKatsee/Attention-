@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
-using UnityEngine.XR;
 using Util;
 
 namespace Attention.Window
@@ -38,7 +36,6 @@ namespace Attention.Window
         [DllImport("kernel32.dll", SetLastError = true)] private static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, uint processId);
         [DllImport("kernel32.dll", SetLastError = true)][return: MarshalAs(UnmanagedType.Bool)] private static extern bool CloseHandle(IntPtr hObject);
         [DllImport("user32.dll", SetLastError = true)] private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-
 
         private const int GWL_EXSTYLE = -20;
         private const int GWL_STYLE = -16;
@@ -103,7 +100,7 @@ namespace Attention.Window
                 if (IsRealAppWindow(hWnd))
                 {
                     WindowAPIData data = GetWindowData(hWnd);
-                    data.Thumbnail=CaptureWindow(hWnd);
+                    data.SetThumbnail(CaptureWindow(hWnd));
                     result.Add(data);
                 }
 

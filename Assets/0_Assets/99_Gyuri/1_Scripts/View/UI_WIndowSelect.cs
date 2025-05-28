@@ -1,6 +1,5 @@
 using Attention.View;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,8 +12,8 @@ namespace Attention.Window
         private const int MAX_INDEX = 20;
 
         [SerializeField] private List<WindowThumbnail> _thumbnails;
-        private Transform _scrollContent;
-        private Transform _thumbnailContainer;
+        [SerializeField] private Transform _scrollContent;
+        [SerializeField] private Transform _thumbnailContainer;
 
         public void Init(List<WindowAPIData> windows, Action<int> action)
         {

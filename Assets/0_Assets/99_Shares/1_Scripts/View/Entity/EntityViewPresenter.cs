@@ -8,7 +8,8 @@ namespace Attention.View
     public class EntityViewPresenter : ViewPresenter<Obj_Entity>
     {
         [Inject(typeof(EntityContainer))] private IEntityContainer _entityContainer;
-        [Inject] private CatDataContainer _dataContainter;
+        //[Inject] private CatDataContainer _dataContainter;
+        [Inject] private EntityDataContainer _entityDataContainer;
 
         public EntityViewPresenter()
         {
@@ -22,7 +23,7 @@ namespace Attention.View
                 Entity entity = _entityContainer.GetEntity(id);
                 if (entity != null)
                 {
-                    entity.UpdateEntity(_dataContainter.GetCatData(id));
+                    entity.UpdateEntity(_entityDataContainer.GetEntityData(id));
                 }
             }
         }

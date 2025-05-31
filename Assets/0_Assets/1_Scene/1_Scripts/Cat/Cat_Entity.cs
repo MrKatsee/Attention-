@@ -19,10 +19,7 @@ namespace Attention.View
             base.UpdateEntity(data);
             _render.flipX = data.direction;
 
-            if (data is CatEntityData catData)
-            {
-                //TODO : 애니메이션 세팅
-            }
+            //TODO : 애니메이션 세팅
         }
     }
 }

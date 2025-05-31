@@ -1,6 +1,6 @@
 namespace Attention.Data
 {
-    public class CatEntityData : EntityData
+    public class CatData
     {
         public string name;
 

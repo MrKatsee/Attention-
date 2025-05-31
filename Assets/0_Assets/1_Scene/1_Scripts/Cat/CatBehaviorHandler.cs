@@ -10,7 +10,8 @@ namespace Attention.Process
     public class CatBehaviorHandler : ILogicEventHandler
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
-        [Inject] private CatDataContainer _dataContainer;
+        [Inject] private EntityDataContainer _entityDataContainer;
+        //[Inject] private CatDataContainer _dataContainer;
 
         public CatBehaviorHandler() 
         {
@@ -19,19 +20,30 @@ namespace Attention.Process
 
         public void Update(DeltaTimeEvent data)
         {
-            foreach ((Guid, CatEntityData) _dataTuple in _dataContainer.GetCatAllDatas())
+            //foreach ((Guid, CatEntityData) _dataTuple in _dataContainer.GetCatAllDatas())
+            //{
+            //    if (_dataTuple.Item2.isActivate)
+            //    {
+            //        UpdateCat(_dataTuple.Item2, data.DeltaTime);
+            //        _dataContainer.UpdateCatData(_dataTuple.Item1, _dataTuple.Item2);
+            //    }
+            //}
+
+            foreach (Guid id in _entityDataContainer.GetAllEntityIds())
             {
-                if (_dataTuple.Item2.isActivate)
+                EntityData entityData = _entityDataContainer.GetEntityData(id);
+                if(entityData.isActivate)
                 {
-                    UpdateCat(_dataTuple.Item2, data.DeltaTime);
-                    _dataContainer.UpdateCatData(_dataTuple.Item1, _dataTuple.Item2);
+                    UpdateCat(entityData, data.DeltaTime);
+                    _entityDataContainer.UpdatetEntityData(id, entityData);
+                    _eventQueue.EnqueueViewEvent(new EntityUpdateEvent(id));
                 }
             }
 
             _eventQueue.EnqueueViewEvent(new EntityUpdateByTypeEvent(EntityType.Cat));
         }
 
-        public void UpdateCat(CatEntityData data, float deltaTime)
+        public void UpdateCat(EntityData data, float deltaTime)
         {
             data.position += new Vector3(3, 0, 0) * (data.direction ? 1 : -1) * deltaTime;
 

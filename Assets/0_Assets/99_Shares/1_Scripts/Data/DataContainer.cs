@@ -8,11 +8,13 @@ namespace Attention.Data
     {
         private CatDataContainer _catDataContainer;
         private TimeDataContainer _timeDataContainer;
+        private EntityDataContainer _entityDataContainer;
 
         public DataContainer()
         {
             _catDataContainer = new CatDataContainer();
             _timeDataContainer = new TimeDataContainer();
+            _entityDataContainer = new EntityDataContainer();
         }
     }
 }

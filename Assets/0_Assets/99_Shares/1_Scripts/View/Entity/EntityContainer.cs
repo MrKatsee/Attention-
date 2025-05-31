@@ -22,13 +22,14 @@ namespace Attention.View
 
         public EntityContainer()
         {
+            _objDict = new Dictionary<Guid, Entity>();
+            _entityPool = new List<Entity>();
+
             DI.Register(this);
         }
         
         public void Init()
         {
-            _objDict = new Dictionary<Guid, Entity>();
-            _entityPool = new List<Entity>();
             _entityPrefabContainer = GameObject.FindAnyObjectByType<EntityPrefabContainer>();
             _entityPrefabContainer.Init();
         }

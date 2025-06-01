@@ -11,7 +11,6 @@ namespace Attention.Process
     {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject] private EntityDataContainer _entityDataContainer;
-        //[Inject] private CatDataContainer _dataContainer;
 
         public CatBehaviorHandler() 
         {
@@ -20,15 +19,6 @@ namespace Attention.Process
 
         public void Update(DeltaTimeEvent data)
         {
-            //foreach ((Guid, CatEntityData) _dataTuple in _dataContainer.GetCatAllDatas())
-            //{
-            //    if (_dataTuple.Item2.isActivate)
-            //    {
-            //        UpdateCat(_dataTuple.Item2, data.DeltaTime);
-            //        _dataContainer.UpdateCatData(_dataTuple.Item1, _dataTuple.Item2);
-            //    }
-            //}
-
             foreach (Guid id in _entityDataContainer.GetAllEntityIds())
             {
                 EntityData entityData = _entityDataContainer.GetEntityData(id);

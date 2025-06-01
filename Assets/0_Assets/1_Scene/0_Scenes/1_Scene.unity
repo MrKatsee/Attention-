@@ -1104,11 +1104,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2012215453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0f389659715e20479d75dd64917cf20, type: 3}
+  m_Script: {fileID: 11500000, guid: 384242cf3b856484fbf3501316ab708f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityPrefabList:
-  - {fileID: 4423492896717003219, guid: a4ccb16ba60902c4cb1b55a485229688, type: 3}
+  prefab: {fileID: 2432483902742288854, guid: a4ccb16ba60902c4cb1b55a485229688, type: 3}
+  _spriteList:
+  - {fileID: -1569016621, guid: 07f52b4ea07fe3e4c9169236c6846dd6, type: 3}
+  _animatorList: []
 --- !u!1 &2044020395
 GameObject:
   m_ObjectHideFlags: 0

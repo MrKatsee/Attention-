@@ -2,6 +2,7 @@ using Attention.Data;
 using Attention.View;
 using System;
 using Util;
+using UnityEngine;
 
 namespace Attention.Process
 {
@@ -9,7 +10,7 @@ namespace Attention.Process
     public class CreateCatConrolHandler : ILogicEventHandler
     {
         [Inject(typeof(EntityLoader))] private IEntityLoader _entityLoader;
-        //[Inject] private CatDataContainer _dataContainter;
+        [Inject] private CatDataContainer _dataContainter;
         [Inject] private EntityDataContainer _entityDataContainer;
 
         public CreateCatConrolHandler()
@@ -20,9 +21,11 @@ namespace Attention.Process
         public void CreateCat(CreateCatEvent _event)
         {
             Guid id = Guid.NewGuid();
-            //_dataContainter.CreateCatData(id);
+            _dataContainter.CreateCatData(id);
+            _dataContainter.SetCurrentCat(id);
             _entityDataContainer.CreateEntityData(id);
-            _entityLoader.CreateAndBindEntity(id, EntityType.Cat);
+            Debug.Log(id);
+            _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0" });
         }
     }
 }

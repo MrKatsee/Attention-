@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Util;
+using UnityEngine;
 
 namespace Attention.View
 {
     public interface IEntityLoader
     {
-        public void CreateEntity(EntityType type);
-        public void CreateAndBindEntity(Guid id, EntityType type);
+        public void CreateEntity(CreateData data);
         public void DeactivateEntity(Guid type);
     }
 
-    public struct BindingData
+    public struct CreateData
     {
         public Guid id;
         public EntityType type;
+        public string sprite;
+        public string animator;
     }
 
     [DIPublisher]
@@ -22,29 +25,25 @@ namespace Attention.View
     {
         private EntityContainer _entityContainer;
 
-        private Queue<EntityType> _createQueue;
-        private Queue<BindingData> _createBindings;
+        private Queue<CreateData> _createQueue;
+        //private Queue<CreateData> _createBindings;
         private Queue<Guid> _deactivateQueue;
 
         public EntityLoader(EntityContainer entityContainer)
         {
             _entityContainer = entityContainer;
 
-            _createQueue = new Queue<EntityType>();
-            _createBindings = new Queue<BindingData>();
+            _createQueue = new Queue<CreateData>();
+            //_createBindings = new Queue<CreateData>();
             _deactivateQueue = new Queue<Guid>();
 
             DI.Register(this);
         }
 
-        public void CreateEntity(EntityType type)
+        public void CreateEntity(CreateData data)
         {
-            _createQueue.Enqueue(type);
-        }
-
-        public void CreateAndBindEntity(Guid id, EntityType type)
-        {
-            _createBindings.Enqueue(new BindingData { id = id, type = type });
+            //_createBindings.Enqueue(data);
+            _createQueue.Enqueue(data);
         }
 
         public void DeactivateEntity(Guid id)
@@ -61,11 +60,12 @@ namespace Attention.View
                 _entityContainer.CreateEntity(_createQueue.Dequeue());
             }
 
-            while(_createBindings.Count > 0)
-            {
-                BindingData data = _createBindings.Dequeue();
-                _entityContainer.CreateAndBindEntity(data.id, data.type);
-            }
+            //while(_createBindings.Count > 0)
+            //{
+            //    CreateData data = _createBindings.Dequeue();
+            //    UnityEngine.Debug.Log(data);
+            //    _entityContainer.CreateAndBindEntity(data.id, data.type);
+            //}
 
             while (_deactivateQueue.Count > 0)
             {

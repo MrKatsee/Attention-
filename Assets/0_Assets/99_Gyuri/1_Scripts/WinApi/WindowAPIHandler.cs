@@ -119,6 +119,7 @@ namespace Attention.Window
             string exePath = GetWindowExecutablePath(hWnd);
             if (string.IsNullOrWhiteSpace(title))
                 title = "Untitled";
+
             return new WindowAPIData(hWnd, $"{title} - {className} ", null, exePath);
         }
     

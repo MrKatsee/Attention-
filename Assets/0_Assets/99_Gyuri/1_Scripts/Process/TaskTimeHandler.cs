@@ -22,6 +22,10 @@ namespace Attention.Process
         {
             WindowAPIData window = _windowAPIHandler.GetFocusedWindowData();
             List<string> tasks = _windowDataContainer.Tasks;
+            if(window == null)
+            {
+                return;
+            }
             if (tasks.Contains(window.ExePath))
             {
                 _taskTimeContainer.UpdateTime(data.DeltaTime);

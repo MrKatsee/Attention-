@@ -154,7 +154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000048816204, y: 15.000012}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 80, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4695908747360020146
@@ -385,6 +385,7 @@ MonoBehaviour:
   _shopButton: {fileID: 2174525343920749702}
   _endingRoomButton: {fileID: 1888557437041671602}
   _settingButton: {fileID: 7788469424081767722}
+  _bottomButton: {fileID: 954649833849398999}
 --- !u!1 &3630355128941938717
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 44.1}
+  m_AnchoredPosition: {x: 0, y: 45}
   m_SizeDelta: {x: 80, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7080505741199182007
@@ -808,7 +809,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC124\uC815"
+  m_Text: "\uBC11\uC73C\uB85C"
 --- !u!1 &6104854636983989581
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,6 @@ public class Task : MonoBehaviour
     public void SetListener(Action<int> action, int index)
     {
         _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(() => { Debug.Log("OnmClick"); action(index); });
+        _button.onClick.AddListener(() => { action(index); });
     }
 }

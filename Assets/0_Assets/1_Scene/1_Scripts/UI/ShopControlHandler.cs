@@ -1,4 +1,3 @@
-using Attention.Main.EventModule;
 using Attention.Process;
 using Attention.View;
 using Util;

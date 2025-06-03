@@ -1,7 +1,6 @@
 using Attention.Data;
 using Attention.Main.EventModule;
 using System.Collections.Generic;
-using UnityEngine;
 using Util;
 
 namespace Attention
@@ -38,7 +37,6 @@ namespace Attention.View
         {
             View.Init(
                 () => _eventQueue.EnqueueLogicEvent(new WindowCaptureLogicEvent()),
-                () => { }, //TODO:manage list of tasks
                 () => _viewContainer.DeactivateView(ViewType.SettingPanel));
         }
 

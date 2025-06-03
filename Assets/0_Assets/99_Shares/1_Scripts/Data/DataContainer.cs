@@ -9,12 +9,14 @@ namespace Attention.Data
         private CatDataContainer _catDataContainer;
         private TimeDataContainer _timeDataContainer;
         private WindowDataContainer _windowDataContainer;
+        private TaskTimeContainer _taskDataContainer;
 
         public DataContainer()
         {
             _catDataContainer = new CatDataContainer();
             _timeDataContainer = new TimeDataContainer();
             _windowDataContainer = new WindowDataContainer();
+            _taskDataContainer = new TaskTimeContainer();
         }
     }
 }

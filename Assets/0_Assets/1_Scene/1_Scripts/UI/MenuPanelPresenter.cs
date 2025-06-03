@@ -1,11 +1,6 @@
 using Attention.Main.EventModule;
 using Util;
 
-namespace Attention
-{
-
-}
-
 namespace Attention.View
 {
     [DISubscriber]

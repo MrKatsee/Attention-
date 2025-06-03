@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,17 +14,15 @@ namespace Attention.View
         private const int MAX_INDEX = 20;
 
         [SerializeField] private Button _addTaskButton;
-        //[SerializeField] private Button _manageTaskButton;
         [SerializeField] private Button _quitButton;
 
         [SerializeField] private Transform _taskContainer;
         [SerializeField] private Transform _scrollContent;
         [SerializeField] private List<Task> _tasks;
 
-        public void Init(Action addAction, Action manageAction, Action quitAction)
+        public void Init(Action addAction, Action quitAction)
         {
-            _addTaskButton.onClick.AddListener(() => { addAction(); });            
-            //_manageTaskButton.onClick.AddListener(() => {  manageAction(); });
+            _addTaskButton.onClick.AddListener(() => { addAction(); });        
             _quitButton.onClick.AddListener(() => {  quitAction(); });
         }
 

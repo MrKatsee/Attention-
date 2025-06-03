@@ -1,7 +1,6 @@
 using Attention.Data;
 using Attention.Main.EventModule;
 using Attention.Window;
-using System;
 using System.Collections.Generic;
 using Util;
 

@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace Attention.View
     {
         [SerializeField] private Button _button;
         [SerializeField] private RawImage _thumbnail;
-        [SerializeField] private Text _title;
+        [SerializeField] private TextMeshProUGUI _title;
 
         public void SetThumbnail(Texture2D thumbnail)
         {

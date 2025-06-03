@@ -28,17 +28,18 @@ namespace Attention.Data
             Windows = data;
         }
 
-        public void AddTask(WindowAPIData window)
+        public void AddTask(int id)
         {
+            WindowAPIData window = Windows[id];
             if(!Tasks.Contains(window.ExePath))
             {
                 Tasks.Add(window.ExePath);
             }
         }
 
-        public void DeleteTask(WindowAPIData window)
+        public void DeleteTask(int id)
         {
-            Tasks.Remove(window.ExePath);
+            Tasks.RemoveAt(id);
         }
     }
 }

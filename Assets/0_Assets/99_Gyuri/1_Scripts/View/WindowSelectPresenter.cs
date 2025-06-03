@@ -32,23 +32,28 @@ namespace Attention.View
         {
             DI.Register(this);
         }
-        public void SetSelectPanel()
-        {
-            _viewContainer.ActivateView(ViewType.WindowSelect);
-            List<Action> actions = new();
-            List<WindowAPIData> windows = _windowDataContainer.Windows;
-            View.Init(windows,(int i) =>
-            {
-                _eventQueue.EnqueueLogicEvent(new WindowSelectLogicEvent(i));
-            });
-           
 
+        protected override void OnInitializeView()
+        {
+            View.Init(() => _viewContainer.DeactivateView(ViewType.WindowSelect));
         }
 
         public override void OnActivateView()
         {
             View.ResetThumbnails();
             SetSelectPanel();
+        }
+
+        private void SetSelectPanel()
+        {
+            _viewContainer.ActivateView(ViewType.WindowSelect);
+            List<WindowAPIData> windows = _windowDataContainer.Windows;
+
+            View.UpdateThumbnails(windows,(int i) =>
+            {
+                _eventQueue.EnqueueLogicEvent(new WindowSelectLogicEvent(i));
+                _viewContainer.DeactivateView(ViewType.WindowSelect);
+            });
         }
     }
 

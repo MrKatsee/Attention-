@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using Util;
 
@@ -116,7 +119,6 @@ namespace Attention.Window
             string exePath = GetWindowExecutablePath(hWnd);
             if (string.IsNullOrWhiteSpace(title))
                 title = "Untitled";
-            Debug.Log($"{title} [{className}], Path: {exePath}");
             return new WindowAPIData(hWnd, $"{title} - {className} ", null, exePath);
         }
     
@@ -238,5 +240,7 @@ namespace Attention.Window
             return success ? tex : null;
         }
     }
+
+
 }
 

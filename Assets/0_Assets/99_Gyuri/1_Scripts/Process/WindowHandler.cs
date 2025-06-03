@@ -38,7 +38,6 @@ namespace Attention.Process
         {
             _windowDataContainer.SetWindowData(_windowAPIHandler.GetWindowDataList());
             _eventQueue.EnqueueViewEvent(new WindowCaptureViewEvent());
-            Debug.Log(_windowDataContainer.Windows.Count);
 
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using Util; 
 
 namespace Attention.Data
@@ -18,6 +19,14 @@ namespace Attention.Data
             TaskTime += deltaTime;
         }
 
+        public string GetFormattedTime()
+        {
+            TimeSpan time = TimeSpan.FromSeconds(TaskTime);
+            return string.Format("{0:D2}:{1:D2}:{2:D2}",
+                                 (int)time.TotalHours,
+                                 time.Minutes,
+                                 time.Seconds);
+        }
     }
 }
 

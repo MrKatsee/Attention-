@@ -1,15 +1,17 @@
-using Attention.Main.EventModule;
-using Attention.Process;
+using Attention.Data;
 using Attention.View;
+using System;
 using Util;
+using UnityEngine;
 
-namespace Attention
+namespace Attention.Process
 {
     [DISubscriber]
     public class CreateCatConrolHandler : ILogicEventHandler
     {
-        [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject(typeof(EntityLoader))] private IEntityLoader _entityLoader;
+        [Inject] private CatDataContainer _dataContainter;
+        [Inject] private EntityDataContainer _entityDataContainer;
 
         public CreateCatConrolHandler()
         {
@@ -18,8 +20,12 @@ namespace Attention
 
         public void CreateCat(CreateCatEvent _event)
         {
-            _entityLoader.CreateEntity(EntityType.Cat);
-            _eventQueue.EnqueueViewEvent(new MatchCatImageEvent(_event.CatData));
+            Guid id = Guid.NewGuid();
+            _dataContainter.CreateCatData(id);
+            _dataContainter.SetCurrentCat(id);
+            _entityDataContainer.CreateEntityData(id);
+            Debug.Log(id);
+            _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0" });
         }
     }
 }

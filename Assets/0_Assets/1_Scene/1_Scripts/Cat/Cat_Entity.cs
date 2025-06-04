@@ -1,41 +1,25 @@
-using Attention.Data;
-using UnityEngine;
-using Util;
+//using Attention.Data;
+//using UnityEngine;
 
-namespace Attention.View
-{
-    [DISubscriber]
-    public class Cat_Entity : Entity
-    {
-        [Inject] private CatDataContainer _entityDataContainer;
+//namespace Attention.View
+//{
+//    public class Cat_Entity : Entity
+//    {
+//        private SpriteRenderer _render;
 
-        private SpriteRenderer _render;
+//        public override EntityType type => EntityType.Cat;
 
-        public override EntityType type => EntityType.Cat;
+//        public override void Init()
+//        {
+//            _render = this.GetComponent<SpriteRenderer>();
+//        }
 
-        public override void Init()
-        {
-            base.Init();
-            DI.Register(this);
-            _entityDataContainer.CreateCataData(id, new CatEntityData());
-            _render = this.GetComponent<SpriteRenderer>();
-        }
+//        public override void UpdateEntity(EntityData data)
+//        {
+//            base.UpdateEntity(data);
+//            _render.flipX = data.direction;
 
-        public override void UpdateEntity()
-        {
-            EntityData data = _entityDataContainer.GetCatData(id);
-            if (data != null && data is CatEntityData catData)
-            {
-                UpdateEntity(catData);
-            }
-        }
-
-        public void UpdateEntity(CatEntityData data)
-        {
-            this.transform.position = data.position;
-            _render.flipX = data.direction;
-
-            //TODO : 애니메이션 세팅
-        }
-    }
-}
+//            //TODO : 애니메이션 세팅
+//        }
+//    }
+//}

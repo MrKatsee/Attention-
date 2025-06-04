@@ -13,4 +13,6 @@ namespace Attention
             To = to;
         }
     }
+
+    public class GameStartEvent : ILogicEvent { }
 }

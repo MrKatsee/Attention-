@@ -20,11 +20,7 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            View.Init(OnClickSettingButton, OnClickShopButton,
-            () =>
-            {
-                _windowAPIHandler.SetWindowBottom(_windowDataContainer.AttentionWindowData);
-            });
+            View.Init(OnClickSettingButton, OnClickShopButton, OnClickWindowButton);
         }
 
         private void OnClickSettingButton()
@@ -35,6 +31,11 @@ namespace Attention.View
         private void OnClickShopButton()
         {
             _viewContainer.ActivateView(ViewType.Shop);
+        }
+
+        private void OnClickWindowButton()
+        {
+            _windowAPIHandler.SetWindowBottom(_windowDataContainer.AttentionWindowData);
         }
     }
 }

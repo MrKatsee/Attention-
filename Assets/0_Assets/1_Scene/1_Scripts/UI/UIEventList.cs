@@ -16,15 +16,15 @@ namespace Attention
         }
     }
 
-    public class CompleteLoadSceneEvent : ILogicEvent
-    {
-        public SceneType SceneType;
+    //public class CompleteLoadSceneEvent : ILogicEvent
+    //{
+    //    public SceneType SceneType;
 
-        public CompleteLoadSceneEvent(SceneType sceneType)
-        {
-            SceneType = sceneType;
-        }
-    }
+    //    public CompleteLoadSceneEvent(SceneType sceneType)
+    //    {
+    //        SceneType = sceneType;
+    //    }
+    //}
 
     public class MatchCatImageEvent : IViewEvent
     {

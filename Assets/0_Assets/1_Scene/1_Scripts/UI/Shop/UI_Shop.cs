@@ -1,4 +1,4 @@
-using Attention.View;
+using Attention.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

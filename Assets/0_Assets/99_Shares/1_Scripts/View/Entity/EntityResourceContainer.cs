@@ -73,6 +73,16 @@ namespace Attention.View
             {
                 return _animatorDIct[animatorName];
             }
+            else
+            {
+                UnityEngine.Debug.Log(animatorName);
+                string debuging = "";
+                foreach (var name in _animatorDIct.Keys)
+                {
+                    debuging += name + "\n";
+                }
+                UnityEngine.Debug.Log(debuging);
+            }
             return null;
         }
     }

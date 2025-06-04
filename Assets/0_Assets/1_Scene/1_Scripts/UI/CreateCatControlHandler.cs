@@ -12,6 +12,7 @@ namespace Attention.Process
         [Inject(typeof(EntityLoader))] private IEntityLoader _entityLoader;
         [Inject] private CatDataContainer _dataContainter;
         [Inject] private EntityDataContainer _entityDataContainer;
+        [Inject] private GameObjectContainer _objectDataContainer;
 
         public CreateCatConrolHandler()
         {
@@ -24,8 +25,8 @@ namespace Attention.Process
             _dataContainter.CreateCatData(id);
             _dataContainter.SetCurrentCat(id);
             _entityDataContainer.CreateEntityData(id);
-            Debug.Log(id);
-            _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0" });
+            _objectDataContainer.Register(id, new CatObject(id));
+            _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0", animator = "Cat" });
         }
     }
 }

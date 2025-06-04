@@ -520,7 +520,8 @@ MonoBehaviour:
   prefab: {fileID: 2432483902742288854, guid: a4ccb16ba60902c4cb1b55a485229688, type: 3}
   _spriteList:
   - {fileID: -1569016621, guid: 07f52b4ea07fe3e4c9169236c6846dd6, type: 3}
-  _animatorList: []
+  _animatorList:
+  - {fileID: 9100000, guid: 7406e76e7ef85914bab2818c2eed987b, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -4,8 +4,13 @@ using Util;
 
 namespace Attention.Data
 {
+    public interface IShopDataContainer
+    {
+        IEnumerable<ItemData> GetAllItemDatas();
+    }
+
     [DIPublisher]
-    public class ShopDataContainer
+    public class ShopDataContainer : IShopDataContainer
     {
         private Dictionary<int, ItemData> _shopItems;   // Key: id
 
@@ -35,6 +40,11 @@ namespace Attention.Data
         private void RegisterItemData(ItemData itemData)
         {
             _shopItems.Add(itemData.Index, itemData);
+        }
+
+        public IEnumerable<ItemData> GetAllItemDatas()
+        {
+            return _shopItems.Values;
         }
     }
 }

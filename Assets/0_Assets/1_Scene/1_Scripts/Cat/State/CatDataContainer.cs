@@ -49,15 +49,22 @@ namespace Attention.Data
         //    return _catDatas[id];
         //}
 
+        public State GetCurrentState(Guid id)
+        {
+            CatData catData = _catDatas[id];
+            return new State(catData.Happiness, catData.Bond, catData.Fullness, catData.Cleanliness);
+        }
+
         public void UpdateCatData(Guid id, CatChangeData data)
         {
             if (!_catDatas.ContainsKey(id)) { return; }
 
             CatData catData = _catDatas[id];
 
-            catData.satiety += data.satiety;
-            catData.stress += data.stress;
-            catData.affection += data.affection;
+            catData.Fullness = data.Fullness;
+            catData.Happiness = data.Happiness;
+            catData.Bond = data.Bond;
+            catData.Cleanliness = data.Cleanliness;
 
             _catDatas[id] = catData;
 

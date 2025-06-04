@@ -385,7 +385,7 @@ MonoBehaviour:
   _shopButton: {fileID: 2174525343920749702}
   _endingRoomButton: {fileID: 1888557437041671602}
   _settingButton: {fileID: 7788469424081767722}
-  _bottomButton: {fileID: 954649833849398999}
+  _windowButton: {fileID: 954649833849398999}
 --- !u!1 &3630355128941938717
 GameObject:
   m_ObjectHideFlags: 0

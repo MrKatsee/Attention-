@@ -1,3 +1,4 @@
+using Attention.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Attention.View
         public Entity GetEntity(Guid id);
 
         public List<Guid> GetIDs();
+
+        public void UpdateEntity(Guid id, EntityData data);
     }
 
     [DIPublisher]
@@ -38,8 +41,9 @@ namespace Attention.View
         {
             Entity target = _entityPrefabContainer.GetEntity();
             Entity entity = GameObject.Instantiate(target) as Entity;
-            entity.Init(_entityPrefabContainer.GetSprite(data.sprite));
             _entityDict[data.id] = entity;
+            if (data.animator != null) entity.Init(_entityPrefabContainer.GetSprite(data.sprite), _entityPrefabContainer.GetAnimator(data.animator));
+            else entity.Init(_entityPrefabContainer.GetSprite(data.sprite));
         }
 
         //public void CreateEntity(EntityType type)
@@ -88,6 +92,11 @@ namespace Attention.View
                 ids.Add(id);
             }
             return ids;
+        }
+
+        public void UpdateEntity(Guid id, EntityData data)
+        {
+            _entityDict[id].UpdateEntity(data);
         }
 
         public void DeactivateEntity(Guid id)

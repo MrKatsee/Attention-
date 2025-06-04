@@ -23,12 +23,14 @@ namespace Attention
         }
     }
 
-    public class EntityCreateEvent
+    public class EntityCreateEvent : IViewEvent
     {
+        public Guid id;
         public EntityType type;
 
-        public EntityCreateEvent(EntityType _type)
+        public EntityCreateEvent(Guid _id, EntityType _type)
         {
+            this.id = _id;
             type = _type;
         }
     }

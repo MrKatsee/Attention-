@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5434224322557738622}
   - component: {fileID: 7629614091805012116}
-  - component: {fileID: 4423492896717003219}
+  - component: {fileID: 6883243788538123941}
   m_Layer: 0
   m_Name: CatObject
   m_TagString: Untagged
@@ -74,18 +74,18 @@ SpriteRenderer:
   m_SortingLayerID: -2003175355
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1669647618, guid: c884bd84acf5d5f41a145a9413cab7a7, type: 3}
-  m_Color: {r: 0.99607843, g: 0.99607843, b: 0.99607843, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4423492896717003219
+--- !u!114 &6883243788538123941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,6 +94,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2432483902742288854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89f4daf71796a2c43860df42c9a916cc, type: 3}
+  m_Script: {fileID: 11500000, guid: b983a013ff711b34580abeff40c38dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

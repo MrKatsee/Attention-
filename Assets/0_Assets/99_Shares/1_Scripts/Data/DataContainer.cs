@@ -12,6 +12,7 @@ namespace Attention.Data
         private PlayerDataContainer _playerDataContainer;
         private ShopDataContainer _shopDataContainer;
         private TaskTimeContainer _taskDataContainer;
+        private EntityDataContainer _entityDataContainer;
 
         public DataContainer()
         {
@@ -21,6 +22,7 @@ namespace Attention.Data
             _playerDataContainer = new PlayerDataContainer();
             _shopDataContainer = new ShopDataContainer();
             _taskDataContainer = new TaskTimeContainer();
+            _entityDataContainer = new EntityDataContainer();
         }
     }
 }

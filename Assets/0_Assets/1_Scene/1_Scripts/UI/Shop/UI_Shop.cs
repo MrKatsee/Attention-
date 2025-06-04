@@ -1,7 +1,5 @@
 using Attention.View;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +13,7 @@ namespace Attention
 
         public void Init(Action onExitClick)
         {
-            _exitBtn.onClick.AddListener(() => onExitClick());
+            _exitBtn.onClick.AddListener(() => onExitClick());   
         }
     }
 }

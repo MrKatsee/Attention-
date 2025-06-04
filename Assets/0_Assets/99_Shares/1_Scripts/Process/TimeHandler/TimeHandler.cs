@@ -20,6 +20,7 @@ namespace Attention.Process
         {
             _timeData.UpdateTime(data.DeltaTime);
 
+            _eventQueue.EnqueueLogicEvent(new CurrentCatStateUpdateEvent(-data.DeltaTime, data.DeltaTime, 0));
             _eventQueue.EnqueueViewEvent(new TimeViewEvent(data.DeltaTime));
         }
 

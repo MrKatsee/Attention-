@@ -18,14 +18,21 @@ namespace Attention.View
         {
             DI.Register(this);
         }
+
         protected override void OnInitializeView()
         {
-            View.Init(() =>
-            {
-                _viewContainer.ActivateView(ViewType.SettingPanel);
-            });
+            View.Init(OnClickSettingButton, OnClickShopButton);
+        }
+
+        private void OnClickSettingButton()
+        {
+            _viewContainer.ActivateView(ViewType.SettingPanel);
+        }
+
+        private void OnClickShopButton()
+        {
+            _viewContainer.ActivateView(ViewType.Shop);
         }
     }
-
 }
 

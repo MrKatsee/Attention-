@@ -7,7 +7,7 @@ namespace Attention.Data
     [DIPublisher]
     public class ShopDataContainer
     {
-        private Dictionary<int, ItemData> _shopItems;
+        private Dictionary<int, ItemData> _shopItems;   // Key: id
 
         public ShopDataContainer()
         {
@@ -19,12 +19,12 @@ namespace Attention.Data
             _shopItems = new Dictionary<int, ItemData>();
 
             // 귀찮으니까 걍 하드코딩
-            RegisterItemData(new ItemData(0, "사료", 20f, 0f, 0f, 2f, 0f));
-            RegisterItemData(new ItemData(1, "고급 사료", 35f, 1f, 0f, 3f, 0f));
-            RegisterItemData(new ItemData(2, "최고급 사료", 50f, 2f, 0f, 4f, 0f));
-            RegisterItemData(new ItemData(10, "장난감", 60f, 3f, 5f, 0f, -2f));
-            RegisterItemData(new ItemData(20, "붕어빵", 70f, 3f, 1f, 3f, 0f));
-            RegisterItemData(new ItemData(30, "침대", 150f, 10f, 5f, 0f, 0f));
+            RegisterItemData(new ItemData(0, "사료", 20f, 0f, -1f, 2f, 0f));
+            RegisterItemData(new ItemData(1, "고급 사료", 35f, 0f, 0f, 3f, 0f));
+            RegisterItemData(new ItemData(2, "최고급 사료", 50f, 1f, 0f, 4f, 0f));
+            RegisterItemData(new ItemData(10, "간식", 30f, 2f, 1f, 1f, 0f));
+            RegisterItemData(new ItemData(11, "고급 간식", 45f, 3f, 2f, 1f, 0f));
+            RegisterItemData(new ItemData(12, "최고급 간식", 60f, 4f, 3f, 1f, 0f));
         }
 
         public ItemData GetItemData(int id)

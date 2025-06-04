@@ -7,10 +7,12 @@ namespace Attention.Data
     public class TaskTimeContainer
     {
         public float TaskTime { get; private set; }
+        public bool IsWorking { get; private set; }
 
         public TaskTimeContainer()
         {
             TaskTime = 0;
+            IsWorking = false;
             DI.Register(this);
         }
 

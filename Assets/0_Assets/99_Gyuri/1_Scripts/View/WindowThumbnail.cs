@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,9 @@ namespace Attention.View
     
     public class WindowThumbnail : MonoBehaviour
     {
-
         [SerializeField] private Button _button;
         [SerializeField] private RawImage _thumbnail;
-        [SerializeField] private Text _title;
-
-        private Action _onClick;
+        [SerializeField] private TextMeshProUGUI _title;
 
         public void SetThumbnail(Texture2D thumbnail)
         {
@@ -28,4 +26,5 @@ namespace Attention.View
             _button.onClick.AddListener(() => { action(index); });
         }
     }
+
 }

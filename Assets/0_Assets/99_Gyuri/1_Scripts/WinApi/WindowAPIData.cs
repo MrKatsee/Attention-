@@ -1,4 +1,3 @@
-
 using System;
 using UnityEngine;
 
@@ -6,49 +5,27 @@ namespace Attention.Window
 {
     public class WindowAPIData
     {
-        private IntPtr _hwnd;
-        private string _title;
-        private Texture2D _thumbnail;
-        private string _exePath;
+        public IntPtr HWnd { get; private set; }
+        public string Title { get; private set; }
+        public Texture2D Thumbnail { get; private set; }
+        public string ExePath { get; private set; }
 
         public WindowAPIData()
         {
-            _hwnd = IntPtr.Zero;
+            HWnd = IntPtr.Zero;
         }
+
         public WindowAPIData(IntPtr hWnd, string title = null, Texture2D thumbnail = null, string exePath = null)
         {
-            _hwnd = hWnd;
-            _title = title == null ? "" : title;
-            _thumbnail = thumbnail;
-            _exePath = exePath;
+            HWnd = hWnd;
+            Title = title == null ? "" : title;
+            Thumbnail = thumbnail;
+            ExePath = exePath;
         }
 
-        public IntPtr HWnd{
-            get { return _hwnd; }
-        }
-        public string Title
+        public void SetThumbnail(Texture2D thumbnail)
         {
-            get { return _title; }
-        }
-        public Texture2D Thumbnail
-        {
-            get { return _thumbnail; }
-            set { _thumbnail = value; }
-        }
-
-        public string exePath
-        {
-            get { return exePath; }
-        }
-
-        public bool IsHWnd(WindowAPIData data)
-        {
-            return _hwnd == data._hwnd;
-        }
-
-        public bool IsExePath(string exePath)
-        {
-            return _exePath.Equals(exePath);
+            Thumbnail = thumbnail;
         }
     }
 

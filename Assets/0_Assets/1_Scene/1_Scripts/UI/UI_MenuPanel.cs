@@ -13,11 +13,13 @@ namespace Attention.View
         [SerializeField] private Button _shopButton;
         [SerializeField] private Button _endingRoomButton;
         [SerializeField] private Button _settingButton;
+        [SerializeField] private Button _bottomButton;
 
-        public void Init(Action onClickSetting, Action onClickShop)
+        public void Init(Action onClickSetting, Action onClickShop, Action bottomAction)
         {
             _settingButton.onClick.AddListener(() => { onClickSetting(); });
             _shopButton.onClick.AddListener(() => { onClickShop(); });
+            _bottomButton.onClick.AddListener(() => { bottomAction(); });
         }
     }
 }

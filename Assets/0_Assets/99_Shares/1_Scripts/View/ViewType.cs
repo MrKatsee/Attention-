@@ -6,8 +6,9 @@ namespace Attention.View
         
         MenuPanel,
         SettingPanel,
-        WinCapture_Button,
-        
+
+        TaskTimer,
+
         WindowSelect,
         WindowThumbnail,
         Cat = 97,

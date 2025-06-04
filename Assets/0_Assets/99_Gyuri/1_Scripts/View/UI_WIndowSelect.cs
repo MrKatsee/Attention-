@@ -1,8 +1,8 @@
 using Attention.View;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Attention.Window
 {
@@ -13,10 +13,11 @@ namespace Attention.Window
         private const int MAX_INDEX = 20;
 
         [SerializeField] private List<WindowThumbnail> _thumbnails;
-        private Transform _scrollContent;
-        private Transform _thumbnailContainer;
+        [SerializeField] private Transform _scrollContent;
+        [SerializeField] private Transform _thumbnailContainer;
+        [SerializeField] private Button _quitButton;
 
-        public void Init(List<WindowAPIData> windows, Action<int> action)
+        public void UpdateThumbnails(List<WindowAPIData> windows, Action<int> action)
         {
             for(int i=0;i<windows.Count;i++)
             {
@@ -37,6 +38,11 @@ namespace Attention.Window
                 thumbnail.transform.SetParent(_thumbnailContainer);
                 thumbnail.gameObject.SetActive(false);
             }
+        }
+
+        public void Init(Action quitAction)
+        {
+            _quitButton.onClick.AddListener(() => quitAction());
         }
         
 

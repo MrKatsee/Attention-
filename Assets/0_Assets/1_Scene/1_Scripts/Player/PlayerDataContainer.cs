@@ -2,8 +2,13 @@ using Util;
 
 namespace Attention.Data
 {
+    public interface IPlayerDataContainer
+    {
+        float GetMoney();
+    }
+
     [DIPublisher]
-    public class PlayerDataContainer
+    public class PlayerDataContainer : IPlayerDataContainer
     {
         private float _money;
 

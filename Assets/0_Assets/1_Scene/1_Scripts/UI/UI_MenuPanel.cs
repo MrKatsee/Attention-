@@ -15,11 +15,22 @@ namespace Attention.View
         [SerializeField] private Button _settingButton;
         [SerializeField] private Button _windowButton;
 
+        [SerializeField] private Text _txtMoney;
+
         public void Init(Action onClickSetting, Action onClickShop, Action windowAction)
         {
             _settingButton.onClick.AddListener(() => { onClickSetting(); });
             _shopButton.onClick.AddListener(() => { onClickShop(); });
             _windowButton.onClick.AddListener(() => { windowAction(); });
+
+            Canvas canvas = GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 1000;
+        }
+
+        public void SetMoney(int money)
+        {
+            _txtMoney.text = money.ToString() + "원";
         }
     }
 }

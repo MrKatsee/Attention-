@@ -4,12 +4,12 @@ using Util;
 namespace Attention.Data
 {
     [DIPublisher]
-    public class TaskTimeContainer
+    public class TaskTimeDataContainer
     {
         public float TaskTime { get; private set; }
         public bool IsWorking { get; private set; }
 
-        public TaskTimeContainer()
+        public TaskTimeDataContainer()
         {
             TaskTime = 0;
             IsWorking = false;
@@ -21,6 +21,11 @@ namespace Attention.Data
             TaskTime += deltaTime;
         }
 
+        public void ResetTime()
+        {
+            TaskTime = 0;
+        }
+
         public string GetFormattedTime()
         {
             TimeSpan time = TimeSpan.FromSeconds(TaskTime);
@@ -28,6 +33,11 @@ namespace Attention.Data
                                  (int)time.TotalHours,
                                  time.Minutes,
                                  time.Seconds);
+        }
+
+        public void SetWorkingState(bool isWorking)
+        {
+            IsWorking = isWorking;
         }
     }
 }

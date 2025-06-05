@@ -22,9 +22,11 @@ namespace Attention.Process
         public void CreateCat(CreateCatEvent _event)
         {
             Guid id = Guid.NewGuid();
-            _dataContainter.CreateCatData(id);
+            _dataContainter.CreateCatData(id, _event.CatData);
             _dataContainter.SetCurrentCat(id);
+
             _entityDataContainer.CreateEntityData(id);
+
             _objectDataContainer.Register(id, new CatObject(id));
             _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0", animator = "Cat" });
         }

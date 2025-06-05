@@ -25,9 +25,9 @@ namespace Attention.Data
             }
         }
 
-        public void CreateCatData(Guid id)
+        public void CreateCatData(Guid id, string name)
         {
-            CatData data = new CatData();
+            CatData data = new CatData(name);
             _catDatas.Add(id, data);
         }
 
@@ -44,14 +44,19 @@ namespace Attention.Data
         //    }
         //}
 
-        //public CatData GetCatData(Guid id)
-        //{
-        //    return _catDatas[id];
-        //}
-
-        public State GetCurrentState(Guid id)
+        public CatData GetCatData(Guid id)
         {
-            CatData catData = _catDatas[id];
+            return _catDatas[id];
+        }
+
+        public State GetCurrentState()
+        {
+            if (currentCatId == Guid.Empty)
+            {
+                return new State();
+            }
+
+            CatData catData = _catDatas[currentCatId];
             return new State(catData.Happiness, catData.Bond, catData.Fullness, catData.Cleanliness);
         }
 
@@ -61,10 +66,10 @@ namespace Attention.Data
 
             CatData catData = _catDatas[id];
 
-            catData.Fullness = data.Fullness;
-            catData.Happiness = data.Happiness;
-            catData.Bond = data.Bond;
-            catData.Cleanliness = data.Cleanliness;
+            catData.Fullness += data.Fullness;
+            catData.Happiness += data.Happiness;
+            catData.Bond += data.Bond;
+            catData.Cleanliness += data.Cleanliness;
 
             _catDatas[id] = catData;
 

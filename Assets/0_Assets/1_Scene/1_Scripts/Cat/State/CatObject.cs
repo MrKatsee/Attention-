@@ -7,7 +7,7 @@ namespace Attention
     public class CatObject : IGameObject
     {
         private Guid id;
-        private Vector3 position;
+        private Vector3 position = new Vector3(0, -11);
         private bool direction;
 
         private float colliderX;
@@ -15,7 +15,7 @@ namespace Attention
 
         private float stateCooltime;
 
-        enum BehaviorState { idle, walk }
+        enum BehaviorState { idle, walk, Lay }
         BehaviorState bState;
         private int stateCount;
 
@@ -31,7 +31,7 @@ namespace Attention
 
         public (Guid, EntityData) GetEntityData()
         {
-            return (id, new EntityData { position = position, direction = direction });
+            return (id, new EntityData { position = position, direction = direction, animator = (int)bState });
         }
 
         public Vector3 GetPos()
@@ -51,9 +51,6 @@ namespace Attention
         {
             switch (bState) 
             {
-                case BehaviorState.idle:
-                    //idle(deltaTime);
-                    break;
                 case BehaviorState.walk:
                     walk(deltaTime);
                     break;
@@ -67,16 +64,25 @@ namespace Attention
             }
         }
 
-        //private void idle(float deltaTime)
-        //{
+        //private void idle(float deltaTime) { }
 
-        //}
 
         private void walk(float deltaTime)
         {
             position += new Vector3(3, 0, 0) * (direction ? 1 : -1) * deltaTime;
 
-            direction = UnityEngine.Random.Range(0.0f, 100.0f) > 99.9f ? !direction : direction;
+            if(position.x > 28)
+            {
+                direction = false;
+            }
+            else if(position.x < -28)
+            {
+                direction = true;
+            }
+            else
+            {
+                direction = UnityEngine.Random.Range(0.0f, 100.0f) > 99.9f ? !direction : direction;
+            }
         }
     }
 }

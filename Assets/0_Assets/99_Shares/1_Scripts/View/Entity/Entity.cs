@@ -36,6 +36,14 @@ namespace Attention.View
         {
             this.transform.position = data.position;
             this._renderer.flipX = data.direction;
+            if (_animator != null)
+            {
+                int anim = _animator.GetInteger("Anim");
+                if (anim != data.animator) {
+                    _animator.SetInteger("Anim", data.animator);
+                    _animator.SetTrigger("Change");
+                }
+            }
         }
     }
 }

@@ -6,10 +6,10 @@ namespace Attention.Data
     {
         public string name;
 
-        public float Happiness;    // Çàº¹ÇÔ
-        public float Bond;         // À¯´ë°¨
-        public float Fullness;     // Æ÷¸¸°¨
-        public float Cleanliness;  // Ã»°áµµ
+        public float Happiness;    // ï¿½àº¹ï¿½ï¿½
+        public float Bond;         // ï¿½ï¿½ï¿½ë°¨
+        public float Fullness;     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        public float Cleanliness;  // Ã»ï¿½áµµ
 
         public List<State> stateLogs;
 
@@ -17,10 +17,10 @@ namespace Attention.Data
         {
             this.name = name;
 
-            this.Happiness = 0.0f;
+            this.Happiness = 50.0f;
             this.Bond = 0.0f;
-            this.Fullness = 0.0f;
-            this.Cleanliness = 0.0f;
+            this.Fullness = 50.0f;
+            this.Cleanliness = 50.0f;
 
             this.stateLogs = new List<State>();
         }

@@ -22,7 +22,7 @@ namespace Attention.Process
             //CatData catData = _dataContainer.GetCatData(data.id);
 
             _dataContainer.UpdateCatData(data.id, data.data);
-            _eventQueue.EnqueueViewEvent(new CatStateViewEvent(data.id, _dataContainer.GetCurrentState(data.id)));
+            _eventQueue.EnqueueViewEvent(new CatStateViewEvent(data.id));
         }
 
         public void Update(CurrentCatStateUpdateEvent data)
@@ -34,7 +34,7 @@ namespace Attention.Process
             }
 
             _dataContainer.UpdateCatData(id, data.data);
-            _eventQueue.EnqueueViewEvent(new CatStateViewEvent(id, _dataContainer.GetCurrentState(id)));
+            _eventQueue.EnqueueViewEvent(new CurrentCatStateViewEvent());
         }
     }
 }

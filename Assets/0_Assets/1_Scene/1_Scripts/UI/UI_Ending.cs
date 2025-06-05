@@ -11,7 +11,7 @@ namespace Attention
         public override ViewType Type => ViewType.Ending;
 
         [SerializeField] private Button _exitBtn;
-        [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private Text _text;
         [SerializeField] private Image _image;
 
         public void Init(Action onClickExit)

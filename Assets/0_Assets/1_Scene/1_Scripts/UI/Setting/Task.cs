@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Task : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _task;
+    [SerializeField] private Text _task;
     [SerializeField] private Button _button;
 
     public void SetText(string task)

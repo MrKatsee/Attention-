@@ -20,7 +20,7 @@ namespace Attention.View
         {
             _imgItem.sprite = Resources.Load<Sprite>("Sprites/Shop/" + itemData.Index);
             _txtName.text = itemData.Name;
-            _txtPrice.text = itemData.Price.ToString("F4") + "원";
+            _txtPrice.text = itemData.Price.ToString() + "원";
         }
     }
 }

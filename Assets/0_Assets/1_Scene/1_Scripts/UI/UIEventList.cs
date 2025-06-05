@@ -16,6 +16,11 @@ namespace Attention
         }
     }
 
+    public class UpdateMoneyEvent : IViewEvent
+    {
+        public UpdateMoneyEvent() { }
+    }
+
     //public class CompleteLoadSceneEvent : ILogicEvent
     //{
     //    public SceneType SceneType;

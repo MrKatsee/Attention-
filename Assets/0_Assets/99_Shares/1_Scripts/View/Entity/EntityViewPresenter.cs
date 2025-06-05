@@ -16,7 +16,12 @@ namespace Attention.View
             DI.Register(this);
         }
 
-        public void OnEntityViewEvent(EntityUpdateByTypeEvent data)
+        public void OnEntityViewEvent(EntityUpdateEvent data)
+        {
+            _entityContainer.UpdateEntity(data.id, _entityDataContainer.GetEntityData(data.id));
+        }
+
+        public void OnEntityViewEventByType(EntityUpdateByTypeEvent data)
         {
             foreach (Guid id in _entityContainer.GetIDs())
             {

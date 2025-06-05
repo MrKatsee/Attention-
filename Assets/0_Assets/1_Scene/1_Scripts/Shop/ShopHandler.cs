@@ -1,4 +1,5 @@
 using Attention.Data;
+using Attention.Main.EventModule;
 using Attention.Process;
 using Util;
 
@@ -7,6 +8,7 @@ namespace Attention
     [DISubscriber]
     public class ShopHandler : ILogicEventHandler
     {
+        [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject] private ShopDataContainer _shopDataContainer;
         [Inject] private PlayerDataContainer _playerDataContainer;
 
@@ -26,6 +28,9 @@ namespace Attention
 
             ItemData itemData = _shopDataContainer.GetItemData(id);
             _playerDataContainer.SubtractMoney(itemData.Price);
+            _eventQueue.EnqueueLogicEvent(new CurrentCatStateUpdateEvent(itemData.GetChangeData()));
+
+            _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
         }
     }
 }

@@ -1,3 +1,4 @@
+using Attention.Data;
 using System;
 
 namespace Attention
@@ -5,46 +6,51 @@ namespace Attention
     public class CatStateUpdateEvent : ILogicEvent
     {
         public Guid id;
-        public float satiety;
-        public float stress;
-        public float affection;
+        public CatChangeData data;
 
-        public CatStateUpdateEvent(Guid id, float satiety, float stress, float affection)
+        public CatStateUpdateEvent(Guid id, float Happiness, float Bond, float Fullness, float Cleanliness)
         {
             this.id = id;
-            this.satiety = satiety;
-            this.stress = stress;
-            this.affection = affection;
+            data = new CatChangeData(Happiness, Bond, Fullness, Cleanliness);
         }
+
+        public CatStateUpdateEvent(Guid id, CatChangeData data)
+        {
+            this.id = id;
+            this.data = data;
+        }   
     }
 
     public class CurrentCatStateUpdateEvent : ILogicEvent
     {
-        public float satiety;
-        public float stress;
-        public float affection;
+        public CatChangeData data;
 
-        public CurrentCatStateUpdateEvent(float satiety, float stress, float affection)
+        public CurrentCatStateUpdateEvent(float Happiness, float Bond, float Fullness, float Cleanliness)
         {
-            this.satiety = satiety;
-            this.stress = stress;
-            this.affection = affection;
+            this.data = new CatChangeData(Happiness, Bond, Fullness, Cleanliness);
+        }
+
+        public CurrentCatStateUpdateEvent(CatChangeData data)
+        {
+            this.data = data;
         }
     }
 
     public class CatStateViewEvent : IViewEvent
     {
         public Guid id;
-        public float satiety;
-        public float stress;
-        public float affection;
+        public State state;
 
-        public CatStateViewEvent(Guid id, float satiety, float stress, float affection)
+        public CatStateViewEvent(Guid id, float Happiness, float Bond, float Fullness, float Cleanliness)
         {
             this.id = id;
-            this.satiety = satiety;
-            this.stress = stress;
-            this.affection = affection;
+            this.state = new State(Happiness, Bond, Fullness, Cleanliness);
+        }
+
+        public CatStateViewEvent(Guid id, State state)
+        {
+            this.id = id;
+            this.state = state;
         }
     }
 }

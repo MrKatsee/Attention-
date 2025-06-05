@@ -1,3 +1,5 @@
+using Attention.Data;
+
 namespace Attention
 {
     public class ItemData
@@ -21,6 +23,11 @@ namespace Attention
             Bond = bond;
             Fullness = fullness;
             Cleanliness = cleanliness;
+        }
+
+        public CatChangeData GetChangeData()
+        {
+            return new CatChangeData(Happiness, Bond, Fullness, Cleanliness);
         }
     }
 }

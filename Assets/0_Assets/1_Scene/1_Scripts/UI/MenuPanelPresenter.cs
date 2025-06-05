@@ -4,6 +4,7 @@ using Attention.Window;
 using UnityEngine;
 using Util;
 
+
 namespace Attention.View
 {
     [DISubscriber]
@@ -55,6 +56,8 @@ namespace Attention.View
         {
             UpdateMoney();
         }
+
+
     }
 }
 

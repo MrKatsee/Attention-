@@ -17,15 +17,17 @@ namespace Attention.View
 
         [SerializeField] private Button _addTaskButton;
         [SerializeField] private Button _quitButton;
+        [SerializeField] private Button _exitButton;
 
         [SerializeField] private Transform _taskContainer;
         [SerializeField] private Transform _scrollContent;
         [SerializeField] private List<Task> _tasks;
 
-        public void Init(Action addAction, Action quitAction)
+        public void Init(Action addAction, Action quitAction, Action exitAction)
         {
             _addTaskButton.onClick.AddListener(() => { addAction(); });        
             _quitButton.onClick.AddListener(() => {  quitAction(); });
+            _exitButton.onClick.AddListener(() => {  exitAction(); });
         }
 
         public void UpdateTasks(List<string> tasks, Action<int> action)

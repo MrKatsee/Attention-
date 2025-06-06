@@ -1,5 +1,6 @@
 using Attention.Data;
 using Attention.Main.EventModule;
+using Attention.Process;
 using System.Collections.Generic;
 using Util;
 
@@ -37,7 +38,8 @@ namespace Attention.View
         {
             View.Init(
                 () => _eventQueue.EnqueueLogicEvent(new WindowCaptureLogicEvent()),
-                () => _viewContainer.DeactivateView(ViewType.SettingPanel));
+                () => _viewContainer.DeactivateView(ViewType.SettingPanel),
+                () => _eventQueue.EnqueueLogicEvent(new ExitEvent()));
         }
 
         public override void OnActivateView()

@@ -1,5 +1,6 @@
 using Attention.Data;
 using Attention.Main.EventModule;
+using Attention.Process;
 using Attention.Window;
 using UnityEngine;
 using Util;
@@ -24,7 +25,8 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            View.Init(OnClickSettingButton, OnClickShopButton, OnClickWindowButton);
+            //View.Init(OnClickSettingButton, OnClickShopButton, OnClickWindowButton);
+            View.Init(OnClickSettingButton, OnClickEndingButton, OnClickShopButton, OnClickWindowButton);
         }
 
         public override void OnActivateView()
@@ -40,6 +42,14 @@ namespace Attention.View
         private void OnClickShopButton()
         {
             _viewContainer.ActivateView(ViewType.Shop);
+            _viewContainer.ActivateView(ViewType.State);
+            _eventQueue.EnqueueViewEvent(new CurrentCatStateViewEvent());
+        }
+
+        private void OnClickEndingButton()
+        {
+            //_viewContainer.ActivateView(ViewType.Ending);
+            _eventQueue.EnqueueLogicEvent(new EndEvent());
         }
 
         private void OnClickWindowButton()

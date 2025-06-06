@@ -31,7 +31,7 @@ namespace Attention
 
         public void Register(Guid id, IGameObject obj)
         {
-            UnityEngine.Debug.Log("Regist : " + id);
+            //UnityEngine.Debug.Log("Regist : " + id);
             objDict[id] = obj;
         }
 

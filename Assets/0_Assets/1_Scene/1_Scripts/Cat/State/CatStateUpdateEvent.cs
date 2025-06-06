@@ -18,7 +18,7 @@ namespace Attention
         {
             this.id = id;
             this.data = data;
-        }   
+        }
     }
 
     public class CurrentCatStateUpdateEvent : ILogicEvent
@@ -36,21 +36,15 @@ namespace Attention
         }
     }
 
+    public class CurrentCatStateViewEvent : IViewEvent { }
+
     public class CatStateViewEvent : IViewEvent
     {
-        public Guid id;
-        public State state;
+        public Guid id { get; private set; }
 
-        public CatStateViewEvent(Guid id, float Happiness, float Bond, float Fullness, float Cleanliness)
+        public CatStateViewEvent(Guid id)
         {
             this.id = id;
-            this.state = new State(Happiness, Bond, Fullness, Cleanliness);
-        }
-
-        public CatStateViewEvent(Guid id, State state)
-        {
-            this.id = id;
-            this.state = state;
         }
     }
 }

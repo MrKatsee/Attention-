@@ -9,6 +9,8 @@ namespace Attention.View
 
         TaskTimer,
 
+        State,
+        Ending,
         WindowSelect,
         WindowThumbnail,
         Entity = 97,

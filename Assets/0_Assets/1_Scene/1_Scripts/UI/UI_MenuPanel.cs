@@ -28,6 +28,18 @@ namespace Attention.View
             canvas.sortingOrder = 1000;
         }
 
+        public void Init(Action onClickSetting, Action endingAtion, Action onClickShop, Action windowAction)
+        {
+            _settingButton.onClick.AddListener(() => { onClickSetting(); });
+            _endingRoomButton.onClick.AddListener(() => { endingAtion(); });
+            _shopButton.onClick.AddListener(() => { onClickShop(); });
+            _windowButton.onClick.AddListener(() => { windowAction(); });
+
+            Canvas canvas = GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 1000;
+        }
+
         public void SetMoney(int money)
         {
             _txtMoney.text = money.ToString() + "원";

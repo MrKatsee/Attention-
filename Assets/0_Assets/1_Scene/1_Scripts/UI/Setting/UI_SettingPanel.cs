@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,13 +32,18 @@ namespace Attention.View
 
         public void UpdateTasks(List<string> tasks, Action<int> action)
         {
-            for(int i=0; i < tasks.Count; ++i)
+            List<string> taskList = tasks.Select(s =>
+            {
+                int index = s.LastIndexOf('\\');
+                return (index != -1) ? s.Substring(index + 1) : s;
+            }).ToList();
+            for (int i=0; i < taskList.Count; ++i)
             {
                 if (i >= MAX_INDEX) break;
                 Task task = _tasks[i];
                 task.transform.SetParent(_scrollContent);
                 task.gameObject.SetActive(true);
-                task.SetText(tasks[i]);
+                task.SetText(taskList[i]);
                 task.SetListener(action, i);
             }
         }

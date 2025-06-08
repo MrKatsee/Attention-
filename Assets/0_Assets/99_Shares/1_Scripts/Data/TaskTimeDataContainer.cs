@@ -6,19 +6,28 @@ namespace Attention.Data
     [DIPublisher]
     public class TaskTimeDataContainer
     {
+        private const float MULTIPLIER = 1.0f;
         public float TaskTime { get; private set; }
-        public bool IsWorking { get; private set; }
+        public int PastMoney { get; private set; }
+        public int CurrentMoney { get; private set; }
+
+
 
         public TaskTimeDataContainer()
         {
             TaskTime = 0;
-            IsWorking = false;
             DI.Register(this);
         }
 
         public void UpdateTime(float deltaTime)
         {
             TaskTime += deltaTime;
+            CurrentMoney = (int)((int)TaskTime * MULTIPLIER);
+        }
+
+        public void UpdateMoney()
+        {
+            PastMoney = CurrentMoney;
         }
 
         public void ResetTime()
@@ -35,10 +44,7 @@ namespace Attention.Data
                                  time.Seconds);
         }
 
-        public void SetWorkingState(bool isWorking)
-        {
-            IsWorking = isWorking;
-        }
+
     }
 }
 

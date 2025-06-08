@@ -116,8 +116,15 @@ namespace Attention.Window
             string exePath = GetWindowExecutablePath(hWnd);
             if (string.IsNullOrWhiteSpace(title))
                 title = "Untitled";
+            string name = title + " - " + className;
+            int index = name.IndexOf("HandWrapper");
 
-            return new WindowAPIData(hWnd, $"{title} - {className} ", null, exePath);
+            if (index != -1)
+            {
+                name = name.Substring(0, index);
+            }
+
+            return new WindowAPIData(hWnd, name, null, exePath);
         }
     
         public void SetWindowTransparent(WindowAPIData window)

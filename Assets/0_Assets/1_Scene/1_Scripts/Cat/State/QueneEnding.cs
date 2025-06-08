@@ -8,9 +8,9 @@ namespace Attention
         public float GetScore(CatData data)
         {
             float score = 0;
-            foreach (State state in data.stateLogs)
+            foreach (Log log in data.logs)
             {
-                if (state.Happiness > 70 && state.Fullness > 50)
+                if (log.listState.Happiness > 70 && log.listState.Fullness > 50)
                 {
                     score += 20;
                 }

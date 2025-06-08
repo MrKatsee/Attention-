@@ -11,6 +11,8 @@ namespace Attention.View
 
         State,
         Ending,
+        Log,
+        DataList,
         WindowSelect,
         WindowThumbnail,
         Entity = 97,

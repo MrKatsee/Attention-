@@ -1,5 +1,6 @@
 using Attention.Data;
 using Attention.Main.EventModule;
+using System;
 using Util;
 
 namespace Attention.Process
@@ -8,7 +9,7 @@ namespace Attention.Process
 
     public class EndViewEvent : IViewEvent
     {
-        string ending;
+        public string ending;
         
         public EndViewEvent(string ending) 
         {
@@ -32,7 +33,13 @@ namespace Attention.Process
 
         public void OnEndEvent(EndEvent _event) 
         {
-            CatData data = _catDataContainer.GetCatData(_catDataContainer.currentCatId);
+            Guid id = _catDataContainer.currentCatId;
+            if (id == Guid.Empty)
+            {
+                return;
+            }
+
+            CatData data = _catDataContainer.GetCatData(id);
 
             string ending = _endinManager.GetEnding(data);
             _eventQueue.EnqueueViewEvent(new EndViewEvent(ending));

@@ -18,7 +18,7 @@ namespace Attention.View
     [DIPublisher]
     public class EntityContainer : IEntityContainer
     {
-        private EntityResourceContainer _entityPrefabContainer;
+        private ResourceContainer _entityPrefabContainer;
 
         private Dictionary<Guid, Entity> _entityDict;
         //private List<Entity> _entityPool;
@@ -33,7 +33,7 @@ namespace Attention.View
         
         public void Init()
         {
-            _entityPrefabContainer = GameObject.FindAnyObjectByType<EntityResourceContainer>();
+            _entityPrefabContainer = GameObject.FindAnyObjectByType<ResourceContainer>();
             _entityPrefabContainer.Init();
         }
 

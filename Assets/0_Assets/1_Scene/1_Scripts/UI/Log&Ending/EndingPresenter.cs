@@ -1,4 +1,5 @@
 using Attention.Data;
+using Attention.Main.EventModule;
 using Attention.Process;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Attention.View
     public class EndingPresenter : ViewPresenter<UI_Ending>
     {
         [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
+        [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
 
         public EndingPresenter()
         {
@@ -19,11 +21,18 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            View.Init(OnExitClick);
+            View.Init(OnExitClick, OnLogViewClick);
         }
 
         private void OnExitClick()
         {
+            _viewContainer.DeactivateView(ViewType.Ending);
+        }
+
+        private void OnLogViewClick()
+        {
+            _eventQueue.EnqueueViewEvent(new LogViewUpdateEvent());
+            _viewContainer.ActivateView(ViewType.Log);
             _viewContainer.DeactivateView(ViewType.Ending);
         }
 

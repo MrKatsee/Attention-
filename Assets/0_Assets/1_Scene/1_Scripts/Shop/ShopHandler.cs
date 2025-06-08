@@ -28,7 +28,7 @@ namespace Attention
 
             ItemData itemData = _shopDataContainer.GetItemData(id);
             _playerDataContainer.SubtractMoney(itemData.Price);
-            _eventQueue.EnqueueLogicEvent(new CurrentCatStateUpdateEvent(itemData.GetChangeData()));
+            _eventQueue.EnqueueLogicEvent(new CurrentCatItemUseEvent(itemData));
 
             _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
         }

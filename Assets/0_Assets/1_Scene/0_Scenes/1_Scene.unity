@@ -475,6 +475,8 @@ MonoBehaviour:
   - {fileID: 562042396813959280, guid: 4f729062e04c985448aa8ccbe7943c18, type: 3}
   - {fileID: 8697330757475035968, guid: 925a688af3567e84d85abd85ec636c50, type: 3}
   - {fileID: 6807022123708880693, guid: 087aa8e170cd6874a83050adfb293184, type: 3}
+  - {fileID: 2366684334133372154, guid: b07ac1afc7a98604089e7bcd17b2727d, type: 3}
+  - {fileID: 7809598432084313468, guid: c8045cd8f03a8a946b258f55ee108970, type: 3}
 --- !u!1 &2012215453
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,12 +518,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2012215453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384242cf3b856484fbf3501316ab708f, type: 3}
+  m_Script: {fileID: 11500000, guid: ea92c530b779c6949815d4d88456e35e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2432483902742288854, guid: a4ccb16ba60902c4cb1b55a485229688, type: 3}
   _spriteList:
   - {fileID: -1569016621, guid: 07f52b4ea07fe3e4c9169236c6846dd6, type: 3}
+  - {fileID: 21300000, guid: 9801d7f7d7800c14e9bf615bd63d3674, type: 3}
+  - {fileID: 21300000, guid: c0fc4fa327c2968479556b936fcc4a0d, type: 3}
   _animatorList:
   - {fileID: 9100000, guid: 7406e76e7ef85914bab2818c2eed987b, type: 2}
 --- !u!1660057539 &9223372036854775807

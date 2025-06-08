@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Attention.View
 {
-    public class EntityResourceContainer : MonoBehaviour
+    public class ResourceContainer : MonoBehaviour
     {
         //[SerializeField] private List<Entity> _entityPrefabList;
         [SerializeField] private GameObject prefab;
@@ -14,7 +14,7 @@ namespace Attention.View
         private Dictionary<string, Sprite> _spriteDIct;
         private Dictionary<string, RuntimeAnimatorController> _animatorDIct;
 
-        public EntityResourceContainer() 
+        public ResourceContainer() 
         { 
             //_entityPrefabList = new List<Entity>();
             _spriteList = new List<Sprite>();

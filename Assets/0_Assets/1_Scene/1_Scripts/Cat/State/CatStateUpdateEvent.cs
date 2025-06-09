@@ -36,6 +36,16 @@ namespace Attention
         }
     }
 
+    public class CurrentCatItemUseEvent : ILogicEvent
+    {
+        public ItemData data;
+
+        public CurrentCatItemUseEvent(ItemData data)
+        {
+            this.data = data;
+        }
+    }
+
     public class CurrentCatStateViewEvent : IViewEvent { }
 
     public class CatStateViewEvent : IViewEvent

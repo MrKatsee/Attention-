@@ -34,6 +34,8 @@ namespace Attention.View
 
         public void UpdateEntity(EntityData data)
         {
+            if (data == null) { return; }
+
             this.transform.position = data.position;
             this._renderer.flipX = data.direction;
             if (_animator != null)

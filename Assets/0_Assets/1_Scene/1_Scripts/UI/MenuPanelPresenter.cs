@@ -25,7 +25,6 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            //View.Init(OnClickSettingButton, OnClickShopButton, OnClickWindowButton);
             View.Init(OnClickSettingButton, OnClickEndingButton, OnClickShopButton, OnClickWindowButton);
         }
 

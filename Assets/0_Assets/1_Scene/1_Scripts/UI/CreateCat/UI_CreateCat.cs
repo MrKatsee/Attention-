@@ -16,5 +16,10 @@ namespace Attention
         {
             _btn.onClick.AddListener(() => onClick(_inputCatData.text));
         }
+
+        public void Resetting()
+        {
+            _inputCatData.text = "";
+        }
     }
 }

@@ -34,4 +34,14 @@ namespace Attention
             type = _type;
         }
     }
+
+    public class EntityRemoveEvent : ILogicEvent
+    {
+        public Guid id;
+
+        public EntityRemoveEvent(Guid id)
+        {
+            this.id = id;
+        }
+    }
 }

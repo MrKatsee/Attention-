@@ -1,28 +1,69 @@
+using System;
 using System.Collections.Generic;
 
 namespace Attention.Data
 {
+    [Serializable]
     public struct CatData
     {
         public string name;
+        public DateTime startTime;
+
+        public string Ending;
+        public float usedCoin;
+        public float remainCoin;
+        public float score;
+        public float recordTime;
+
+        public List<string> useItem;
 
         public float Happiness;    // �ູ��
         public float Bond;         // ���밨
         public float Fullness;     // ������
         public float Cleanliness;  // û�ᵵ
 
-        public List<State> stateLogs;
+        public List<Log> logs;
 
         public CatData(string name)
         {
             this.name = name;
+
+            this.startTime = DateTime.Now;
+
+            this.Ending = "";
+            this.usedCoin = 0;
+            this.recordTime = 0;
+            this.remainCoin = 0;
+            this.score = 0;
 
             this.Happiness = 50.0f;
             this.Bond = 0.0f;
             this.Fullness = 50.0f;
             this.Cleanliness = 50.0f;
 
-            this.stateLogs = new List<State>();
+            this.useItem = new List<string>();
+            this.logs = new List<Log>();
+        }
+    }
+
+    public struct Log
+    {
+        public float timeRecord;
+        public State listState;
+        public List<string> useItem;
+
+        public Log(float timeRecord, float happiness, float bond, float fullness, float cleanliness)
+        {
+            this.timeRecord = timeRecord;
+            this.listState = new State(happiness, bond, fullness, cleanliness);
+            useItem = new List<string>();
+        }
+
+        public Log(float timeRecord, float happiness, float bond, float fullness, float cleanliness, List<string> usedItem)
+        {
+            this.timeRecord = timeRecord;
+            this.listState = new State(happiness, bond, fullness, cleanliness);
+            this.useItem = usedItem;
         }
     }
 
@@ -44,6 +85,7 @@ namespace Attention.Data
 
     public struct CatChangeData
     {
+        public float RecordTime { get; private set; }
         public float Happiness { get; private set; } 
         public float Bond { get; private set; } 
         public float Fullness { get; private set; } 
@@ -51,18 +93,20 @@ namespace Attention.Data
 
         public CatChangeData(float Happiness, float Bond, float Fullness, float Cleanliness)
         {
+            this.RecordTime = 0;
             this.Happiness = Happiness;
             this.Bond = Bond;
             this.Fullness = Fullness;
             this.Cleanliness = Cleanliness;
         }
 
-        public CatChangeData(CatData data)
+        public CatChangeData(float RecordTime, float Happiness, float Bond, float Fullness, float Cleanliness)
         {
-            this.Happiness = data.Happiness;
-            this.Bond = data.Bond;
-            this.Fullness = data.Fullness;
-            this.Cleanliness = data.Cleanliness;
+            this.RecordTime = RecordTime;
+            this.Happiness = Happiness;
+            this.Bond = Bond;
+            this.Fullness = Fullness;
+            this.Cleanliness = Cleanliness;
         }
     }
 }

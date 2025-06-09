@@ -56,7 +56,7 @@ namespace Attention.Process
 
         private void OnNewGame()
         {
-            _viewLoader.ActivateView(ViewType.CreateCat);
+            _eventQueue.EnqueueLogicEvent(new StartEvent());
         }
 
         private void OnLoadGame()

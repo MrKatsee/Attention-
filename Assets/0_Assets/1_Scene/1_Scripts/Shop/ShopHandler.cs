@@ -27,8 +27,10 @@ namespace Attention
             int id = data.ID;
 
             ItemData itemData = _shopDataContainer.GetItemData(id);
+            if (_playerDataContainer.GetMoney() < itemData.Price) { return; }
+
             _playerDataContainer.SubtractMoney(itemData.Price);
-            _eventQueue.EnqueueLogicEvent(new CurrentCatStateUpdateEvent(itemData.GetChangeData()));
+            _eventQueue.EnqueueLogicEvent(new CurrentCatItemUseEvent(itemData));
 
             _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
         }

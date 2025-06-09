@@ -36,5 +36,17 @@ namespace Attention.Process
             _dataContainer.UpdateCatData(id, data.data);
             _eventQueue.EnqueueViewEvent(new CurrentCatStateViewEvent());
         }
+
+        public void UpdateByItem(CurrentCatItemUseEvent data)
+        {
+            Guid id = _dataContainer.currentCatId;
+            if (id == Guid.Empty)
+            {
+                return;
+            }
+
+            _dataContainer.UseItem(id, data.data);
+            _eventQueue.EnqueueViewEvent(new CurrentCatStateViewEvent());
+        }
     }
 }

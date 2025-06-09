@@ -1,5 +1,6 @@
 using Attention.Data;
 using System.Collections.Generic;
+using UnityEngine;
 using Util;
 
 namespace Attention
@@ -20,10 +21,10 @@ namespace Attention
             endingDict[name] = data;
         }
 
-        public string GetEnding(CatData data)
+        public (string, float) GetEnding(CatData data)
         {
             float maxScore = 0;
-            string ending = "";
+            string ending = "BadEnding";
             foreach (string key in endingDict.Keys)
             {
                 float score = endingDict[key].GetScore(data);
@@ -33,8 +34,9 @@ namespace Attention
                     ending = key;
                 }
             }
+            Debug.Log(maxScore);
 
-            return ending;
+            return (ending, maxScore);
         }
     }
 

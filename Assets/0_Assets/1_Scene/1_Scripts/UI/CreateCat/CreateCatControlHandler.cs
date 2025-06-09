@@ -2,7 +2,6 @@ using Attention.Data;
 using Attention.View;
 using System;
 using Util;
-using UnityEngine;
 
 namespace Attention.Process
 {
@@ -29,6 +28,17 @@ namespace Attention.Process
 
             _objectDataContainer.Register(id, new CatObject(id));
             _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0", animator = "Cat" });
+        }
+
+        public void RemoveCat(EntityRemoveEvent _event)
+        {
+            _dataContainter.SetCurrentCat(Guid.Empty);
+
+            _entityDataContainer.RemoveEntityData(_event.id);
+
+            _objectDataContainer.Remove(_event.id);
+
+            _entityLoader.DeactivateEntity(_event.id);
         }
     }
 }

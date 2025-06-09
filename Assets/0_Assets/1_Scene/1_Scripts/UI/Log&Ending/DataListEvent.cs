@@ -8,11 +8,6 @@ namespace Attention
     {
         public Guid id;
 
-        public LogViewUpdateEvent()
-        {
-            id = Guid.Empty;
-        }
-
         public LogViewUpdateEvent(Guid id)
         {
             this.id = id;

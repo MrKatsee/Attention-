@@ -10,21 +10,23 @@ namespace Attention
     {
         public override ViewType Type => ViewType.Ending;
 
-        [SerializeField] private Button _exitBtn;
         [SerializeField] private Button _logViewBtn;
-        [SerializeField] private Text _text;
+        [SerializeField] private Text _title;
+        [SerializeField] private Text _score;
+        [SerializeField] private Text _desc;
         [SerializeField] private Image _image;
 
-        public void Init(Action onClickExit, Action onClickLogView)
+        public void Init(Action onClickLogView)
         {
-            _exitBtn.onClick.AddListener(() => onClickExit());
             _logViewBtn.onClick.AddListener(() => onClickLogView());
         }
 
-        public void OnEnding(Sprite sprite, string text)
+        public void OnEnding(Sprite sprite, string title, float score, string desc)
         {
-            _text.text = text;
+            _title.text = title;
             _image.sprite = sprite;
+            _score.text = (int)score + "Á¡!";
+            _desc.text = desc;
         }
     }
 }

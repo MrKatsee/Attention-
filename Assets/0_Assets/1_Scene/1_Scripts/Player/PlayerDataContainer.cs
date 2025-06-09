@@ -19,6 +19,11 @@ namespace Attention.Data
             DI.Register(this);
         }
 
+        public void SetMoney(float money)
+        {
+            _money = money;
+        }
+
         public void AddMoney(float money)
         {
             _money += money;

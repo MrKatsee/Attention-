@@ -9,7 +9,10 @@ namespace Attention.Data
         public string name;
         public DateTime startTime;
 
+        public string Ending;
         public float usedCoin;
+        public float remainCoin;
+        public float score;
         public float recordTime;
 
         public List<string> useItem;
@@ -26,8 +29,12 @@ namespace Attention.Data
             this.name = name;
 
             this.startTime = DateTime.Now;
+
+            this.Ending = "";
             this.usedCoin = 0;
             this.recordTime = 0;
+            this.remainCoin = 0;
+            this.score = 0;
 
             this.Happiness = 50.0f;
             this.Bond = 0.0f;

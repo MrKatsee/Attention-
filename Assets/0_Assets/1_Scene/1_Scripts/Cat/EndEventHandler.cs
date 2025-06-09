@@ -1,5 +1,6 @@
 using Attention.Data;
 using Attention.Main.EventModule;
+using Attention.View;
 using System;
 using Util;
 
@@ -9,11 +10,11 @@ namespace Attention.Process
 
     public class EndViewEvent : IViewEvent
     {
-        public string ending;
+        public Guid id;
         
-        public EndViewEvent(string ending) 
+        public EndViewEvent(Guid id) 
         {
-            this.ending = ending;
+            this.id = id;
         }
     }
 
@@ -21,13 +22,16 @@ namespace Attention.Process
     public class EndEventHAndler : ILogicEventHandler
      {
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
+        [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
         [Inject] private CatDataContainer _catDataContainer;
+        [Inject] private PlayerDataContainer _playerDataContainer;
         private EndingManager _endinManager;
 
         public EndEventHAndler()
         {
             _endinManager = new EndingManager();
-            _endinManager.resgistEnding("Quene", new QueneEnding());
+            _endinManager.resgistEnding("QueneEnding", new QueneEnding());
+            _endinManager.resgistEnding("BadEnding", new BadEnding());
             DI.Register(this);
         }
 
@@ -41,8 +45,14 @@ namespace Attention.Process
 
             CatData data = _catDataContainer.GetCatData(id);
 
-            string ending = _endinManager.GetEnding(data);
-            _eventQueue.EnqueueViewEvent(new EndViewEvent(ending));
+            var ending = _endinManager.GetEnding(data);
+            _catDataContainer.SetEnding(id, ending.Item1);
+            _catDataContainer.SetScore(id, ending.Item2);
+            _catDataContainer.SetRemainCoin(id, _playerDataContainer.GetMoney());
+
+            _viewContainer.DeactivateView(ViewType.Shop);
+            _viewContainer.DeactivateView(ViewType.State);
+            _eventQueue.EnqueueViewEvent(new EndViewEvent(id));
         }
     }
 }

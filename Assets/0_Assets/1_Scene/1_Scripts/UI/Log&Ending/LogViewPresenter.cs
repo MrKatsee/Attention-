@@ -3,6 +3,7 @@ using Attention.Main.EventModule;
 using Attention.Process;
 using Attention.View;
 using System;
+using System.Diagnostics;
 using Util;
 
 namespace Attention
@@ -13,6 +14,7 @@ namespace Attention
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
         [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
         [Inject] private CatDataContainer _catContainer;
+        Guid id;
 
         public LogViewPrsenter()
         {
@@ -29,9 +31,14 @@ namespace Attention
         //    View.Resetting(_catContainer.GetCatData(_catContainer.currentCatId));
         //}
 
+        public override void OnActivateView()
+        {
+            base.OnActivateView();
+            View.Resetting(_catContainer.GetCatData(id));
+        }
+
         public void Set(LogViewUpdateEvent data)
         {
-            Guid id;
             if(data.id == Guid.Empty)
             {
                 id = _catContainer.currentCatId;
@@ -40,7 +47,8 @@ namespace Attention
             {
                 id = data.id;  
             }
-            View.Resetting(_catContainer.GetCatData(id));
+
+            _viewContainer.ActivateView(ViewType.Log);
         }
 
         private void OnExitClick()

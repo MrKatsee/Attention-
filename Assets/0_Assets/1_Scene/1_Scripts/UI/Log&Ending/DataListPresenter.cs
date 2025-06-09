@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Util;
 using Attention.Main.EventModule;
 using Attention.Process;
+using UnityEngine;
 
 namespace Attention.View
 {
@@ -21,7 +22,7 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            View.Init(NewStartButton);
+            View.Init(NewStartButton, GetSprite);
         }
 
         public override void OnActivateView()
@@ -36,10 +37,14 @@ namespace Attention.View
         //    View.Set(list, LoadLogView);
         //}
 
+        public Sprite GetSprite(string name)
+        {
+            return GameObject.FindAnyObjectByType<ResourceContainer>().GetSprite(name);
+        }
+
         public void LoadLogView(Guid id)
         {
-            _eventQueue.EnqueueViewEvent(new LogViewUpdateEvent(id));
-            _viewContainer.ActivateView(ViewType.Log);
+            _eventQueue.EnqueueViewEvent(new EndViewEvent(id));
             _viewContainer.DeactivateView(ViewType.DataList);
         }
 

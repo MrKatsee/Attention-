@@ -1,8 +1,7 @@
 using Attention.Data;
 using Attention.Main.EventModule;
 using Attention.Process;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Util;
 
@@ -13,6 +12,12 @@ namespace Attention.View
     {
         [Inject(typeof(ViewLoader))] private IViewLoader _viewContainer;
         [Inject(typeof(EventBus))] private IEventQueue _eventQueue;
+        [Inject] private CatDataContainer _catDataContainer;
+
+        Sprite sprite;
+        string title, desc;
+        float score;
+        Guid id;
 
         public EndingPresenter()
         {
@@ -21,7 +26,12 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            View.Init(OnExitClick, OnLogViewClick);
+            View.Init(OnLogViewClick);
+        }
+
+        public override void OnActivateView()
+        {
+            View.OnEnding(sprite, title, score, desc);
         }
 
         private void OnExitClick()
@@ -31,13 +41,20 @@ namespace Attention.View
 
         private void OnLogViewClick()
         {
-            _eventQueue.EnqueueViewEvent(new LogViewUpdateEvent());
-            _viewContainer.ActivateView(ViewType.Log);
-            _viewContainer.DeactivateView(ViewType.Ending);
+            _eventQueue.EnqueueViewEvent(new LogViewUpdateEvent(this.id));
+            _viewContainer.DeactivateView(ViewType.Ending); 
         }
 
-        private void OnEndng(EndViewEvent _event)
+        private void OnEnding(EndViewEvent _event)
         {
+            this.id = _event.id;
+            string ending = _catDataContainer.GetCatData(this.id).Ending;
+            ResourceContainer resourceContainer = GameObject.FindAnyObjectByType<ResourceContainer>();
+            sprite = resourceContainer.GetSprite(ending);
+            title = resourceContainer.GetEndingTitle(ending);
+            desc = resourceContainer.GetEndingDesc(ending);
+            score = _catDataContainer.GetCatData(this.id).score;
+
             _viewContainer.ActivateView(ViewType.Ending);
         }
     }

@@ -89,7 +89,7 @@ namespace Attention.View
                 }
             }
 
-            _textLog.SetText(data.startTime, maxRecord, data.usedCoin, maxUseItem);
+            _textLog.SetText(data.startTime, maxRecord, data.remainCoin, data.usedCoin, maxUseItem);
             _timeGraph.Set((maxRecord + 3 > 24 ? 24 : (int)maxRecord + 3), record);
             ViewLog();
         }

@@ -26,10 +26,18 @@ namespace Attention.Data
             }
         }
 
+        public void SetEnding(Guid id, string ending)
+        {
+            CatData data = _catDatas[id];
+            data.Ending = ending;
+            _catDatas[id] = data;
+        }
+
         public void CreateCatData(Guid id, string name)
         {
             CatData data = new CatData(name);
             _catDatas.Add(id, data);
+            currentCatId = id;
         }
 
         public void CreateCataData(Guid id, CatData data)
@@ -47,7 +55,33 @@ namespace Attention.Data
 
         public CatData GetCatData(Guid id)
         {
-            return _catDatas[id];
+            //Debug.Log(id + " : " + _catDatas.ContainsKey(id));
+            //foreach (Guid _id in _catDatas.Keys)
+            //{
+            //    Debug.Log(_id);
+            //}
+            if (_catDatas.ContainsKey(id)) { return _catDatas[id]; }
+            return new CatData();
+        }
+
+        public void SetScore(Guid id, float score)
+        {
+            if (_catDatas.ContainsKey(id))
+            {
+                CatData data = _catDatas[id];
+                data.score = score;
+                _catDatas[id] = data;
+            }
+        }
+
+        public void SetRemainCoin(Guid id, float coin)
+        {
+            if (_catDatas.ContainsKey(id))
+            {
+                CatData data = _catDatas[id];
+                data.remainCoin = coin;
+                _catDatas[id] = data;
+            }
         }
 
         public List<(Guid, CatData)> GetAllDatas()

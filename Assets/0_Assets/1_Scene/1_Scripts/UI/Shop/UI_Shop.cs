@@ -14,10 +14,14 @@ namespace Attention.View
         [SerializeField] private List<SubUI_ShopItem> _shopItemUIs;
 
         private Action<int> _onClickBuy;
+        private Action<ItemData> _onEnterItem;
+        private Action _onExitItem;
 
-        public void Init(Action onClickExit, Action<int> onClickBuy)
+        public void Init(Action onClickExit, Action<int> onClickBuy, Action<ItemData> onEnterItem, Action onExitItem)
         {
             _onClickBuy = onClickBuy;
+            _onEnterItem = onEnterItem;
+            _onExitItem = onExitItem;
 
             _exitBtn.onClick.AddListener(() => onClickExit());
         }
@@ -29,7 +33,11 @@ namespace Attention.View
             {
                 _shopItemUIs[i].gameObject.SetActive(true);
 
-                _shopItemUIs[i].Init(() => _onClickBuy.Invoke(itemData.Index));
+                _shopItemUIs[i].Init(
+                    () => _onClickBuy.Invoke(itemData.Index),
+                    () => _onEnterItem.Invoke(itemData),
+                    () => _onExitItem.Invoke()
+                    );
                 _shopItemUIs[i].SetData(itemData);
 
                 i++;
@@ -40,5 +48,8 @@ namespace Attention.View
                 _shopItemUIs[i].gameObject.SetActive(false);
             }
         }
+
+        
+
     }
 }

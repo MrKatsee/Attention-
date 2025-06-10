@@ -13,6 +13,10 @@ namespace Attention
         public float Fullness { get; private set; }     // 포만감
         public float Cleanliness { get; private set; }  // 청결도
 
+        public int RemainStock { get; private set; } // 최대 구매 개수 (-1이면 무제한 구매 가능)
+
+        public string EntitySpone { get; private set; }
+
         public ItemData(int index, string name, float price, float happiness, float bond, float fullness, float cleanliness)
         {
             Index = index;
@@ -23,11 +27,21 @@ namespace Attention
             Bond = bond;
             Fullness = fullness;
             Cleanliness = cleanliness;
+
+            RemainStock = -1;
+
+            EntitySpone = "";
         }
 
-        public CatChangeData GetChangeData()
+        public ItemData(int index, string name, float price, float happiness, float bond, float fullness, float cleanliness, int remainStock, string entitySpone) : this(index, name, price, happiness, bond, fullness, cleanliness)
         {
-            return new CatChangeData(Happiness, Bond, Fullness, Cleanliness);
+            RemainStock = remainStock;
+            EntitySpone = entitySpone;
+        }
+
+        public void purchase()
+        {
+            RemainStock--;
         }
     }
 }

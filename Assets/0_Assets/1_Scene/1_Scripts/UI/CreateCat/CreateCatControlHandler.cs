@@ -27,7 +27,7 @@ namespace Attention.Process
             _entityDataContainer.CreateEntityData(id);
 
             _objectDataContainer.Register(id, new CatObject(id));
-            _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0", animator = "Cat" });
+            _entityLoader.CreateEntity(new CreateData { id = id, type = EntityType.Cat, sprite = "Idle_0", animator = "Cat", order = 10 });
         }
 
         public void RemoveCat(EntityRemoveEvent _event)

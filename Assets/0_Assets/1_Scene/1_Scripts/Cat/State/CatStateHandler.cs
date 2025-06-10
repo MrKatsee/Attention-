@@ -46,7 +46,7 @@ namespace Attention.Process
             }
 
             _dataContainer.UseItem(id, data.data);
-            _eventQueue.EnqueueViewEvent(new CurrentCatStateViewEvent());
+            _eventQueue.EnqueueViewEvent(new CurrentCatStateViewEvent()); 
         }
     }
 }

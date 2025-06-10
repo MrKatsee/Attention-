@@ -42,7 +42,7 @@ namespace Attention.View
             Entity target = _entityPrefabContainer.GetEntity();
             Entity entity = GameObject.Instantiate(target) as Entity;
             _entityDict[data.id] = entity;
-            if (data.animator != null) entity.Init(_entityPrefabContainer.GetSprite(data.sprite), _entityPrefabContainer.GetAnimator(data.animator));
+            if (data.animator != null) entity.Init(_entityPrefabContainer.GetSprite(data.sprite), _entityPrefabContainer.GetAnimator(data.animator), data.order);
             else entity.Init(_entityPrefabContainer.GetSprite(data.sprite));
         }
 

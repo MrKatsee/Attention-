@@ -27,10 +27,15 @@ namespace Attention
             int id = data.ID;
 
             ItemData itemData = _shopDataContainer.GetItemData(id);
-            if (_playerDataContainer.GetMoney() < itemData.Price) { return; }
+            if (_playerDataContainer.GetMoney() < itemData.Price || itemData.RemainStock == 0) { return; }
+            itemData.purchase();
 
             _playerDataContainer.SubtractMoney(itemData.Price);
             _eventQueue.EnqueueLogicEvent(new CurrentCatItemUseEvent(itemData));
+            if(!string.IsNullOrEmpty(itemData.EntitySpone))
+            {
+                _eventQueue.EnqueueLogicEvent(new CreateEntityEvent(itemData.EntitySpone));
+            }
 
             _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
         }

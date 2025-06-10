@@ -18,6 +18,7 @@ namespace Attention.View
         public EntityType type;
         public string sprite;
         public string animator;
+        public int order;
     }
 
     [DIPublisher]

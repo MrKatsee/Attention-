@@ -32,6 +32,16 @@ namespace Attention.View
             _animator.runtimeAnimatorController = controller;
         }
 
+        public void Init(Sprite sprite, RuntimeAnimatorController controller, int order)
+        {
+            _renderer = this.GetComponent<SpriteRenderer>();
+            _renderer.sprite = sprite;
+            _renderer.sortingOrder = order;
+
+            _animator = this.AddComponent<Animator>();
+            _animator.runtimeAnimatorController = controller;
+        }
+
         public void UpdateEntity(EntityData data)
         {
             if (data == null) { return; }

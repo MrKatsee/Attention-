@@ -30,6 +30,7 @@ namespace Attention.Data
             RegisterItemData(new ItemData(10, "간식", 30f, 2f, 1f, 1f, 0f));
             RegisterItemData(new ItemData(11, "고급 간식", 45f, 3f, 2f, 1f, 0f));
             RegisterItemData(new ItemData(12, "최고급 간식", 60f, 4f, 3f, 1f, 0f));
+            RegisterItemData(new ItemData(20, "푸른 색 침대", 100f, 4f, 3f, 1f, 0f, 1, "CatBedBlue"));
         }
 
         public ItemData GetItemData(int id)

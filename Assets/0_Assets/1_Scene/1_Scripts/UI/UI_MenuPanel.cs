@@ -16,6 +16,7 @@ namespace Attention.View
         [SerializeField] private Button _windowButton;
 
         [SerializeField] private Text _txtMoney;
+        [SerializeField] private Text _txtSharedMoney;
 
         public void Init(Action onClickSetting, Action onClickShop, Action windowAction)
         {
@@ -43,6 +44,12 @@ namespace Attention.View
         public void SetMoney(int money)
         {
             _txtMoney.text = money.ToString() + "원";
+        }
+
+        public void SetMoney(int money, int sharedMoney)
+        {
+            _txtMoney.text = money.ToString() + "원";
+            _txtSharedMoney.text = sharedMoney.ToString() + "원";
         }
     }
 }

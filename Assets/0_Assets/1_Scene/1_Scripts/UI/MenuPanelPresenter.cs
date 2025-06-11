@@ -58,7 +58,7 @@ namespace Attention.View
 
         private void UpdateMoney()
         {
-            View.SetMoney(Mathf.RoundToInt(_playerDataContainer.GetMoney()));
+            View.SetMoney(Mathf.RoundToInt(_playerDataContainer.GetMoney()), Mathf.RoundToInt(_playerDataContainer.GetSharedMoney()));
         }
 
         public void UpdateMoney(UpdateMoneyEvent data)

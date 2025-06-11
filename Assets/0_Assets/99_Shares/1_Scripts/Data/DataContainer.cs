@@ -14,6 +14,7 @@ namespace Attention.Data
         private TaskTimeDataContainer _taskTimeDataContainer;
         private EntityDataContainer _entityDataContainer;
         private GameObjectContainer _gameObjectContainer;
+        private BehaviorContainer _behaviorContainer;
 
         public DataContainer()
         {
@@ -25,6 +26,7 @@ namespace Attention.Data
             _taskTimeDataContainer = new TaskTimeDataContainer();
             _entityDataContainer = new EntityDataContainer();
             _gameObjectContainer = new GameObjectContainer();
+            _behaviorContainer = new BehaviorContainer();
         }
     }
 }

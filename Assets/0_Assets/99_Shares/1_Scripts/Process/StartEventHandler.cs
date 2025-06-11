@@ -15,6 +15,8 @@ namespace Attention.Process
         [Inject(typeof(ViewLoader))] private IViewLoader _viewLoader;
         [Inject] private CatDataContainer _catContainer;
         [Inject] private PlayerDataContainer _playerDataContainer;
+        [Inject] private TaskTimeDataContainer _taskTimeDataContainer;
+        [Inject] private BehaviorContainer _behaviorContainer;
 
         public StartEventHandler()
         {
@@ -29,7 +31,11 @@ namespace Attention.Process
                 _eventQueue.EnqueueLogicEvent(new EntityRemoveEvent(_catContainer.currentCatId));
             }
 
+            _playerDataContainer.AddSharedMoney(_playerDataContainer.GetMoney());
             _playerDataContainer.SetMoney(1000f);
+            _taskTimeDataContainer.ResetTime();
+            _behaviorContainer.Clear();
+            _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
             _viewLoader.ActivateView(ViewType.CreateCat);
         }
     }

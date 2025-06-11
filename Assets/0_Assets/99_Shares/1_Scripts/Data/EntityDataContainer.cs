@@ -21,6 +21,11 @@ namespace Attention.Data
             _entityDatas.Add(id, new EntityData());
         }
 
+        public void CreateEntityData(Guid id, bool isCollerable = false)
+        {
+            _entityDatas.Add(id, new EntityData { isCollerable = isCollerable });
+        }
+
         public void AddEntityData(Guid _id, EntityData data)
         {
             _entityDatas.Add(_id, data);

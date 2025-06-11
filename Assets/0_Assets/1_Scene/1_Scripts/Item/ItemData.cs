@@ -8,6 +8,9 @@ namespace Attention
         public string Name { get; private set; }
         public float Price { get; private set; }
 
+        public enum ItemType { expendable, furniture, clothes }
+        public ItemType Type { get; private set; }
+
         public float Happiness { get; private set; }    // 행복함
         public float Bond { get; private set; }         // 유대감
         public float Fullness { get; private set; }     // 포만감
@@ -22,6 +25,7 @@ namespace Attention
             Index = index;
             Name = name;
             Price = price;
+            Type = ItemType.expendable;
 
             Happiness = happiness;
             Bond = bond;
@@ -33,7 +37,24 @@ namespace Attention
             EntitySpone = "";
         }
 
-        public ItemData(int index, string name, float price, float happiness, float bond, float fullness, float cleanliness, int remainStock, string entitySpone) : this(index, name, price, happiness, bond, fullness, cleanliness)
+        public ItemData(int index, string name, float price, ItemType type, float happiness, float bond, float fullness, float cleanliness)
+        {
+            Index = index;
+            Name = name;
+            Price = price;
+            Type = type;
+
+            Happiness = happiness;
+            Bond = bond;
+            Fullness = fullness;
+            Cleanliness = cleanliness;
+
+            RemainStock = -1;
+
+            EntitySpone = "";
+        }
+
+        public ItemData(int index, string name, float price, ItemType type, float happiness, float bond, float fullness, float cleanliness, int remainStock, string entitySpone) : this(index, name, price, type, happiness, bond, fullness, cleanliness)
         {
             RemainStock = remainStock;
             EntitySpone = entitySpone;

@@ -30,12 +30,25 @@ namespace Attention
             if (_playerDataContainer.GetMoney() < itemData.Price || itemData.RemainStock == 0) { return; }
             itemData.purchase();
 
-            _playerDataContainer.SubtractMoney(itemData.Price);
+            float price = itemData.Price;
+
             _eventQueue.EnqueueLogicEvent(new CurrentCatItemUseEvent(itemData));
-            if(!string.IsNullOrEmpty(itemData.EntitySpone))
+            if(itemData.Type != ItemData.ItemType.expendable)
             {
+                float shareMoney = _playerDataContainer.GetSharedMoney();
+                if (shareMoney > price)
+                {
+                    _playerDataContainer.SubtractSharedMoney(price);
+                    price = 0;
+                }
+                else
+                {
+                    price -= shareMoney;
+                    _playerDataContainer.SetMoney(0);
+                }
                 _eventQueue.EnqueueLogicEvent(new CreateEntityEvent(itemData.EntitySpone));
             }
+            _playerDataContainer.SubtractMoney(price);
 
             _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
         }

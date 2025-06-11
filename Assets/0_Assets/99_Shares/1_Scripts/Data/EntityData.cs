@@ -9,6 +9,7 @@ namespace Attention.Data
 
         public bool isActivate = true;
         public bool isVisible = true;
+        public bool isCollerable = false;
 
         public string basicImage = null;
         public int animator = -1;
@@ -20,6 +21,7 @@ namespace Attention.Data
 
             isActivate = true;
             isVisible = true;
+            isCollerable = false;
 
             basicImage = null;
             animator = -1;

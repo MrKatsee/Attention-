@@ -8,6 +8,8 @@ namespace Attention
         public string Name { get; private set; }
         public float Price { get; private set; }
 
+        public string Description { get; private set; }
+
         public enum ItemType { expendable, furniture, clothes }
         public ItemType Type { get; private set; }
 
@@ -20,7 +22,7 @@ namespace Attention
 
         public string EntitySpone { get; private set; }
 
-        public ItemData(int index, string name, float price, float happiness, float bond, float fullness, float cleanliness)
+        public ItemData(int index, string name, float price, float happiness, float bond, float fullness, float cleanliness, string description = "")
         {
             Index = index;
             Name = name;
@@ -35,6 +37,8 @@ namespace Attention
             RemainStock = -1;
 
             EntitySpone = "";
+
+            Description = description;
         }
 
         public ItemData(int index, string name, float price, ItemType type, float happiness, float bond, float fullness, float cleanliness)

@@ -8,6 +8,7 @@ namespace Attention.View
         SettingPanel,
 
         TaskTimer,
+        ItemDesc,
 
         State,
         Ending,

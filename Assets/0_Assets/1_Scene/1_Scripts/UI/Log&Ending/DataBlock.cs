@@ -20,7 +20,7 @@ public class DataBlock : MonoBehaviour
     public void Init(Sprite baseImage)
     {
         image.sprite = baseImage; 
-        nameText.text = "(데이터 없음)";
+        nameText.text = "";
         dateText.text = "";
     }
 }

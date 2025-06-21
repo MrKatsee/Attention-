@@ -529,6 +529,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f206c01b2273c5448a967c0fc78e4273, type: 3}
   - {fileID: 21300000, guid: 12a67bc571d591c4ebaeae58bacbbe63, type: 3}
   - {fileID: 21300000, guid: bf3cf15d98107c94f82091628e6589f1, type: 3}
+  - {fileID: 21300000, guid: 261594daf9138a7488f33f99b069582f, type: 3}
   _animatorList:
   - {fileID: 9100000, guid: 7406e76e7ef85914bab2818c2eed987b, type: 2}
   _endingDescList:
@@ -537,6 +538,9 @@ MonoBehaviour:
   - "QueneEnding_\uC5D4\uB529 2 : \uACE0\uC591\uC774\uC758 \uC655!_\uB2F9\uC2E0\uC758
     \uADF9\uC9C4\uD55C \uC815\uC131\uC73C\uB85C \uACE0\uC591\uC774\uC758 \uC655\uC774
     \uB418\uC5C8\uC2B5\uB2C8\uB2E4!"
+  - "NormalEnding_\uC5D4\uB529 3 : \uD3C9\uBC94\uD55C \uB098\uB0A0_\uB2F9\uC2E0\uC758
+    \uB178\uB825 \uB355\uBD84\uC5D0 \uC544\uBB34 \uD0C8\uC5C6\uC774 \uC131\uC7A5\uD55C
+    \uACE0\uC591\uC774\uC640 \uD568\uAED8 \uD558\uB294 \uD558\uB8E8"
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

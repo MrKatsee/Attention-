@@ -58,10 +58,11 @@ namespace Attention
             EntitySpone = "";
         }
 
-        public ItemData(int index, string name, float price, ItemType type, float happiness, float bond, float fullness, float cleanliness, int remainStock, string entitySpone) : this(index, name, price, type, happiness, bond, fullness, cleanliness)
+        public ItemData(int index, string name, float price, ItemType type, float happiness, float bond, float fullness, float cleanliness, int remainStock, string entitySpone, string description = "") : this(index, name, price, type, happiness, bond, fullness, cleanliness)
         {
             RemainStock = remainStock;
             EntitySpone = entitySpone;
+            Description = description;
         }
 
         public void purchase()

@@ -113,10 +113,10 @@ namespace Attention.Data
 
             catData.recordTime += data.RecordTime;
 
-            catData.Fullness += data.Fullness;
-            catData.Happiness += data.Happiness;
-            catData.Bond += data.Bond;
-            catData.Cleanliness += data.Cleanliness;
+            catData.Fullness = MathF.Max(0, MathF.Min(100, data.Fullness + catData.Fullness));
+            catData.Happiness = MathF.Max(0, MathF.Min(100, data.Happiness + catData.Happiness));
+            catData.Bond = MathF.Max(0, MathF.Min(100, data.Bond + catData.Bond));
+            catData.Cleanliness = MathF.Max(0, MathF.Min(100, data.Cleanliness + catData.Cleanliness));
 
             _catDatas[id] = catData;
 

@@ -29,7 +29,7 @@ namespace Attention.View
             logLIst = new List<GameObject>();
             logLIst.Add(_statusSlider.gameObject);
             logLIst.Add(_textLog.gameObject);
-            logLIst.Add(_timeGraph.gameObject);
+            //logLIst.Add(_timeGraph.gameObject);
             //exitButton.onClick.AddListener(() => { exitClick(); });
             prevButton.onClick.AddListener(() => { Previous(); });
             nextButton.onClick.AddListener(() => { Next(exitClick); });

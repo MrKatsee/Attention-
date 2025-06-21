@@ -32,9 +32,10 @@ namespace Attention.Process
             }
 
             _playerDataContainer.AddSharedMoney(_playerDataContainer.GetMoney());
-            _playerDataContainer.SetMoney(1000f);
+            _playerDataContainer.SetMoney(5000f);
             _taskTimeDataContainer.ResetTime();
             _behaviorContainer.Clear();
+            _eventQueue.EnqueueViewEvent(new TaskTimerUpdateViewEvent());
             _eventQueue.EnqueueViewEvent(new UpdateMoneyEvent());
             _viewLoader.ActivateView(ViewType.CreateCat);
         }

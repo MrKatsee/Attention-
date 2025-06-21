@@ -3,6 +3,7 @@ using Attention.Main.EventModule;
 using Attention.View;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using Util;
 
@@ -23,7 +24,7 @@ namespace Attention.View
 
         protected override void OnInitializeView()
         {
-            View.Init(OnExitClick, OnClickBuy);
+            View.Init(OnExitClick, OnClickBuy,OnEnterItem, OnExitItem);
             View.SetItemDatas(_shopDataContainer.GetAllItemDatas());
         }
 
@@ -35,6 +36,17 @@ namespace Attention.View
         private void OnClickBuy(int id)
         {
             _eventQueue.EnqueueLogicEvent(new BuyItemEvent(id));
+        }
+
+        private void OnEnterItem(ItemData itemData)
+        {
+            _viewContainer.ActivateView(ViewType.ItemDesc);
+            _eventQueue.EnqueueViewEvent(new OnEnterItemEvnet(itemData));
+        }
+
+        private void OnExitItem()
+        {
+            _viewContainer.DeactivateView(ViewType.ItemDesc);
         }
     }
 }

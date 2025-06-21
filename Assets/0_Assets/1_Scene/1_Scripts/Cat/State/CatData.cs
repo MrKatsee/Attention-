@@ -36,10 +36,10 @@ namespace Attention.Data
             this.remainCoin = 0;
             this.score = 0;
 
-            this.Happiness = 50.0f;
+            this.Happiness = 10.0f;
             this.Bond = 0.0f;
-            this.Fullness = 50.0f;
-            this.Cleanliness = 50.0f;
+            this.Fullness = 10.0f;
+            this.Cleanliness = 10.0f;
 
             this.useItem = new List<string>();
             this.logs = new List<Log>();

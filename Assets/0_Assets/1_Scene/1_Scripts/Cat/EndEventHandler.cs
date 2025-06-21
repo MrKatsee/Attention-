@@ -32,6 +32,7 @@ namespace Attention.Process
             _endinManager = new EndingManager();
             _endinManager.resgistEnding("QueneEnding", new QueneEnding());
             _endinManager.resgistEnding("BadEnding", new BadEnding());
+            _endinManager.resgistEnding("NormalEnding", new NormalEnding());
             DI.Register(this);
         }
 
@@ -46,8 +47,14 @@ namespace Attention.Process
             CatData data = _catDataContainer.GetCatData(id);
 
             var ending = _endinManager.GetEnding(data);
+            float score = ending.Item2;
+            score += data.Happiness;
+            score += data.Bond;
+            score += data.Cleanliness;
+            score += data.Fullness;
+
             _catDataContainer.SetEnding(id, ending.Item1);
-            _catDataContainer.SetScore(id, ending.Item2);
+            _catDataContainer.SetScore(id, score);
             _catDataContainer.SetRemainCoin(id, _playerDataContainer.GetMoney());
 
             _viewContainer.DeactivateView(ViewType.Shop);

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Attention
 {
-    public class QueneEnding : EndingData
+    public class NormalEnding : EndingData
     {
         public float GetScore(CatData data)
         {
             float score = -1;
-            if (data.Happiness > 90 && data.Fullness > 90 && data.Cleanliness > 90 && data.Bond > 90)
+            if (data.Happiness > 20 && data.Fullness > 20 && data.Cleanliness > 20 && data.Bond > 20)
             {
-                score = 1000;
+                score = 500;
             }
 
             return score;

@@ -24,13 +24,11 @@ namespace Attention.Data
             _shopItems = new Dictionary<int, ItemData>();
 
             // 귀찮으니까 걍 하드코딩
-            RegisterItemData(new ItemData(0, "사료", 20f, 0f, -1f, 2f, 0f));
-            RegisterItemData(new ItemData(1, "고급 사료", 35f, 0f, 0f, 3f, 0f));
-            RegisterItemData(new ItemData(2, "최고급 사료", 50f, 1f, 0f, 4f, 0f));
-            RegisterItemData(new ItemData(10, "간식", 30f, 2f, 1f, 1f, 0f));
-            RegisterItemData(new ItemData(11, "고급 간식", 45f, 3f, 2f, 1f, 0f));
-            RegisterItemData(new ItemData(12, "최고급 간식", 60f, 4f, 3f, 1f, 0f));
-            RegisterItemData(new ItemData(20, "푸른 색 침대", 100f, ItemData.ItemType.furniture, 4f, 3f, 1f, 0f, 1, "CatBedBlue"));
+            RegisterItemData(new ItemData(0, "사료", 200f, 0f, 0f, 30f, 0f, "맛있는 사료입니다"));
+            RegisterItemData(new ItemData(10, "간식", 200f, 15f, 10f, 15f, 0f, "맛있는 간식은 행복감을 느끼게 하죠."));
+            RegisterItemData(new ItemData(5, "청결 도구", 300f, -5f, 0f, 0f, 30f, "고양이를 깨끗하게 만들어보세요!"));
+            RegisterItemData(new ItemData(4, "낚시대", 300f, 30f, 30f, 0f, 0f, "고양이의 본능을 깨워보세요!"));
+            RegisterItemData(new ItemData(20, "푸른 색 침대", 1000f, ItemData.ItemType.furniture, 0f, 0f, 0f, 0f, 1, "CatBedBlue", "푹신한 침대입니다."));
         }
 
         public ItemData GetItemData(int id)

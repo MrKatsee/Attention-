@@ -398,6 +398,7 @@ MonoBehaviour:
   - {fileID: 2739210245738866361}
   - {fileID: 5515865977652107846}
   - {fileID: 9035652427450797511}
+  _shopItemDesc: {fileID: 0}
 --- !u!1001 &15892178562701247
 PrefabInstance:
   m_ObjectHideFlags: 0
